@@ -80,7 +80,7 @@ class Navbar extends React.Component {
 						<ListItemIcon>
 							<MusicNoteIcon />
 						</ListItemIcon>
-						<ListItemText primary="My Songs" />
+						<ListItemText primary="My Tracks" />
 					</ListItem>
 					<ListItem button>
 						<ListItemIcon>
