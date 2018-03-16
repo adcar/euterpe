@@ -1,5 +1,6 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import Cookie from 'js-cookie'
 import { withRouter } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
@@ -57,6 +58,9 @@ const styles = theme => ({
 })
 
 class Navbar extends React.Component {
+	componentDidMount() {
+		console.log(Cookie.get('spotifyAccessToken'))
+	}
 	state = {
 		mobileOpen: false
 	}
@@ -65,8 +69,7 @@ class Navbar extends React.Component {
 		this.setState({ mobileOpen: !this.state.mobileOpen })
 	}
 	redirect(location, e) {
-		console.log(location)
-		console.log(this.router)
+		this.props.history.push(location)
 	}
 	render() {
 		const { classes, theme } = this.props
@@ -76,13 +79,13 @@ class Navbar extends React.Component {
 				<div className={classes.toolbar} />
 				<Divider />
 				<List>
-					<ListItem button>
+					<ListItem button onClick={e => this.redirect('/my-tracks', e)}>
 						<ListItemIcon>
 							<MusicNoteIcon />
 						</ListItemIcon>
 						<ListItemText primary="My Tracks" />
 					</ListItem>
-					<ListItem button>
+					<ListItem button onClick={e => this.redirect('/my-albums', e)}>
 						<ListItemIcon>
 							<AlbumIcon />
 						</ListItemIcon>
@@ -145,9 +148,7 @@ class Navbar extends React.Component {
 				</Hidden>
 				<main className={classes.content}>
 					<div className={classes.toolbar} />
-					<Typography noWrap>
-						{'You think water moves fast? You should see ice.'}
-					</Typography>
+					{this.props.children}
 				</main>
 			</div>
 		)
@@ -159,4 +160,4 @@ Navbar.propTypes = {
 	theme: PropTypes.object.isRequired
 }
 
-export default withStyles(styles, { withTheme: true })(Navbar)
+export default withRouter(withStyles(styles, { withTheme: true })(Navbar))

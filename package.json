@@ -4,6 +4,7 @@
 	"private": true,
 	"license": "GPL-3.0",
 	"dependencies": {
+		"js-cookie": "^2.2.0",
 		"material-ui": "^1.0.0-beta.37",
 		"material-ui-icons": "^1.0.0-beta.36",
 		"query-string": "^5.1.0",
