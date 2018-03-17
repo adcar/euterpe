@@ -1,7 +1,7 @@
 import React from 'react'
 import PropTypes from 'prop-types'
 import Cookie from 'js-cookie'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
 import AppBar from 'material-ui/AppBar'
@@ -18,12 +18,13 @@ import LibraryMusicIcon from 'material-ui-icons/LibraryMusic'
 import MusicNoteIcon from 'material-ui-icons/MusicNote'
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 
+
 const drawerWidth = 240
 
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
-		height: 430,
+	
 		zIndex: 1,
 		overflow: 'hidden',
 		position: 'relative',
@@ -58,9 +59,6 @@ const styles = theme => ({
 })
 
 class Navbar extends React.Component {
-	componentDidMount() {
-		console.log(Cookie.get('spotifyAccessToken'))
-	}
 	state = {
 		mobileOpen: false
 	}
@@ -69,6 +67,7 @@ class Navbar extends React.Component {
 		this.setState({ mobileOpen: !this.state.mobileOpen })
 	}
 	redirect(location, e) {
+	  this.handleDrawerToggle()
 		this.props.history.push(location)
 	}
 	render() {
@@ -91,7 +90,7 @@ class Navbar extends React.Component {
 						</ListItemIcon>
 						<ListItemText primary="My Albums" />
 					</ListItem>
-					<ListItem button onClick={e => this.redirect('/playlists', e)}>
+					<ListItem button onClick={e => this.redirect('/my-playlists', e)}>
 						<ListItemIcon>
 							<PlaylistPlayIcon />
 						</ListItemIcon>
@@ -114,9 +113,11 @@ class Navbar extends React.Component {
 						>
 							<MenuIcon />
 						</IconButton>
-						<Typography variant="title" color="inherit" noWrap>
-							Apollo
-						</Typography>
+						<Link to="/" style={{textDecoration: 'none', color: 'white'}}>
+						  <Typography variant="title" color="inherit" noWrap>
+							  Apollo
+						  </Typography>
+						</Link>
 					</Toolbar>
 				</AppBar>
 				<Hidden mdUp>

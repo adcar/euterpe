@@ -1,15 +1,15 @@
 import React, { Component } from 'react'
 import getToken from '../getToken'
 
-class MyTracks extends Component {
+class MyPlaylists extends Component {
   componentDidMount() {
     console.log(getToken('spotifyAccessToken'))
   }
   render() {
     return (
-      <h1>My Tracks</h1>
+      <h1>My Playlists</h1>
       )
   }
 }
 
-export default MyTracks
+export default MyPlaylists
