@@ -6,6 +6,7 @@ import { withStyles } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
+import Input from 'material-ui/Input'
 import List from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import IconButton from 'material-ui/IconButton'
@@ -18,13 +19,12 @@ import LibraryMusicIcon from 'material-ui-icons/LibraryMusic'
 import MusicNoteIcon from 'material-ui-icons/MusicNote'
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 
-
 const drawerWidth = 240
 
 const styles = theme => ({
 	root: {
 		flexGrow: 1,
-	
+
 		zIndex: 1,
 		overflow: 'hidden',
 		position: 'relative',
@@ -55,6 +55,18 @@ const styles = theme => ({
 		flexGrow: 1,
 		backgroundColor: theme.palette.background.default,
 		padding: theme.spacing.unit * 3
+	},
+	underline: {
+		'&:after': {
+			backgroundColor: theme.palette.secondary.main
+		}
+	},
+	input: {
+		borderBottomColor: 'white',
+		color: 'white',
+		'&::placeholder': {
+			color: 'white'
+		}
 	}
 })
 
@@ -67,8 +79,14 @@ class Navbar extends React.Component {
 		this.setState({ mobileOpen: !this.state.mobileOpen })
 	}
 	redirect(location, e) {
-	  this.handleDrawerToggle()
+		this.handleDrawerToggle()
 		this.props.history.push(location)
+	}
+	handleSubmit(e) {
+		console.log('handled submit')
+	}
+	handleChange(e) {
+		console.log('handled change')
 	}
 	render() {
 		const { classes, theme } = this.props
@@ -113,11 +131,25 @@ class Navbar extends React.Component {
 						>
 							<MenuIcon />
 						</IconButton>
-						<Link to="/" style={{textDecoration: 'none', color: 'white'}}>
-						  <Typography variant="title" color="inherit" noWrap>
-							  Apollo
-						  </Typography>
+						<Link
+							to="/"
+							style={{ textDecoration: 'none', color: 'white', flex: 1 }}
+						>
+							<Typography variant="title" color="inherit" noWrap>
+								Apollo
+							</Typography>
 						</Link>
+						<form onSubmit={this.handleSubmit.bind(this)}>
+							<Input
+								classes={{
+									input: classes.input,
+									underline: classes.underline
+								}}
+								type="search"
+								onChange={this.handleChange.bind(this)}
+								placeholder="Search Albums or Songs"
+							/>
+						</form>
 					</Toolbar>
 				</AppBar>
 				<Hidden mdUp>

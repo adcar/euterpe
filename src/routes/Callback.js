@@ -14,7 +14,7 @@ class Callback extends Component {
 			)
 			this.props.history.push('/') // Redirects back home
 		} else {
-		  console.log('No Access Token in callback ??')
+			console.log('No Access Token in callback ??')
 		}
 	}
 	render() {
