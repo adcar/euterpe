@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
+import { Link } from 'react-router-dom'
 
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
@@ -50,9 +51,7 @@ class MyAlbums extends Component {
     this.setState({
       albums: data.body.items,
       albumItems: data.body.items.map(item => (
-        
-         <div>
-      <Card className={classes.card}>
+      <Card className={classes.card} key={item.album.id}>
         <CardMedia
           style={{height: 200}}
           image={item.album.images[1].url}
@@ -65,12 +64,13 @@ class MyAlbums extends Component {
           </Typography>
         </CardContent>
         <CardActions>
+        <Link to={`/album/${item.album.id}`} style={{textDecoration: 'none'}}>
           <Button size="small" color="primary">
             Play
           </Button>
+          </Link>
         </CardActions>
       </Card>
-    </div>
         ))
     })
     
@@ -85,7 +85,7 @@ class MyAlbums extends Component {
     const { classes } = this.props
     return (
       <div>
-        <h1>My Albums</h1>
+        <Typography component="h1" variant="display1" align="center">My Albums</Typography>
         <div className={classes.cardWrapper}>
         {this.state.albumItems}
         </div>
