@@ -11,6 +11,7 @@ import MyTracks from './routes/MyTracks'
 import MyAlbums from './routes/MyAlbums'
 import MyPlaylists from './routes/MyPlaylists'
 import Album from './routes/Album'
+import Callback from './routes/Callback'
 
 import blue from 'material-ui/colors/blue'
 import amber from 'material-ui/colors/amber'
@@ -31,6 +32,7 @@ ReactDOM.render(
 			<div>
 				<Navbar>
 					<Route path="/" exact component={Home} />
+					<Route path="/callback" component={Callback} />
 					<Route path="/my-tracks" component={MyTracks} />
 					<Route path="/my-albums" component={MyAlbums} />
 					<Route path="/my-playlists" component={MyPlaylists} />
