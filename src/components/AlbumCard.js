@@ -6,6 +6,10 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { Link } from 'react-router-dom'
+import getToken from '../getToken'
+const SpotifyWebApi = require('spotify-web-api-node')
+const spotifyApi = new SpotifyWebApi()
+spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
 const styles = theme => ({
 	card: {
@@ -18,7 +22,19 @@ const styles = theme => ({
 })
 
 class AlbumCard extends Component {
+	save() {
+		console.log(this.props.id)
+		spotifyApi
+			.addToMySavedAlbums({ ids: [this.props.id] })
+			.then(data => console.log(data))
+			.catch(err => console.log(err))
+	}
 	render() {
+		const saveBtn = !this.props.saved ? (
+			<Button size="small" color="primary" onClick={this.save.bind(this)}>
+				Save
+			</Button>
+		) : null
 		const { classes } = this.props
 		if (this.props.image && this.props.name && this.props.id) {
 			return (
@@ -51,6 +67,7 @@ class AlbumCard extends Component {
 								Play
 							</Button>
 						</Link>
+						{saveBtn}
 					</CardActions>
 				</Card>
 			)
