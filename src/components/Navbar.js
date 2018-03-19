@@ -1,6 +1,5 @@
 import React from 'react'
 import PropTypes from 'prop-types'
-import Cookie from 'js-cookie'
 import { withRouter, Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
@@ -15,16 +14,18 @@ import Divider from 'material-ui/Divider'
 import MenuIcon from 'material-ui-icons/Menu'
 import AlbumIcon from 'material-ui-icons/Album'
 import PlaylistPlayIcon from 'material-ui-icons/PlaylistPlay'
-import LibraryMusicIcon from 'material-ui-icons/LibraryMusic'
 import MusicNoteIcon from 'material-ui-icons/MusicNote'
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+import { isBrowser } from 'react-device-detect'
 
 const drawerWidth = 240
 
 const styles = theme => ({
+	searchInput: {
+		width: 190
+	},
 	root: {
 		flexGrow: 1,
-
 		zIndex: 1,
 		overflow: 'hidden',
 		position: 'relative',
@@ -71,22 +72,37 @@ const styles = theme => ({
 })
 
 class Navbar extends React.Component {
-	state = {
-		mobileOpen: false
+	constructor() {
+		super()
+		this.state = {
+			mobileOpen: false,
+			searchTerm: ''
+		}
 	}
 
 	handleDrawerToggle = () => {
 		this.setState({ mobileOpen: !this.state.mobileOpen })
 	}
+	updateHistory() {
+		this.props.history.push(`/search/${this.state.searchTerm}`)
+	}
+
 	redirect(location, e) {
 		this.handleDrawerToggle()
 		this.props.history.push(location)
 	}
-	handleSubmit(e) {
-		console.log('handled submit')
-	}
 	handleChange(e) {
-		console.log('handled change')
+		// Only do live updates on desktop browser, where on mobile (or anything else) you have to hit your (virtual) enter key
+		if (isBrowser) {
+			this.setState({ searchTerm: e.target.value }, this.updateHistory)
+		} else {
+			this.setState({ searchTerm: e.target.value })
+		}
+	}
+	handleSubmit(e) {
+		e.preventDefault()
+		this.searchInput.blur()
+		this.updateHistory()
 	}
 	render() {
 		const { classes, theme } = this.props
@@ -141,9 +157,13 @@ class Navbar extends React.Component {
 						</Link>
 						<form onSubmit={this.handleSubmit.bind(this)}>
 							<Input
+								className={classes.searchInput}
 								classes={{
 									input: classes.input,
 									underline: classes.underline
+								}}
+								inputRef={input => {
+									this.searchInput = input
 								}}
 								type="search"
 								onChange={this.handleChange.bind(this)}

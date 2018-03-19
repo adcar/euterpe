@@ -1,10 +1,9 @@
 import React, { Component } from 'react'
 import { withStyles } from 'material-ui/styles'
-import Card, { CardContent, CardMedia } from 'material-ui/Card'
+import Card, { CardContent } from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
-import PlayArrowIcon from 'material-ui-icons/PlayArrow'
 import SkipNextIcon from 'material-ui-icons/SkipNext'
 import { CircularProgress } from 'material-ui/Progress'
 
@@ -109,16 +108,7 @@ class PlaylistPlayer extends Component {
 		}
 	}
 	render() {
-		const { classes, theme } = this.props
-		if (this.state.tracks[this.state.currenSource]) {
-			const image = (
-				<img
-					className={classes.songArt}
-					alt="Song Cover Art"
-					src={this.state.tracks[this.state.currentSource].image}
-				/>
-			)
-		}
+		const { classes } = this.props
 
 		const player = this.state.tracks[this.state.currentSource] ? (
 			<Card className={classes.card}>

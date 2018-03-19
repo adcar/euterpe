@@ -9,6 +9,7 @@
 		"material-ui-icons": "^1.0.0-beta.36",
 		"query-string": "^5.1.0",
 		"react": "^16.2.0",
+		"react-device-detect": "^0.1.0",
 		"react-dom": "^16.2.0",
 		"react-oauth-popup": "^0.0.3",
 		"react-redux": "^5.0.7",

@@ -12,6 +12,7 @@ import MyAlbums from './routes/MyAlbums'
 import MyPlaylists from './routes/MyPlaylists'
 import Album from './routes/Album'
 import Callback from './routes/Callback'
+import Search from './routes/Search'
 
 import blue from 'material-ui/colors/blue'
 import amber from 'material-ui/colors/amber'
@@ -37,6 +38,7 @@ ReactDOM.render(
 					<Route path="/my-albums" component={MyAlbums} />
 					<Route path="/my-playlists" component={MyPlaylists} />
 					<Route path="/album/:id" component={Album} />
+					<Route path="/search/:query" component={Search} />
 				</Navbar>
 			</div>
 		</Router>
