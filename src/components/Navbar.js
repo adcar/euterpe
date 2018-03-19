@@ -22,7 +22,11 @@ const drawerWidth = 240
 
 const styles = theme => ({
 	searchInput: {
-		width: 190
+		width: 'auto',
+		marginLeft: theme.spacing.unit * 2,
+		[theme.breakpoints.up('sm')]: {
+			width: 245
+		}
 	},
 	root: {
 		flexGrow: 1,
@@ -167,7 +171,7 @@ class Navbar extends React.Component {
 								}}
 								type="search"
 								onChange={this.handleChange.bind(this)}
-								placeholder="Search Albums or Songs"
+								placeholder="Search Albums, Songs or Artists"
 							/>
 						</form>
 					</Toolbar>

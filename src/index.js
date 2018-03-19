@@ -2,6 +2,7 @@ import React from 'react'
 import ReactDOM from 'react-dom'
 import './index.css'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
+import CssBaseline from 'material-ui/CssBaseline'
 import Navbar from './components/Navbar'
 import registerServiceWorker from './registerServiceWorker'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
@@ -29,6 +30,7 @@ const theme = createMuiTheme({
 
 ReactDOM.render(
 	<MuiThemeProvider theme={theme}>
+		<CssBaseline />
 		<Router>
 			<div>
 				<Navbar>
