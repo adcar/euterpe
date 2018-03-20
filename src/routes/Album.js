@@ -6,6 +6,12 @@ const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
+const convertToSeconds = millis => {
+	let minutes = Math.floor(millis / 60000)
+	let seconds = ((millis % 60000) / 1000).toFixed(0)
+	return `${minutes}:${(seconds < 10 ? '0' : '') + seconds}`
+}
+
 class Album extends Component {
 	constructor() {
 		super()
@@ -42,7 +48,7 @@ class Album extends Component {
 							key={item.id}
 							onClick={e => this.trackChange(index, e)}
 						>
-							{item.name}
+							{item.name} ({convertToSeconds(item.duration_ms)})
 						</li>
 					)),
 					tracksJson: data.body.tracks.map(track => ({
