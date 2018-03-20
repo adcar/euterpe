@@ -32,7 +32,7 @@ ReactDOM.render(
 	<MuiThemeProvider theme={theme}>
 		<CssBaseline />
 		<Router>
-			<div>
+			<div className="main-wrapper">
 				<Navbar>
 					<Route path="/" exact component={Home} />
 					<Route path="/callback" component={Callback} />

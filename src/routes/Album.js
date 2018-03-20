@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import getToken from '../getToken'
+import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import PlayArrow from 'material-ui-icons/PlayArrow'
 import Pause from 'material-ui-icons/Pause'
@@ -15,6 +16,13 @@ const convertToSeconds = millis => {
 	let seconds = ((millis % 60000) / 1000).toFixed(0)
 	return `${minutes}:${(seconds < 10 ? '0' : '') + seconds}`
 }
+
+const styles = theme => ({
+	trackSelector: {
+		overflowY: 'scroll',
+		height: 'calc(100vh - 350px)'
+	}
+})
 
 class Album extends Component {
 	constructor() {
@@ -71,12 +79,13 @@ class Album extends Component {
 			})
 	}
 	render() {
+		const { classes } = this.props
 		return (
 			<div>
 				<Typography component="h1" variant="display1" align="center">
 					{this.state.albumInfo.name}
 				</Typography>
-				<List>{this.state.tracks}</List>
+				<List className={classes.trackSelector}>{this.state.tracks}</List>
 				<Player
 					tracks={this.state.tracksJson}
 					currentTrack={this.state.currentTrack}
@@ -86,4 +95,4 @@ class Album extends Component {
 	}
 }
 
-export default Album
+export default withStyles(styles)(Album)

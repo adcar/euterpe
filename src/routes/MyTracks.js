@@ -6,6 +6,7 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { Link } from 'react-router-dom'
 import { CircularProgress } from 'material-ui/Progress'
+import TrackCard from '../components/TrackCard'
 
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
@@ -43,7 +44,7 @@ class MyTracks extends Component {
 		const { classes } = this.props
 		spotifyApi.setAccessToken(this.state.token)
 		spotifyApi
-			.getMySavedTracks({
+			.getMyTopTracks({
 				limit: 50,
 				offset: 0
 			})
@@ -53,37 +54,12 @@ class MyTracks extends Component {
 					this.setState({
 						albums: data.body.items,
 						albumItems: data.body.items.map(item => (
-							<Card className={classes.card} key={item.track.id}>
-								<CardMedia
-									style={{ height: 200 }}
-									image={item.track.album.images[1].url}
-									title="Album Cover"
-								/>
-								<CardContent>
-									<Typography
-										variant="title"
-										component="h2"
-										style={{
-											flex: 1,
-											whiteSpace: 'nowrap',
-											overflow: 'hidden',
-											textOverflow: 'ellipsis'
-										}}
-									>
-										{item.track.name}
-									</Typography>
-								</CardContent>
-								<CardActions>
-									<Link
-										to={`/album/${item.track.id}`}
-										style={{ textDecoration: 'none' }}
-									>
-										<Button size="small" color="primary">
-											Play
-										</Button>
-									</Link>
-								</CardActions>
-							</Card>
+							<TrackCard
+								image={item.album.images[1].url}
+								name={item.name}
+								artist={item.artists[0].name}
+								id={item.id}
+							/>
 						))
 					})
 				},
@@ -100,7 +76,7 @@ class MyTracks extends Component {
 			return (
 				<div>
 					<Typography component="h1" variant="display1" align="center">
-						My Tracks
+						My Top Tracks
 					</Typography>
 					<div className={classes.cardWrapper}>{this.state.albumItems}</div>
 				</div>

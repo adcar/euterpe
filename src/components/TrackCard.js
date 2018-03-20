@@ -62,6 +62,9 @@ class TrackCard extends Component {
 						>
 							{this.props.name}
 						</Typography>
+						<Typography variant="subheading" style={{ marginTop: 10 }}>
+							{this.props.artist}
+						</Typography>
 					</CardContent>
 					<CardActions>
 						<Link
