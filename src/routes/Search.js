@@ -23,6 +23,10 @@ const styles = theme => ({
 		[theme.breakpoints.down('md')]: {
 			width: `calc(95vw)`
 		}
+	},
+	category: {
+		marginTop: theme.spacing.unit * 5,
+		marginBottom: theme.spacing.unit * 5
 	}
 })
 
@@ -91,18 +95,25 @@ class Search extends Component {
 		const { classes } = this.props
 		return (
 			<div>
-				<Typography variant="display1" component="h2" align="center">
-					Albums
-				</Typography>
-				<div className={classes.cardWrapper}>{this.state.albums}</div>
-				<Typography variant="display1" component="h2" align="center">
-					Artists
-				</Typography>
-				<div className={classes.cardWrapper}>{this.state.artists}</div>
-				<Typography variant="display1" component="h2" align="center">
-					Tracks
-				</Typography>
-				<div className={classes.cardWrapper}>{this.state.tracks}</div>
+				<div className={classes.category}>
+					<Typography variant="display1" component="h2" align="center">
+						Albums
+					</Typography>
+					<div className={classes.cardWrapper}>{this.state.albums}</div>
+				</div>
+
+				<div className={classes.category}>
+					<Typography variant="display1" component="h2" align="center">
+						Artists
+					</Typography>
+					<div className={classes.cardWrapper}>{this.state.artists}</div>
+				</div>
+				<div className={classes.category}>
+					<Typography variant="display1" component="h2" align="center">
+						Tracks
+					</Typography>
+					<div className={classes.cardWrapper}>{this.state.tracks}</div>
+				</div>
 			</div>
 		)
 	}

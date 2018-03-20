@@ -1,5 +1,9 @@
 import React, { Component } from 'react'
 import getToken from '../getToken'
+import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
+import PlayArrow from 'material-ui-icons/PlayArrow'
+import Pause from 'material-ui-icons/Pause'
+import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import Player from '../components/PlaylistPlayer'
 const SpotifyWebApi = require('spotify-web-api-node')
@@ -23,9 +27,9 @@ class Album extends Component {
 		}
 	}
 	trackChange(index, e) {
-		console.log(index)
 		this.setState({
-			currentTrack: index
+			currentTrack: index,
+			played: true
 		})
 	}
 	componentDidMount() {
@@ -42,15 +46,19 @@ class Album extends Component {
 			.then(trackIds => spotifyApi.getTracks(trackIds))
 			.then(data => {
 				this.setState({
-					tracks: data.body.tracks.map((item, index) => (
-						<li
-							style={{ cursor: 'pointer' }}
-							key={item.id}
-							onClick={e => this.trackChange(index, e)}
-						>
-							{item.name} ({convertToSeconds(item.duration_ms)})
-						</li>
-					)),
+					tracks: data.body.tracks.map((item, index) => {
+						return (
+							<ListItem
+								key={item.id}
+								button
+								onClick={e => this.trackChange(index, e)}
+							>
+								<ListItemText>
+									{item.name} ({convertToSeconds(item.duration_ms)})
+								</ListItemText>
+							</ListItem>
+						)
+					}),
 					tracksJson: data.body.tracks.map(track => ({
 						name: track.name,
 						artist: track.artists[0].name,
@@ -68,7 +76,7 @@ class Album extends Component {
 				<Typography component="h1" variant="display1" align="center">
 					{this.state.albumInfo.name}
 				</Typography>
-				<ol>{this.state.tracks}</ol>
+				<List>{this.state.tracks}</List>
 				<Player
 					tracks={this.state.tracksJson}
 					currentTrack={this.state.currentTrack}
