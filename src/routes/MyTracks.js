@@ -35,6 +35,10 @@ class MyTracks extends Component {
 			albumItems: []
 		}
 	}
+	play(object) {
+		this.props.playSong(object)
+	}
+
 	componentWillMount() {
 		this.setState({
 			token: getToken('spotifyAccessToken')
@@ -59,6 +63,14 @@ class MyTracks extends Component {
 								name={item.name}
 								artist={item.artists[0].name}
 								id={item.id}
+								play={e =>
+									this.play({
+										image: item.album.images[0].url,
+										name: item.name,
+										id: item.id,
+										artist: item.artists[0].name
+									})
+								}
 							/>
 						))
 					})

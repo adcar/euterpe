@@ -30,10 +30,11 @@ const styles = theme => ({
 	root: {
 		flexGrow: 1,
 		zIndex: 1,
-		overflow: 'hidden',
+		overflow: 'auto',
 		position: 'relative',
 		display: 'flex',
-		width: '100%'
+		width: '100%',
+		height: 'calc(100vh - 130px)'
 	},
 	appBar: {
 		position: 'absolute',

@@ -29,6 +29,7 @@ class TrackCard extends Component {
 			.then(data => console.log(data))
 			.catch(err => console.log(err))
 	}
+
 	render() {
 		const saveBtn = !this.props.saved ? (
 			<Button
@@ -67,14 +68,9 @@ class TrackCard extends Component {
 						</Typography>
 					</CardContent>
 					<CardActions>
-						<Link
-							to={`/track/${this.props.id}`}
-							style={{ textDecoration: 'none' }}
-						>
-							<Button size="small" color="primary">
-								Play
-							</Button>
-						</Link>
+						<Button size="small" color="primary" onClick={this.props.play}>
+							Play
+						</Button>
 						{saveBtn}
 					</CardActions>
 				</Card>

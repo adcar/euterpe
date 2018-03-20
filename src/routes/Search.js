@@ -19,9 +19,9 @@ const styles = theme => ({
 		alignItems: 'center',
 		flexWrap: 'nowrap',
 		overflowX: 'auto',
-		width: `calc(95vw - ${drawerWidth}px)`,
-		[theme.breakpoints.down('md')]: {
-			width: `calc(95vw)`
+		width: `calc(90vw - ${drawerWidth}px)`,
+		[theme.breakpoints.down('sm')]: {
+			width: `calc(80vw)`
 		}
 	},
 	category: {
@@ -38,6 +38,10 @@ class Search extends Component {
 			artists: [],
 			tracks: []
 		}
+		this.play = this.play.bind(this)
+	}
+	play(object) {
+		this.props.playSong(object)
 	}
 	searchSpotify(props) {
 		spotifyApi
@@ -75,6 +79,15 @@ class Search extends Component {
 									image={item.album.images[0].url}
 									name={item.name}
 									id={item.id}
+									artist={item.artists[0].name}
+									play={e =>
+										this.play({
+											image: item.album.images[0].url,
+											name: item.name,
+											id: item.id,
+											artist: item.artists[0].name
+										})
+									}
 								/>
 							)
 						} else {

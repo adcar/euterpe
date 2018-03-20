@@ -16,12 +16,13 @@ const styles = theme => ({
 		alignItems: 'center'
 	},
 	songArt: {
-		height: 120,
-		marginRight: theme.spacing.unit * 2
+		marginLeft: theme.spacing.unit * 2,
+		marginTop: theme.spacing.unit * 2,
+		height: 70
 	},
 	songLabel: {
-		marginTop: theme.spacing.unit,
-		padding: theme.spacing.unit * 2,
+		marginBottom: 10,
+		height: 70,
 		display: 'flex',
 		justifyContent: 'space-between',
 		alignItems: 'center'
@@ -43,6 +44,12 @@ const styles = theme => ({
 		flex: '1'
 	},
 	card: {
+		display: 'flex',
+		alignItems: 'stretch',
+		flexDirection: 'column',
+		justifyContent: 'center',
+		height: 130,
+		width: '100%',
 		backgroundColor: '#fafafa'
 	},
 	cardContent: { marginTop: theme.spacing.unit * 2 },
@@ -52,10 +59,6 @@ const styles = theme => ({
 	},
 	content: {
 		flex: '1 0 auto'
-	},
-	cover: {
-		width: 151,
-		height: 151
 	},
 	controls: {
 		display: 'flex',
@@ -74,12 +77,10 @@ class PlaylistPlayer extends Component {
 		super(props)
 		this.state = {
 			sources: [],
-			currentSource: 0,
 			tracks: []
 		}
 	}
 	componentWillReceiveProps(nextProps) {
-		console.log(nextProps)
 		if (nextProps.tracks.length > 0) {
 			this.setState({
 				tracks: nextProps.tracks,
@@ -161,7 +162,50 @@ class PlaylistPlayer extends Component {
 			</Card>
 		) : (
 			<div className={classes.progress}>
-				<CircularProgress />
+				<Card className={classes.card}>
+					<div>
+						<div className={classes.songLabel}>
+							<img
+								className={classes.songArt}
+								alt="Song Cover Art"
+								src="http://via.placeholder.com/120x120"
+							/>
+							<CardContent className={classes.cardContent}>
+								<div>
+									{' '}
+									<Typography variant="headline" component="h3" align="right" />
+									<Typography variant="subheading" align="right" />
+								</div>
+							</CardContent>
+						</div>
+						<div className={classes.player}>
+							<IconButton>
+								<SkipPreviousIcon
+									className={classes.icon}
+									onClick={this.handlePrev.bind(this)}
+								/>
+							</IconButton>
+
+							<audio
+								onEnded={this.handleNext.bind(this)}
+								onError={this.handleNext.bind(this)}
+								ref={audio => {
+									this.audio = audio
+								}}
+								autoPlay
+								controls
+								className={classes.audio}
+								src={this.state.sources[this.state.currentSource]}
+							/>
+							<IconButton>
+								<SkipNextIcon
+									className={classes.icon}
+									onClick={this.handleNext.bind(this)}
+								/>
+							</IconButton>
+						</div>
+					</div>
+				</Card>
 			</div>
 		)
 		return <div>{player}</div>

@@ -7,6 +7,7 @@ import Pause from 'material-ui-icons/Pause'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import Player from '../components/PlaylistPlayer'
+import Button from 'material-ui/Button'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
@@ -18,9 +19,12 @@ const convertToSeconds = millis => {
 }
 
 const styles = theme => ({
-	trackSelector: {
-		overflowY: 'scroll',
-		height: 'calc(100vh - 350px)'
+	title: {
+		width: '100%',
+		display: 'flex',
+		flexDirection: 'column',
+		jusitfyContent: 'center',
+		alignItems: 'center'
 	}
 })
 
@@ -31,14 +35,8 @@ class Album extends Component {
 			tracks: [],
 			tracksJson: [],
 			albumInfo: {},
-			currentTrack: 0
+			tracksInfo: []
 		}
-	}
-	trackChange(index, e) {
-		this.setState({
-			currentTrack: index,
-			played: true
-		})
 	}
 	componentDidMount() {
 		spotifyApi
@@ -54,24 +52,27 @@ class Album extends Component {
 			.then(trackIds => spotifyApi.getTracks(trackIds))
 			.then(data => {
 				this.setState({
+					tracksInfo: data.body.tracks.map(track => ({
+						name: track.name,
+						artist: track.artists[0].name,
+						image: track.album.images[1].url
+					})),
 					tracks: data.body.tracks.map((item, index) => {
 						return (
 							<ListItem
 								key={item.id}
 								button
-								onClick={e => this.trackChange(index, e)}
+								onClick={e => {
+									this.props.getTracks(this.state.tracksInfo, e)
+									this.props.trackChange(index, e)
+								}}
 							>
 								<ListItemText>
 									{item.name} ({convertToSeconds(item.duration_ms)})
 								</ListItemText>
 							</ListItem>
 						)
-					}),
-					tracksJson: data.body.tracks.map(track => ({
-						name: track.name,
-						artist: track.artists[0].name,
-						image: track.album.images[1].url
-					}))
+					})
 				})
 			})
 			.catch(err => {
@@ -82,14 +83,25 @@ class Album extends Component {
 		const { classes } = this.props
 		return (
 			<div>
-				<Typography component="h1" variant="display1" align="center">
-					{this.state.albumInfo.name}
-				</Typography>
+				<div className={classes.title}>
+					{' '}
+					<Typography component="h1" variant="display1" align="center">
+						{this.state.albumInfo.name}
+					</Typography>
+					<Button
+						style={{ marginTop: 20 }}
+						variant="raised"
+						color="primary"
+						onClick={e => {
+							this.props.getTracks(this.state.tracksInfo, e)
+							this.props.trackChange(0, e)
+						}}
+					>
+						Play
+					</Button>
+				</div>
+
 				<List className={classes.trackSelector}>{this.state.tracks}</List>
-				<Player
-					tracks={this.state.tracksJson}
-					currentTrack={this.state.currentTrack}
-				/>
 			</div>
 		)
 	}
