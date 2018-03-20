@@ -21,11 +21,11 @@ const styles = theme => ({
 	}
 })
 
-class AlbumCard extends Component {
+class TrackCard extends Component {
 	save() {
 		console.log(this.props.id)
 		spotifyApi
-			.addToMySavedAlbums({ ids: [this.props.id] })
+			.addToMySavedTracks({ ids: [this.props.id] })
 			.then(data => console.log(data))
 			.catch(err => console.log(err))
 	}
@@ -65,7 +65,7 @@ class AlbumCard extends Component {
 					</CardContent>
 					<CardActions>
 						<Link
-							to={`/album/${this.props.id}`}
+							to={`/track/${this.props.id}`}
 							style={{ textDecoration: 'none' }}
 						>
 							<Button size="small" color="primary">
@@ -82,4 +82,4 @@ class AlbumCard extends Component {
 	}
 }
 
-export default withStyles(styles)(AlbumCard)
+export default withStyles(styles)(TrackCard)

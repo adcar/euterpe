@@ -21,25 +21,8 @@ const styles = theme => ({
 	}
 })
 
-class AlbumCard extends Component {
-	save() {
-		console.log(this.props.id)
-		spotifyApi
-			.addToMySavedAlbums({ ids: [this.props.id] })
-			.then(data => console.log(data))
-			.catch(err => console.log(err))
-	}
+class ArtistCard extends Component {
 	render() {
-		const saveBtn = !this.props.saved ? (
-			<Button
-				disabled
-				size="small"
-				color="primary"
-				onClick={this.save.bind(this)}
-			>
-				Save
-			</Button>
-		) : null
 		const { classes } = this.props
 		if (this.props.image && this.props.name && this.props.id) {
 			return (
@@ -65,14 +48,13 @@ class AlbumCard extends Component {
 					</CardContent>
 					<CardActions>
 						<Link
-							to={`/album/${this.props.id}`}
+							to={`/artist/${this.props.id}`}
 							style={{ textDecoration: 'none' }}
 						>
 							<Button size="small" color="primary">
-								Play
+								Info
 							</Button>
 						</Link>
-						{saveBtn}
 					</CardActions>
 				</Card>
 			)
@@ -82,4 +64,4 @@ class AlbumCard extends Component {
 	}
 }
 
-export default withStyles(styles)(AlbumCard)
+export default withStyles(styles)(ArtistCard)

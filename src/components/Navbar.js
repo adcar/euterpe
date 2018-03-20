@@ -17,8 +17,7 @@ import PlaylistPlayIcon from 'material-ui-icons/PlaylistPlay'
 import MusicNoteIcon from 'material-ui-icons/MusicNote'
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import { isBrowser } from 'react-device-detect'
-
-const drawerWidth = 240
+import drawerWidth from '../drawerWidth'
 
 const styles = theme => ({
 	searchInput: {
