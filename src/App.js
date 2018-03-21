@@ -12,6 +12,7 @@ import MyTracks from './routes/MyTracks'
 import MyAlbums from './routes/MyAlbums'
 import MyPlaylists from './routes/MyPlaylists'
 import Album from './routes/Album'
+import Playlist from './routes/Playlist'
 import Callback from './routes/Callback'
 import Search from './routes/Search'
 
@@ -78,6 +79,16 @@ class App extends Component {
 								path="/album/:id"
 								render={routeProps => (
 									<Album
+										{...routeProps}
+										trackChange={this.trackChange}
+										getTracks={this.getTracks}
+									/>
+								)}
+							/>
+							<Route
+								path="/playlist/:user/:id"
+								render={routeProps => (
+									<Playlist
 										{...routeProps}
 										trackChange={this.trackChange}
 										getTracks={this.getTracks}

@@ -49,7 +49,7 @@ class AlbumCard extends Component {
 		) : null
 		const linkBtn = this.props.playlist ? (
 			<Link
-				to={`/playlist/${this.props.id}`}
+				to={`/playlist/${this.props.artist.id}/${this.props.id}`}
 				style={{ textDecoration: 'none' }}
 			>
 				<Button size="small" color="primary">
