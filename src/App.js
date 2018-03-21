@@ -4,9 +4,9 @@ import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import CssBaseline from 'material-ui/CssBaseline'
 import Navbar from './components/Navbar'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-
 import Player from './components/PlaylistPlayer'
 
+import Artist from './routes/Artist'
 import Home from './routes/Home'
 import MyTracks from './routes/MyTracks'
 import MyAlbums from './routes/MyAlbums'
@@ -65,6 +65,7 @@ class App extends Component {
 						<Navbar>
 							<Route path="/" exact component={Home} />
 							<Route path="/callback" component={Callback} />
+							<Route path="/artist/:id" component={Artist} />
 							<Route
 								path="/my-tracks"
 								render={routeProps => (

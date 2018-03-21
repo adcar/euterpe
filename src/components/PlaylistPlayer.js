@@ -212,8 +212,8 @@ class PlaylistPlayer extends Component {
 	}
 }
 PlaylistPlayer.propTypes = {
-	tracks: PropTypes.object.isRequired,
-	currentTrack: PropTypes.number.isRequired
+	tracks: PropTypes.array,
+	currentTrack: PropTypes.number
 }
 
 export default withStyles(styles, { withTheme: true })(PlaylistPlayer)

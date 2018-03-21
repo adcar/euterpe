@@ -1,5 +1,4 @@
 import Cookie from 'js-cookie'
-console.log(process.env)
 let url = ''
 if (process.env.NODE_ENV === 'production') {
 	url = 'https://apollomusic.tk'
