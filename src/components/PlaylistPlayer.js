@@ -5,7 +5,6 @@ import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
 import SkipNextIcon from 'material-ui-icons/SkipNext'
-import { CircularProgress } from 'material-ui/Progress'
 
 const styles = theme => ({
 	progress: {

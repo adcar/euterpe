@@ -5,7 +5,6 @@ import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
-import { Link } from 'react-router-dom'
 import getToken from '../getToken'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()

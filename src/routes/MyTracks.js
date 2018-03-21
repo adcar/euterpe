@@ -1,10 +1,7 @@
 import React, { Component } from 'react'
 import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
-import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
-import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
-import { Link } from 'react-router-dom'
 import { CircularProgress } from 'material-ui/Progress'
 import TrackCard from '../components/TrackCard'
 
@@ -45,7 +42,6 @@ class MyTracks extends Component {
 		})
 	}
 	componentDidMount() {
-		const { classes } = this.props
 		spotifyApi.setAccessToken(this.state.token)
 		spotifyApi
 			.getMyTopTracks({

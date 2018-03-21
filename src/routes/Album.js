@@ -1,12 +1,9 @@
 import React, { Component } from 'react'
 import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
-import List, { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
-import PlayArrow from 'material-ui-icons/PlayArrow'
-import Pause from 'material-ui-icons/Pause'
-import IconButton from 'material-ui/IconButton'
+import List, { ListItem, ListItemText } from 'material-ui/List'
+
 import Typography from 'material-ui/Typography'
-import Player from '../components/PlaylistPlayer'
 import Button from 'material-ui/Button'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
