@@ -30,6 +30,13 @@ class AlbumCard extends Component {
 			.catch(err => console.log(err))
 	}
 	render() {
+		const artist = this.props.artist.name ? (
+			<Link style={{ color: 'inherit' }} to={`/artist/${this.props.artist.id}`}>
+				{this.props.artist.name}
+			</Link>
+		) : (
+			this.props.artist.display_name
+		)
 		const saveBtn = !this.props.saved ? (
 			<Button
 				disabled
@@ -40,6 +47,22 @@ class AlbumCard extends Component {
 				Save
 			</Button>
 		) : null
+		const linkBtn = this.props.playlist ? (
+			<Link
+				to={`/playlist/${this.props.id}`}
+				style={{ textDecoration: 'none' }}
+			>
+				<Button size="small" color="primary">
+					View
+				</Button>
+			</Link>
+		) : (
+			<Link to={`/album/${this.props.id}`} style={{ textDecoration: 'none' }}>
+				<Button size="small" color="primary">
+					View
+				</Button>
+			</Link>
+		)
 		const { classes } = this.props
 		if (this.props.image && this.props.name && this.props.id) {
 			return (
@@ -62,16 +85,22 @@ class AlbumCard extends Component {
 						>
 							{this.props.name}
 						</Typography>
+						<Typography
+							variant="subheading"
+							component="h3"
+							style={{
+								marginTop: 10,
+								flex: 1,
+								whiteSpace: 'nowrap',
+								overflow: 'hidden',
+								textOverflow: 'ellipsis'
+							}}
+						>
+							{artist}
+						</Typography>
 					</CardContent>
 					<CardActions>
-						<Link
-							to={`/album/${this.props.id}`}
-							style={{ textDecoration: 'none' }}
-						>
-							<Button size="small" color="primary">
-								Play
-							</Button>
-						</Link>
+						{linkBtn}
 						{saveBtn}
 					</CardActions>
 				</Card>
@@ -85,7 +114,7 @@ class AlbumCard extends Component {
 AlbumCard.propTypes = {
 	image: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
-	artist: PropTypes.string.isRequired,
+	artist: PropTypes.object.isRequired,
 	id: PropTypes.string.isRequired
 }
 

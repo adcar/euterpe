@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { CircularProgress } from 'material-ui/Progress'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
@@ -61,7 +62,12 @@ class TrackCard extends Component {
 							{this.props.name}
 						</Typography>
 						<Typography variant="subheading" style={{ marginTop: 10 }}>
-							{this.props.artist}
+							<Link
+								style={{ color: 'inherit' }}
+								to={`/artist/${this.props.artist.id}`}
+							>
+								{this.props.artist.name}
+							</Link>
 						</Typography>
 					</CardContent>
 					<CardActions>

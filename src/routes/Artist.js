@@ -49,7 +49,12 @@ class Artist extends Component {
 			console.log(data)
 			this.setState({
 				albums: data.body.items.map(item => (
-					<AlbumCard image={item.images[1].url} name={item.name} id={item.id} />
+					<AlbumCard
+						image={item.images[1].url}
+						name={item.name}
+						id={item.id}
+						artist={item.artists[0]}
+					/>
 				))
 			})
 		})

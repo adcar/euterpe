@@ -52,7 +52,7 @@ class ArtistCard extends Component {
 							style={{ textDecoration: 'none' }}
 						>
 							<Button size="small" color="primary">
-								Info
+								View
 							</Button>
 						</Link>
 					</CardActions>

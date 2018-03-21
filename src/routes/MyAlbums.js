@@ -54,6 +54,7 @@ class MyAlbums extends Component {
 								image={item.album.images[1].url}
 								name={item.album.name}
 								id={item.album.id}
+								artist={item.album.artists[0]}
 							/>
 						))
 					})

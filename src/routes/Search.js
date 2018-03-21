@@ -50,13 +50,14 @@ class Search extends Component {
 				offset: 0
 			})
 			.then(data => {
-				console.log(data)
+				console.log(data.body.albums.items)
 				this.setState({
 					albums: data.body.albums.items.map(item => (
 						<AlbumCard
 							image={item.images[1].url}
 							name={item.name}
 							id={item.id}
+							artist={item.artists[0]}
 						/>
 					)),
 					artists: data.body.artists.items.map(item => {
@@ -79,7 +80,7 @@ class Search extends Component {
 									image={item.album.images[0].url}
 									name={item.name}
 									id={item.id}
-									artist={item.artists[0].name}
+									artist={item.artists[0]}
 									play={e =>
 										this.play({
 											image: item.album.images[0].url,
