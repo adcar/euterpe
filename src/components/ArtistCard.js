@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import PropTypes from 'prop-types'
 import { CircularProgress } from 'material-ui/Progress'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
@@ -62,6 +62,13 @@ class ArtistCard extends Component {
 			return <CircularProgress />
 		}
 	}
+}
+
+ArtistCard.propTypes = {
+	image: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	artist: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired
 }
 
 export default withStyles(styles)(ArtistCard)

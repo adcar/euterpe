@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardContent } from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
@@ -209,6 +210,10 @@ class PlaylistPlayer extends Component {
 		)
 		return <div>{player}</div>
 	}
+}
+PlaylistPlayer.propTypes = {
+	tracks: PropTypes.object.isRequired,
+	currentTrack: PropTypes.number.isRequired
 }
 
 export default withStyles(styles, { withTheme: true })(PlaylistPlayer)

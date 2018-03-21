@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-
+import PropTypes from 'prop-types'
 import { CircularProgress } from 'material-ui/Progress'
 import { withStyles } from 'material-ui/styles'
 import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
@@ -22,13 +22,11 @@ const styles = theme => ({
 
 class TrackCard extends Component {
 	save() {
-		console.log(this.props.id)
 		spotifyApi
 			.addToMySavedTracks({ ids: [this.props.id] })
 			.then(data => console.log(data))
 			.catch(err => console.log(err))
 	}
-
 	render() {
 		const saveBtn = !this.props.saved ? (
 			<Button
@@ -78,6 +76,13 @@ class TrackCard extends Component {
 			return <CircularProgress />
 		}
 	}
+}
+TrackCard.propTypes = {
+	image: PropTypes.string.isRequired,
+	name: PropTypes.string.isRequired,
+	artist: PropTypes.string.isRequired,
+	id: PropTypes.string.isRequired,
+	play: PropTypes.func.isRequired
 }
 
 export default withStyles(styles)(TrackCard)
