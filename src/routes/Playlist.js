@@ -44,7 +44,7 @@ class Playlist extends Component {
 					albumInfo: data.body
 				})
 				return Array.from(data.body.tracks.items).map(function(t) {
-					return t.id
+					return t.track.id
 				})
 			})
 			.then(trackIds => spotifyApi.getTracks(trackIds))
