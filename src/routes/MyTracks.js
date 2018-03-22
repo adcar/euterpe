@@ -32,9 +32,6 @@ class MyTracks extends Component {
 			albumItems: []
 		}
 	}
-	play(object) {
-		this.props.playSong(object)
-	}
 
 	componentWillMount() {
 		this.setState({
@@ -60,7 +57,7 @@ class MyTracks extends Component {
 								id={item.id}
 								key={item.id}
 								play={e =>
-									this.play({
+									this.props.playSong({
 										image: item.album.images[0].url,
 										name: item.name,
 										id: item.id,

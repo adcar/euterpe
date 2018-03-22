@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import Typography from 'material-ui/Typography'
 import getToken from '../getToken'
 import AlbumCard from '../components/AlbumCard'
+import TrackCard from '../components/TrackCard'
 import { withStyles } from 'material-ui/styles'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
@@ -25,6 +26,10 @@ const styles = theme => ({
 		display: 'flex',
 		flexWrap: 'wrap',
 		justifyContent: 'center'
+	},
+	section: {
+		marginTop: theme.spacing.unit * 5,
+		marginBottom: theme.spacing.unit * 5
 	}
 })
 
@@ -46,14 +51,36 @@ class Artist extends Component {
 		})
 
 		spotifyApi.getArtistAlbums(id).then(data => {
-			console.log(data)
 			this.setState({
 				albums: data.body.items.map(item => (
 					<AlbumCard
+						key={item.id}
 						image={item.images[1].url}
 						name={item.name}
 						id={item.id}
 						artist={item.artists[0]}
+					/>
+				))
+			})
+		})
+		spotifyApi.getArtistTopTracks(id, 'US').then(data => {
+			console.log(data)
+			this.setState({
+				tracks: data.body.tracks.map(item => (
+					<TrackCard
+						key={item.id}
+						image={item.album.images[1].url}
+						name={item.name}
+						id={item.id}
+						artist={item.artists[0].name}
+						play={e =>
+							this.props.playSong({
+								image: item.album.images[0].url,
+								name: item.name,
+								id: item.id,
+								artist: item.artists[0].name
+							})
+						}
 					/>
 				))
 			})
@@ -78,10 +105,18 @@ class Artist extends Component {
 						{artist.name}
 					</Typography>
 				</div>
-				<Typography variant="display1" align="center">
-					Albums
-				</Typography>
-				<div className={classes.cardWrapper}>{this.state.albums}</div>
+				<div className={classes.section}>
+					<Typography variant="display1" align="center">
+						Albums
+					</Typography>
+					<div className={classes.cardWrapper}>{this.state.albums}</div>
+				</div>
+				<div className={classes.section}>
+					<Typography variant="display1" align="center">
+						Top Tracks
+					</Typography>
+					<div className={classes.cardWrapper}>{this.state.tracks}</div>
+				</div>
 			</div>
 		)
 	}

@@ -66,7 +66,12 @@ class App extends Component {
 						<Navbar>
 							<Route path="/" exact component={Home} />
 							<Route path="/callback" component={Callback} />
-							<Route path="/artist/:id" component={Artist} />
+							<Route
+								path="/artist/:id"
+								render={routeProps => (
+									<Artist {...routeProps} playSong={this.playSong} />
+								)}
+							/>
 
 							<Route
 								path="/my-tracks"
