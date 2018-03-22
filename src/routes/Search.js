@@ -111,22 +111,21 @@ class Search extends Component {
 			<div>
 				<div className={classes.category}>
 					<Typography variant="display1" component="h2" align="center">
+						Tracks
+					</Typography>
+					<div className={classes.cardWrapper}>{this.state.tracks}</div>
+				</div>
+				<div className={classes.category}>
+					<Typography variant="display1" component="h2" align="center">
 						Albums
 					</Typography>
 					<div className={classes.cardWrapper}>{this.state.albums}</div>
 				</div>
-
 				<div className={classes.category}>
 					<Typography variant="display1" component="h2" align="center">
 						Artists
 					</Typography>
 					<div className={classes.cardWrapper}>{this.state.artists}</div>
-				</div>
-				<div className={classes.category}>
-					<Typography variant="display1" component="h2" align="center">
-						Tracks
-					</Typography>
-					<div className={classes.cardWrapper}>{this.state.tracks}</div>
 				</div>
 			</div>
 		)
