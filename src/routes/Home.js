@@ -44,7 +44,7 @@ class Home extends Component {
 							<CardMedia
 								image={item.icons[0].url}
 								title={item.name}
-								style={{ width: 200, height: 200 }}
+								style={{ width: 150, height: 150 }}
 							/>
 							<CardContent>
 								<Typography>{item.name}</Typography>

@@ -37,6 +37,7 @@ class Category extends Component {
 						image={item.images[0].url}
 						id={item.id}
 						artist={item.owner}
+						key={item.id}
 						playlist
 					/>
 				))
