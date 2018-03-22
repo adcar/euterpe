@@ -93,6 +93,9 @@ class PlaylistPlayer extends Component {
 				currentSource: nextProps.currentTrack
 			})
 		}
+		if (nextProps.playing === false) {
+			this.audio.pause()
+		}
 	}
 	handlePrev() {
 		if (this.state.currentSource > 0) {

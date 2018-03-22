@@ -88,6 +88,7 @@ class App extends Component {
 										{...routeProps}
 										trackChange={this.trackChange}
 										getTracks={this.getTracks}
+										currentTrack={this.state.currentTrack}
 									/>
 								)}
 							/>
@@ -121,6 +122,7 @@ class App extends Component {
 					</div>
 				</Router>
 				<Player
+					playing={this.state.playing}
 					tracks={this.state.tracks}
 					currentTrack={this.state.currentTrack}
 				/>

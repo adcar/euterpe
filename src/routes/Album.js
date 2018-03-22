@@ -4,6 +4,10 @@ import { withStyles } from 'material-ui/styles'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 
 import Typography from 'material-ui/Typography'
+
+import PlayArrow from 'material-ui-icons/PlayArrow'
+import Pause from 'material-ui-icons/Pause'
+
 import Button from 'material-ui/Button'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
@@ -32,9 +36,25 @@ class Album extends Component {
 			tracks: [],
 			tracksJson: [],
 			albumInfo: {},
-			tracksInfo: []
+			tracksInfo: [],
+			playing: false
 		}
+		this.play = this.play.bind(this)
 	}
+	componentWillReceiveProps(nextProps) {
+		this.setState({
+			currentTrack: nextProps.currentTrack
+		})
+	}
+	play(index) {
+		this.setState(
+			{
+				playing: !this.state.playing
+			},
+			() => console.log(this.state.playing)
+		)
+	}
+
 	componentDidMount() {
 		spotifyApi
 			.getAlbum(this.props.match.params.id)
@@ -65,7 +85,11 @@ class Album extends Component {
 								}}
 							>
 								<ListItemText>
-									{item.name} ({convertToSeconds(item.duration_ms)})
+									<Typography>
+										{this.state.playing} {item.name} ({convertToSeconds(
+											item.duration_ms
+										)})
+									</Typography>
 								</ListItemText>
 							</ListItem>
 						)
@@ -90,10 +114,16 @@ class Album extends Component {
 						variant="raised"
 						color="primary"
 						onClick={e => {
+							this.play()
 							this.props.getTracks(this.state.tracksInfo, e)
 							this.props.trackChange(0, e)
 						}}
 					>
+						{this.state.playing ? (
+							<Pause style={{ marginRight: 10 }} />
+						) : (
+							<PlayArrow style={{ marginRight: 10 }} />
+						)}
 						Play
 					</Button>
 				</div>
