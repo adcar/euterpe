@@ -56,7 +56,7 @@ class App extends Component {
 		this.getTracks([object])
 		this.trackChange(0, e)
 	}
-	comp
+
 	render() {
 		return (
 			<MuiThemeProvider theme={theme}>
