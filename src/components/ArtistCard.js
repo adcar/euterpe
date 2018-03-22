@@ -67,7 +67,6 @@ class ArtistCard extends Component {
 ArtistCard.propTypes = {
 	image: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
-	artist: PropTypes.string.isRequired,
 	id: PropTypes.string.isRequired
 }
 

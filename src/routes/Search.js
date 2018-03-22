@@ -45,15 +45,19 @@ class Search extends Component {
 	}
 	searchSpotify(props) {
 		spotifyApi
-			.search(props.match.params.query, ['album', 'track', 'artist'], {
-				limit: 20,
-				offset: 0
-			})
+			.search(
+				props.match.params.query,
+				['album', 'track', 'playlist', 'artist'],
+				{
+					limit: 20,
+					offset: 0
+				}
+			)
 			.then(data => {
-				console.log(data.body.albums.items)
 				this.setState({
 					albums: data.body.albums.items.map(item => (
 						<AlbumCard
+							key={item.id}
 							image={item.images[1].url}
 							name={item.name}
 							id={item.id}
@@ -64,23 +68,41 @@ class Search extends Component {
 						if (item.images.length > 0) {
 							return (
 								<ArtistCard
+									key={item.id}
 									image={item.images[0].url}
 									name={item.name}
 									id={item.id}
 								/>
 							)
 						} else {
-							return <div />
+							return null
+						}
+					}),
+					playlists: data.body.playlists.items.map(item => {
+						if (item.images.length > 0) {
+							return (
+								<AlbumCard
+									playlist
+									key={item.id}
+									image={item.images[0].url}
+									id={item.id}
+									name={item.name}
+									artist={item.owner}
+								/>
+							)
+						} else {
+							return null
 						}
 					}),
 					tracks: data.body.tracks.items.map(item => {
 						if (item.album.images.length > 0) {
 							return (
 								<TrackCard
+									key={item.id}
 									image={item.album.images[0].url}
 									name={item.name}
 									id={item.id}
-									artist={item.artists[0]}
+									artist={item.artists[0].name}
 									play={e =>
 										this.play({
 											image: item.album.images[0].url,
@@ -92,12 +114,12 @@ class Search extends Component {
 								/>
 							)
 						} else {
-							return <div />
+							return null
 						}
 					})
 				})
 			})
-			.catch(err => console.log(err))
+			.catch(console.log)
 	}
 	componentWillReceiveProps(nextProps) {
 		this.searchSpotify(nextProps)
@@ -120,6 +142,12 @@ class Search extends Component {
 						Albums
 					</Typography>
 					<div className={classes.cardWrapper}>{this.state.albums}</div>
+				</div>
+				<div className={classes.category}>
+					<Typography variant="display1" component="h2" align="center">
+						Playlists
+					</Typography>
+					<div className={classes.cardWrapper}>{this.state.playlists}</div>
 				</div>
 				<div className={classes.category}>
 					<Typography variant="display1" component="h2" align="center">
