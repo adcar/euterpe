@@ -50,7 +50,6 @@ class MyTracks extends Component {
 			})
 			.then(
 				data => {
-					console.log(data)
 					this.setState({
 						albums: data.body.items,
 						albumItems: data.body.items.map(item => (
@@ -59,6 +58,7 @@ class MyTracks extends Component {
 								name={item.name}
 								artist={item.artists[0].name}
 								id={item.id}
+								key={item.id}
 								play={e =>
 									this.play({
 										image: item.album.images[0].url,
@@ -73,7 +73,6 @@ class MyTracks extends Component {
 				},
 				function(err) {
 					console.log('Something went wrong!', err)
-					window.location = '/'
 				}
 			)
 	}

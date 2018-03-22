@@ -14,6 +14,7 @@ import Divider from 'material-ui/Divider'
 import MenuIcon from 'material-ui-icons/Menu'
 import AlbumIcon from 'material-ui-icons/Album'
 import PlaylistPlayIcon from 'material-ui-icons/PlaylistPlay'
+import LibraryMusicIcon from 'material-ui-icons/LibraryMusic'
 import MusicNoteIcon from 'material-ui-icons/MusicNote'
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import { isBrowser } from 'react-device-detect'
@@ -116,6 +117,12 @@ class Navbar extends React.Component {
 				<div className={classes.toolbar} />
 				<Divider />
 				<List>
+					<ListItem button onClick={e => this.redirect('/', e)}>
+						<ListItemIcon>
+							<LibraryMusicIcon />
+						</ListItemIcon>
+						<ListItemText primary="Browse" />
+					</ListItem>
 					<ListItem button onClick={e => this.redirect('/my-tracks', e)}>
 						<ListItemIcon>
 							<MusicNoteIcon />

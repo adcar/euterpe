@@ -35,15 +35,17 @@ class Home extends Component {
 		spotifyApi.getCategories().then(data => {
 			this.setState({
 				genres: data.body.categories.items.map(item => (
-					<Link to={`/category/${item.id}`} style={{ textDecoration: 'none' }}>
+					<Link
+						to={`/category/${item.id}`}
+						style={{ textDecoration: 'none' }}
+						key={item.id}
+					>
 						<Card className={classes.genreCard}>
-							<CardMedia>
-								<img
-									src={item.icons[0].url}
-									alt={item.name}
-									style={{ width: 200 }}
-								/>
-							</CardMedia>
+							<CardMedia
+								image={item.icons[0].url}
+								title={item.name}
+								style={{ width: 200, height: 200 }}
+							/>
 							<CardContent>
 								<Typography>{item.name}</Typography>
 							</CardContent>
@@ -51,7 +53,6 @@ class Home extends Component {
 					</Link>
 				))
 			})
-			console.log(data.body.categories.items)
 		})
 	}
 	render() {

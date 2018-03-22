@@ -31,34 +31,36 @@ class Playlist extends Component {
 		this.state = {
 			tracks: [],
 			tracksJson: [],
-			albumInfo: {},
-			tracksInfo: []
+			playlistName: '',
+			tracksInfo: [],
+			song: ''
 		}
 	}
 	componentDidMount() {
 		spotifyApi
 			.getPlaylist(this.props.match.params.user, this.props.match.params.id)
-			.then(data => {
-				console.log(data)
+			.then(data =>
 				this.setState({
-					albumInfo: data.body
+					playlistName: data.body.name
 				})
-				return Array.from(data.body.tracks.items).map(function(t) {
-					return t.track.id
-				})
-			})
-			.then(trackIds => spotifyApi.getTracks(trackIds))
+			)
+		spotifyApi
+			.getPlaylistTracks(
+				this.props.match.params.user,
+				this.props.match.params.id
+			)
 			.then(data => {
 				this.setState({
-					tracksInfo: data.body.tracks.map(track => ({
-						name: track.name,
-						artist: track.artists[0].name,
-						image: track.album.images[1].url
+					tracksInfo: data.body.items.map(item => ({
+						name: item.track.name,
+						artist: item.track.artists[0].name,
+						image: item.track.album.images[1].url
 					})),
-					tracks: data.body.tracks.map((item, index) => {
+
+					tracks: data.body.items.map((item, index) => {
 						return (
 							<ListItem
-								key={item.id}
+								key={item.track.id}
 								button
 								onClick={e => {
 									this.props.getTracks(this.state.tracksInfo, e)
@@ -66,7 +68,11 @@ class Playlist extends Component {
 								}}
 							>
 								<ListItemText>
-									{item.name} ({convertToSeconds(item.duration_ms)})
+									<Typography>
+										{item.track.name} ({convertToSeconds(
+											item.track.duration_ms
+										)})
+									</Typography>
 								</ListItemText>
 							</ListItem>
 						)
@@ -84,7 +90,7 @@ class Playlist extends Component {
 				<div className={classes.title}>
 					{' '}
 					<Typography component="h1" variant="display1" align="center">
-						{this.state.albumInfo.name}
+						{this.state.playlistName}
 					</Typography>
 					<Button
 						style={{ marginTop: 20 }}

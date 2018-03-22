@@ -53,7 +53,6 @@ class App extends Component {
 	}
 	playSong(object) {
 		let e = ''
-		console.log(object)
 		this.getTracks([object])
 		this.trackChange(0, e)
 	}

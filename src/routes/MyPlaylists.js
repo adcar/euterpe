@@ -25,7 +25,6 @@ class MyPlaylists extends Component {
 		spotifyApi.getMe().then(res => {
 			let userId = res.body.id
 			spotifyApi.getUserPlaylists(userId).then(res => {
-				console.log(res.body.items)
 				this.setState({
 					playlists: res.body.items.map(item => (
 						<AlbumCard
@@ -33,6 +32,7 @@ class MyPlaylists extends Component {
 							image={item.images[0].url}
 							id={item.id}
 							artist={item.owner}
+							key={item.id}
 							playlist
 						/>
 					))

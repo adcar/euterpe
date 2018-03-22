@@ -55,13 +55,13 @@ class MyAlbums extends Component {
 								name={item.album.name}
 								id={item.album.id}
 								artist={item.album.artists[0]}
+								key={item.album.id}
 							/>
 						))
 					})
 				},
 				function(err) {
 					console.log('Something went wrong!', err)
-					window.location = '/'
 				}
 			)
 	}
