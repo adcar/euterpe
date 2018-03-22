@@ -86,7 +86,9 @@ class PlaylistPlayer extends Component {
 				tracks: nextProps.tracks,
 				sources: nextProps.tracks.map(
 					track =>
-						`https://apolloapi.herokuapp.com/${track.name}/${track.artist}`
+						`https://apolloapi.herokuapp.com/${encodeURIComponent(
+							track.name
+						)}/${encodeURIComponent(track.artist)}`
 				)
 			})
 			this.setState({
