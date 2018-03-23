@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
+import PlayArrow from 'material-ui-icons/PlayArrow'
+import Pause from 'material-ui-icons/Pause'
 import List, { ListItem, ListItemText } from 'material-ui/List'
 
 import Typography from 'material-ui/Typography'
@@ -63,6 +65,7 @@ class Playlist extends Component {
 								key={item.track.id}
 								button
 								onClick={e => {
+									this.props.togglePlay('play')
 									this.props.getTracks(this.state.tracksInfo, e)
 									this.props.trackChange(index, e)
 								}}
@@ -92,17 +95,35 @@ class Playlist extends Component {
 					<Typography component="h1" variant="display1" align="center">
 						{this.state.playlistName}
 					</Typography>
-					<Button
-						style={{ marginTop: 20 }}
-						variant="raised"
-						color="primary"
-						onClick={e => {
-							this.props.getTracks(this.state.tracksInfo, e)
-							this.props.trackChange(0, e)
-						}}
-					>
-						Play
-					</Button>
+					{this.props.playing ? (
+						<Button
+							style={{ marginTop: 20 }}
+							variant="raised"
+							color="primary"
+							onClick={e => {
+								this.props.togglePlay()
+								this.props.getTracks(this.state.tracksInfo, e)
+								this.props.trackChange(0, e)
+							}}
+						>
+							<Pause style={{ marginRight: 10 }} />
+							Pause
+						</Button>
+					) : (
+						<Button
+							style={{ marginTop: 20 }}
+							variant="raised"
+							color="primary"
+							onClick={e => {
+								this.props.togglePlay()
+								this.props.getTracks(this.state.tracksInfo, e)
+								this.props.trackChange(0, e)
+							}}
+						>
+							<PlayArrow style={{ marginRight: 10 }} />
+							Play
+						</Button>
+					)}
 				</div>
 
 				<List className={classes.trackSelector}>{this.state.tracks}</List>

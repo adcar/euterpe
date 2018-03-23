@@ -37,22 +37,13 @@ class Album extends Component {
 			tracksJson: [],
 			albumInfo: {},
 			tracksInfo: [],
-			playing: false
+			playing: true
 		}
-		this.play = this.play.bind(this)
 	}
 	componentWillReceiveProps(nextProps) {
 		this.setState({
 			currentTrack: nextProps.currentTrack
 		})
-	}
-	play(index) {
-		this.setState(
-			{
-				playing: !this.state.playing
-			},
-			() => console.log(this.state.playing)
-		)
 	}
 
 	componentDidMount() {
@@ -82,6 +73,7 @@ class Album extends Component {
 								onClick={e => {
 									this.props.getTracks(this.state.tracksInfo, e)
 									this.props.trackChange(index, e)
+									this.props.togglePlay('play')
 								}}
 							>
 								<ListItemText>
@@ -109,23 +101,35 @@ class Album extends Component {
 					<Typography component="h1" variant="display1" align="center">
 						{this.state.albumInfo.name}
 					</Typography>
-					<Button
-						style={{ marginTop: 20 }}
-						variant="raised"
-						color="primary"
-						onClick={e => {
-							this.play()
-							this.props.getTracks(this.state.tracksInfo, e)
-							this.props.trackChange(0, e)
-						}}
-					>
-						{this.state.playing ? (
+					{this.props.playing ? (
+						<Button
+							style={{ marginTop: 20 }}
+							variant="raised"
+							color="primary"
+							onClick={e => {
+								this.props.togglePlay()
+								this.props.getTracks(this.state.tracksInfo, e)
+								this.props.trackChange(0, e)
+							}}
+						>
 							<Pause style={{ marginRight: 10 }} />
-						) : (
+							Pause
+						</Button>
+					) : (
+						<Button
+							style={{ marginTop: 20 }}
+							variant="raised"
+							color="primary"
+							onClick={e => {
+								this.props.togglePlay()
+								this.props.getTracks(this.state.tracksInfo, e)
+								this.props.trackChange(0, e)
+							}}
+						>
 							<PlayArrow style={{ marginRight: 10 }} />
-						)}
-						Play
-					</Button>
+							Play
+						</Button>
+					)}
 				</div>
 
 				<List className={classes.trackSelector}>{this.state.tracks}</List>

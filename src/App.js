@@ -39,6 +39,18 @@ class App extends Component {
 		this.trackChange = this.trackChange.bind(this)
 		this.getTracks = this.getTracks.bind(this)
 		this.playSong = this.playSong.bind(this)
+		this.togglePlay = this.togglePlay.bind(this)
+	}
+	togglePlay(play) {
+		if (play === 'play') {
+			this.setState({
+				playing: true
+			})
+		} else {
+			this.setState({
+				playing: !this.state.playing
+			})
+		}
 	}
 	trackChange(index, e) {
 		this.setState({
@@ -89,6 +101,8 @@ class App extends Component {
 										trackChange={this.trackChange}
 										getTracks={this.getTracks}
 										currentTrack={this.state.currentTrack}
+										togglePlay={this.togglePlay}
+										playing={this.state.playing}
 									/>
 								)}
 							/>
@@ -99,6 +113,9 @@ class App extends Component {
 										{...routeProps}
 										trackChange={this.trackChange}
 										getTracks={this.getTracks}
+										currentTrack={this.state.currentTrack}
+										togglePlay={this.togglePlay}
+										playing={this.state.playing}
 									/>
 								)}
 							/>
