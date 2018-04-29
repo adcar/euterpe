@@ -7,6 +7,7 @@ import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import { Link } from 'react-router-dom'
 import getToken from '../getToken'
+import { connect } from 'react-redux'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
@@ -118,4 +119,5 @@ AlbumCard.propTypes = {
 	id: PropTypes.string.isRequired
 }
 
-export default withStyles(styles)(AlbumCard)
+const AlbumCardWithStyles = withStyles(styles)(AlbumCard)
+export default connect()(AlbumCardWithStyles)

@@ -3,14 +3,16 @@ import './index.css'
 import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import CssBaseline from 'material-ui/CssBaseline'
 import Navbar from './components/Navbar'
+import PlaylistPlayer from './components/PlaylistPlayer'
+import { createStore } from 'redux'
+import { Provider } from 'react-redux'
 import { BrowserRouter as Router, Route } from 'react-router-dom'
-import Player from './components/PlaylistPlayer'
 
+import rootReducer from './reducers'
+
+import Collection from './routes/Collection'
 import Artist from './routes/Artist'
 import Home from './routes/Home'
-import MyTracks from './routes/MyTracks'
-import MyAlbums from './routes/MyAlbums'
-import MyPlaylists from './routes/MyPlaylists'
 import Album from './routes/Album'
 import Playlist from './routes/Playlist'
 import Category from './routes/Category'
@@ -20,6 +22,10 @@ import Search from './routes/Search'
 import blue from 'material-ui/colors/blue'
 import amber from 'material-ui/colors/amber'
 
+const store = createStore(
+	rootReducer,
+	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+)
 const theme = createMuiTheme({
 	palette: {
 		primary: blue,
@@ -31,121 +37,29 @@ const theme = createMuiTheme({
 })
 
 class App extends Component {
-	constructor() {
-		super()
-		this.state = {
-			tracks: []
-		}
-		this.trackChange = this.trackChange.bind(this)
-		this.getTracks = this.getTracks.bind(this)
-		this.playSong = this.playSong.bind(this)
-		this.togglePlay = this.togglePlay.bind(this)
-	}
-	togglePlay(play) {
-		if (play === 'play') {
-			this.setState({
-				playing: true
-			})
-		} else {
-			this.setState({
-				playing: !this.state.playing
-			})
-		}
-	}
-	trackChange(index, e) {
-		this.setState({
-			currentTrack: index,
-			played: true
-		})
-	}
-	getTracks(tracks) {
-		this.setState({
-			tracks
-		})
-	}
-	playSong(object) {
-		let e = ''
-		this.getTracks([object])
-		this.trackChange(0, e)
-	}
-
 	render() {
 		return (
-			<MuiThemeProvider theme={theme}>
-				<CssBaseline />
-				<Router>
-					<div>
-						<Navbar>
-							<Route path="/" exact component={Home} />
-							<Route path="/callback" component={Callback} />
-							<Route
-								path="/artist/:id"
-								render={routeProps => (
-									<Artist {...routeProps} playSong={this.playSong} />
-								)}
-							/>
-
-							<Route
-								path="/my-tracks"
-								render={routeProps => (
-									<MyTracks {...routeProps} playSong={this.playSong} />
-								)}
-							/>
-							<Route path="/my-albums" component={MyAlbums} />
-							<Route path="/my-playlists" component={MyPlaylists} />
-							<Route
-								path="/album/:id"
-								render={routeProps => (
-									<Album
-										{...routeProps}
-										trackChange={this.trackChange}
-										getTracks={this.getTracks}
-										currentTrack={this.state.currentTrack}
-										togglePlay={this.togglePlay}
-										playing={this.state.playing}
-									/>
-								)}
-							/>
-							<Route
-								path="/playlist/:user/:id"
-								render={routeProps => (
-									<Playlist
-										{...routeProps}
-										trackChange={this.trackChange}
-										getTracks={this.getTracks}
-										currentTrack={this.state.currentTrack}
-										togglePlay={this.togglePlay}
-										playing={this.state.playing}
-									/>
-								)}
-							/>
-							<Route
-								path="/category/:id"
-								render={routeProps => (
-									<Category
-										{...routeProps}
-										trackChange={this.trackChange}
-										getTracks={this.getTracks}
-									/>
-								)}
-							/>
-							<Route
-								path="/search/:query"
-								render={routeProps => (
-									<Search {...routeProps} playSong={this.playSong} />
-								)}
-							/>
-						</Navbar>
-					</div>
-				</Router>
-				<Player
-					playing={this.state.playing}
-					tracks={this.state.tracks}
-					currentTrack={this.state.currentTrack}
-				/>
-			</MuiThemeProvider>
+			<Provider store={store}>
+				<MuiThemeProvider theme={theme}>
+					<CssBaseline />
+					<Router>
+						<div>
+							<Navbar>
+								<Route path="/" exact component={Home} />
+								<Route path="/callback" component={Callback} />
+								<Route path="/artist/:id" component={Artist} />
+								<Route path="/collection" component={Collection} />
+								<Route path="/album/:id" component={Album} />
+								<Route path="/playlist/:user/:id" component={Playlist} />
+								<Route path="/category/:id" component={Category} />
+								<Route path="/search/:query" component={Search} />
+							</Navbar>
+						</div>
+					</Router>
+					<PlaylistPlayer />
+				</MuiThemeProvider>
+			</Provider>
 		)
 	}
 }
-
 export default App

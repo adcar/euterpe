@@ -1,71 +1,68 @@
-import React, { Component } from 'react'
-import getToken from '../getToken'
-import Card, { CardContent, CardMedia } from 'material-ui/Card'
-import Typography from 'material-ui/Typography'
+import React from 'react'
+import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import { Link } from 'react-router-dom'
-const SpotifyWebApi = require('spotify-web-api-node')
-const spotifyApi = new SpotifyWebApi()
-spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
+import AppBar from 'material-ui/AppBar'
+import Tabs, { Tab } from 'material-ui/Tabs'
+import Typography from 'material-ui/Typography'
+
+function TabContainer(props) {
+	return (
+		<Typography component="div" style={{ padding: 8 * 3 }}>
+			{props.children}
+		</Typography>
+	)
+}
+
+TabContainer.propTypes = {
+	children: PropTypes.node.isRequired
+}
 
 const styles = theme => ({
-	genres: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'center'
+	root: {
+		flexGrow: 1,
+		backgroundColor: theme.palette.background.paper,
+		zIndex: 1,
+		position: 'relative'
 	},
-	genreCard: {
-		transition: 'all 0.25s ease-out',
-		margin: theme.spacing.unit,
-		'&:hover': {
-			boxShadow: '0 10px 20px rgba(0,0,0,0.19), 0 6px 6px rgba(0,0,0,0.23)'
-		}
+	appBar: {
+		boxShadow: 'none'
 	}
 })
 
-class Home extends Component {
-	constructor() {
-		super()
-		this.state = {
-			genres: []
-		}
+class Browse extends React.Component {
+	state = {
+		value: 0
 	}
-	componentWillMount() {
-		const { classes } = this.props
-		spotifyApi.getCategories().then(data => {
-			this.setState({
-				genres: data.body.categories.items.map(item => (
-					<Link
-						to={`/category/${item.id}`}
-						style={{ textDecoration: 'none' }}
-						key={item.id}
-					>
-						<Card className={classes.genreCard}>
-							<CardMedia
-								image={item.icons[0].url}
-								title={item.name}
-								style={{ width: 150, height: 150 }}
-							/>
-							<CardContent>
-								<Typography>{item.name}</Typography>
-							</CardContent>
-						</Card>
-					</Link>
-				))
-			})
-		})
+
+	handleChange = (event, value) => {
+		this.setState({ value })
 	}
+
 	render() {
 		const { classes } = this.props
+		const { value } = this.state
+
 		return (
-			<div>
-				<Typography variant="display2" align="center">
-					Genres
-				</Typography>
-				<div className={classes.genres}>{this.state.genres}</div>
+			<div className={classes.root}>
+				<AppBar position="static" className={classes.appBar}>
+					<Tabs value={value} onChange={this.handleChange} centered scrollable>
+						<Tab label="Featured" />
+						<Tab label="Genres & Moods" />
+						<Tab label="New Releases" />
+						<Tab label="Discover" href="#basic-tabs" />
+					</Tabs>
+				</AppBar>
+
+				{value === 0 && <TabContainer>Item One</TabContainer>}
+				{value === 1 && <TabContainer>Item Two</TabContainer>}
+				{value === 2 && <TabContainer>Item Three</TabContainer>}
 			</div>
 		)
 	}
 }
 
-export default withStyles(styles)(Home)
+Browse.propTypes = {
+	classes: PropTypes.object.isRequired
+}
+
+export default withStyles(styles)(Browse)

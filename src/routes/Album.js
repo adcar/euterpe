@@ -6,9 +6,11 @@ import List, { ListItem, ListItemText } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 
 import PlayArrow from 'material-ui-icons/PlayArrow'
-import Pause from 'material-ui-icons/Pause'
 
 import Button from 'material-ui/Button'
+import { connect } from 'react-redux'
+import { playPlaylist } from '../actions/playerActions'
+
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
@@ -39,13 +41,16 @@ class Album extends Component {
 			tracksInfo: [],
 			playing: true
 		}
+		this.togglePlay = this.togglePlay.bind(this)
 	}
-	componentWillReceiveProps(nextProps) {
-		this.setState({
-			currentTrack: nextProps.currentTrack
-		})
+	togglePlay(index) {
+		this.props.dispatch(
+			playPlaylist({
+				currentTrack: index,
+				tracks: this.state.tracksInfo
+			})
+		)
 	}
-
 	componentDidMount() {
 		spotifyApi
 			.getAlbum(this.props.match.params.id)
@@ -70,11 +75,7 @@ class Album extends Component {
 							<ListItem
 								key={item.id}
 								button
-								onClick={e => {
-									this.props.getTracks(this.state.tracksInfo, e)
-									this.props.trackChange(index, e)
-									this.props.togglePlay('play')
-								}}
+								onClick={() => this.togglePlay(index)}
 							>
 								<ListItemText>
 									<Typography>
@@ -101,35 +102,15 @@ class Album extends Component {
 					<Typography component="h1" variant="display1" align="center">
 						{this.state.albumInfo.name}
 					</Typography>
-					{this.props.playing ? (
-						<Button
-							style={{ marginTop: 20 }}
-							variant="raised"
-							color="primary"
-							onClick={e => {
-								this.props.togglePlay()
-								this.props.getTracks(this.state.tracksInfo, e)
-								this.props.trackChange(0, e)
-							}}
-						>
-							<Pause style={{ marginRight: 10 }} />
-							Pause
-						</Button>
-					) : (
-						<Button
-							style={{ marginTop: 20 }}
-							variant="raised"
-							color="primary"
-							onClick={e => {
-								this.props.togglePlay()
-								this.props.getTracks(this.state.tracksInfo, e)
-								this.props.trackChange(0, e)
-							}}
-						>
-							<PlayArrow style={{ marginRight: 10 }} />
-							Play
-						</Button>
-					)}
+					<Button
+						style={{ marginTop: 20 }}
+						variant="raised"
+						color="primary"
+						onClick={() => this.togglePlay(0)}
+					>
+						<PlayArrow style={{ marginRight: 10 }} />
+						Play
+					</Button>
 				</div>
 
 				<List className={classes.trackSelector}>{this.state.tracks}</List>
@@ -137,5 +118,5 @@ class Album extends Component {
 		)
 	}
 }
-
-export default withStyles(styles)(Album)
+const AlbumWithStyles = withStyles(styles)(Album)
+export default connect()(AlbumWithStyles)

@@ -6,8 +6,17 @@ import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
 import SkipNextIcon from 'material-ui-icons/SkipNext'
+import { connect } from 'react-redux'
+import { prevSong, nextSong } from '../actions/playerActions'
 
 const styles = theme => ({
+	root: {
+		position: 'fixed',
+		bottom: 0,
+		left: 0,
+		width: '100%',
+		zIndex: 5000
+	},
 	progress: {
 		width: '100%',
 		height: '100%',
@@ -80,62 +89,31 @@ class PlaylistPlayer extends Component {
 			tracks: []
 		}
 	}
-	componentWillReceiveProps(nextProps) {
-		if (nextProps.tracks.length > 0) {
-			this.setState({
-				tracks: nextProps.tracks,
-				sources: nextProps.tracks.map(
-					track =>
-						`https://apolloapi.herokuapp.com/${encodeURIComponent(
-							track.name
-						)}/${encodeURIComponent(track.artist)}`
-				)
-			})
-			this.setState({
-				currentSource: nextProps.currentTrack
-			})
-		}
-		if (nextProps.playing === false) {
-			this.audio.pause()
-		}
-		if (nextProps.playing === true) {
-			this.audio.play()
-		}
-	}
 	handlePrev() {
-		if (this.state.currentSource > 0) {
-			this.setState({
-				currentSource: this.state.currentSource - 1
-			})
-		}
+		this.props.dispatch(prevSong())
 	}
 	handleNext() {
-		if (this.state.currentSource < this.state.sources.length) {
-			this.setState({
-				currentSource: this.state.currentSource + 1
-			})
-		}
+		this.props.dispatch(nextSong())
 	}
 	render() {
 		const { classes } = this.props
 
-		const player = this.state.tracks[this.state.currentSource] ? (
+		const player = (
 			<Card className={classes.card}>
 				<div>
 					<div className={classes.songLabel}>
 						<img
 							className={classes.songArt}
 							alt="Song Cover Art"
-							src={this.state.tracks[this.state.currentSource].image}
+							src={this.props.tracks[this.props.currentTrack].image}
 						/>
 						<CardContent className={classes.cardContent}>
 							<div>
-								{' '}
 								<Typography variant="headline" component="h3" align="right">
-									{this.state.tracks[this.state.currentSource].name}
+									{this.props.tracks[this.props.currentTrack].name}
 								</Typography>
 								<Typography variant="subheading" align="right">
-									{this.state.tracks[this.state.currentSource].artist}
+									{this.props.tracks[this.props.currentTrack].artist}
 								</Typography>
 							</div>
 						</CardContent>
@@ -149,15 +127,19 @@ class PlaylistPlayer extends Component {
 						</IconButton>
 
 						<audio
-							onEnded={this.handleNext.bind(this)}
 							onError={this.handleNext.bind(this)}
+							onEnded={this.handleNext.bind(this)}
 							ref={audio => {
 								this.audio = audio
 							}}
 							autoPlay
 							controls
 							className={classes.audio}
-							src={this.state.sources[this.state.currentSource]}
+							src={`https://apolloapi.herokuapp.com/${encodeURIComponent(
+								this.props.tracks[this.props.currentTrack].name
+							)}/${encodeURIComponent(
+								this.props.tracks[this.props.currentTrack].artist
+							)}`}
 						/>
 						<IconButton>
 							<SkipNextIcon
@@ -168,60 +150,23 @@ class PlaylistPlayer extends Component {
 					</div>
 				</div>
 			</Card>
-		) : (
-			<div className={classes.progress}>
-				<Card className={classes.card}>
-					<div>
-						<div className={classes.songLabel}>
-							<img
-								className={classes.songArt}
-								alt="Song Cover Art"
-								src="http://via.placeholder.com/120x120"
-							/>
-							<CardContent className={classes.cardContent}>
-								<div>
-									{' '}
-									<Typography variant="headline" component="h3" align="right" />
-									<Typography variant="subheading" align="right" />
-								</div>
-							</CardContent>
-						</div>
-						<div className={classes.player}>
-							<IconButton>
-								<SkipPreviousIcon
-									className={classes.icon}
-									onClick={this.handlePrev.bind(this)}
-								/>
-							</IconButton>
-
-							<audio
-								onEnded={this.handleNext.bind(this)}
-								onError={this.handleNext.bind(this)}
-								ref={audio => {
-									this.audio = audio
-								}}
-								autoPlay
-								controls
-								className={classes.audio}
-								src={this.state.sources[this.state.currentSource]}
-							/>
-							<IconButton>
-								<SkipNextIcon
-									className={classes.icon}
-									onClick={this.handleNext.bind(this)}
-								/>
-							</IconButton>
-						</div>
-					</div>
-				</Card>
-			</div>
 		)
-		return <div>{player}</div>
+		return <div className={classes.root}>{player}</div>
+	}
+}
+
+const PlaylistPlayerWithStyles = withStyles(styles, { withTheme: true })(
+	PlaylistPlayer
+)
+
+const mapStateToProps = state => {
+	return {
+		tracks: state.player.tracks,
+		currentTrack: parseInt(state.player.currentTrack, 10)
 	}
 }
 PlaylistPlayer.propTypes = {
-	tracks: PropTypes.array,
-	currentTrack: PropTypes.number
+	tracks: PropTypes.array.isRequired,
+	currentTrack: PropTypes.number.isRequired
 }
-
-export default withStyles(styles, { withTheme: true })(PlaylistPlayer)
+export default connect(mapStateToProps)(PlaylistPlayerWithStyles)

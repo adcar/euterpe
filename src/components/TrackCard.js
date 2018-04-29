@@ -7,6 +7,8 @@ import Card, { CardActions, CardContent, CardMedia } from 'material-ui/Card'
 import Button from 'material-ui/Button'
 import Typography from 'material-ui/Typography'
 import getToken from '../getToken'
+import { playTrack } from '../actions/playerActions'
+import { connect } from 'react-redux'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
@@ -27,6 +29,18 @@ class TrackCard extends Component {
 			.addToMySavedTracks({ ids: [this.props.id] })
 			.then(data => console.log(data))
 			.catch(err => console.log(err))
+	}
+
+	play() {
+		this.props.dispatch(
+			playTrack([
+				{
+					image: this.props.image,
+					name: this.props.name,
+					artist: this.props.artist
+				}
+			])
+		)
 	}
 	render() {
 		const saveBtn = !this.props.saved ? (
@@ -71,7 +85,7 @@ class TrackCard extends Component {
 						</Typography>
 					</CardContent>
 					<CardActions>
-						<Button size="small" color="primary" onClick={this.props.play}>
+						<Button size="small" color="primary" onClick={this.play.bind(this)}>
 							Play
 						</Button>
 						{saveBtn}
@@ -91,4 +105,5 @@ TrackCard.propTypes = {
 	play: PropTypes.func.isRequired
 }
 
-export default withStyles(styles)(TrackCard)
+const TrackCardWithStyles = withStyles(styles)(TrackCard)
+export default connect()(TrackCardWithStyles)

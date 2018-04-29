@@ -4,9 +4,12 @@ import { withStyles } from 'material-ui/styles'
 import PlayArrow from 'material-ui-icons/PlayArrow'
 import Pause from 'material-ui-icons/Pause'
 import List, { ListItem, ListItemText } from 'material-ui/List'
+import { playPlaylist } from '../actions/playerActions'
 
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
+import { connect } from 'react-redux'
+
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
@@ -37,6 +40,13 @@ class Playlist extends Component {
 			tracksInfo: [],
 			song: ''
 		}
+		this.togglePlay = this.togglePlay.bind(this)
+	}
+	togglePlay(index = 0) {
+		console.log(`Click on ${index}`)
+		this.props.dispatch(
+			playPlaylist({ currentTrack: index, tracks: this.state.tracksInfo })
+		)
 	}
 	componentDidMount() {
 		spotifyApi
@@ -64,11 +74,7 @@ class Playlist extends Component {
 							<ListItem
 								key={item.track.id}
 								button
-								onClick={e => {
-									this.props.togglePlay('play')
-									this.props.getTracks(this.state.tracksInfo, e)
-									this.props.trackChange(index, e)
-								}}
+								onClick={() => this.togglePlay(index)}
 							>
 								<ListItemText>
 									<Typography>
@@ -100,11 +106,7 @@ class Playlist extends Component {
 							style={{ marginTop: 20 }}
 							variant="raised"
 							color="primary"
-							onClick={e => {
-								this.props.togglePlay()
-								this.props.getTracks(this.state.tracksInfo, e)
-								this.props.trackChange(0, e)
-							}}
+							onClick={() => this.togglePlay(0)}
 						>
 							<Pause style={{ marginRight: 10 }} />
 							Pause
@@ -114,11 +116,7 @@ class Playlist extends Component {
 							style={{ marginTop: 20 }}
 							variant="raised"
 							color="primary"
-							onClick={e => {
-								this.props.togglePlay()
-								this.props.getTracks(this.state.tracksInfo, e)
-								this.props.trackChange(0, e)
-							}}
+							onClick={() => this.togglePlay(0)}
 						>
 							<PlayArrow style={{ marginRight: 10 }} />
 							Play
@@ -132,4 +130,5 @@ class Playlist extends Component {
 	}
 }
 
-export default withStyles(styles)(Playlist)
+const PlaylistWithStyles = withStyles(styles)(Playlist)
+export default connect()(PlaylistWithStyles)

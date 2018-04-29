@@ -1,5 +1,5 @@
 import Cookie from 'js-cookie'
-let url = ''
+let url
 if (process.env.NODE_ENV === 'production') {
 	url = 'https://apollomusic.tk'
 } else if (process.env.NODE_ENV === 'development') {
