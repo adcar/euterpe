@@ -1,15 +1,14 @@
 import React, { Component } from 'react'
 import Cookie from 'js-cookie'
 import { withRouter } from 'react-router-dom'
-
-const queryString = require('query-string')
+import qs from 'qs'
 
 class Callback extends Component {
 	componentDidMount() {
 		if (this.props.location.hash.length > 0) {
 			Cookie.set(
 				'spotifyAccessToken',
-				queryString.parse(this.props.location.hash).access_token,
+				qs.parse(this.props.location.hash).access_token,
 				{ expires: 1 / 24 }
 			)
 			this.props.history.push('/') // Redirects back home
