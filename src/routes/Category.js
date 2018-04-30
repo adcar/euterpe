@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import AlbumCard from '../components/AlbumCard'
+import AlbumCard from '../containers/AlbumCard'
 import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'

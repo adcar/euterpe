@@ -2,9 +2,9 @@ import React, { Component } from 'react'
 import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
-import AlbumCard from '../components/AlbumCard'
+import AlbumCard from '../containers/AlbumCard'
 import ArtistCard from '../components/ArtistCard'
-import TrackCard from '../components/TrackCard'
+import TrackCard from '../containers/TrackCard'
 import drawerWidth from '../drawerWidth'
 
 const SpotifyWebApi = require('spotify-web-api-node')

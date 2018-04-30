@@ -5,7 +5,7 @@ import Typography from 'material-ui/Typography'
 
 import { CircularProgress } from 'material-ui/Progress'
 
-import AlbumCard from '../components/AlbumCard'
+import AlbumCard from '../containers/AlbumCard'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 

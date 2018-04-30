@@ -2,8 +2,8 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Typography from 'material-ui/Typography'
 import getToken from '../getToken'
-import AlbumCard from '../components/AlbumCard'
-import TrackCard from '../components/TrackCard'
+import AlbumCard from '../containers/AlbumCard'
+import TrackCard from '../containers/TrackCard'
 import { withStyles } from 'material-ui/styles'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
