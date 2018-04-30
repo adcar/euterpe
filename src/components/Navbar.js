@@ -132,10 +132,12 @@ class Navbar extends React.Component {
 		})
 	}
 	handleLogout() {
-		let width,
-			height = 450
+		let width = 450
+		let height = 450
 		let left = window.innerWidth / 2 - width / 2
 		let top = window.innerHeight / 2 - height / 2
+
+		console.log(width)
 
 		let popup = window.open(
 			'https://accounts.spotify.com/en/status',
