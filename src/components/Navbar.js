@@ -132,19 +132,25 @@ class Navbar extends React.Component {
 		})
 	}
 	handleLogout() {
-		var left = window.clientWidth / 2 - 450 / 2
-		var top = window.clientHeight / 2 - 450 / 2
-		Cookie.remove('spotifyAccessToken')
+		let width,
+			height = 450
+		let left = window.innerWidth / 2 - width / 2
+		let top = window.innerHeight / 2 - height / 2
+
 		let popup = window.open(
 			'https://accounts.spotify.com/en/status',
-			'_blank',
-			`toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=450, height=450, top=${top}, left=${left}`
+			'Log Out',
+			`toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${width}, height=${height}, top=${top}, left=${left}`
 		)
 
-		popup.onbeforeunload = () => {
-			console.log('unloaded')
-			window.location = '/'
-		}
+		popup.focus()
+		let timer = setInterval(() => {
+			if (popup.closed) {
+				clearInterval(timer)
+				Cookie.remove('spotifyAccessToken')
+				window.location = '/'
+			}
+		}, 1000)
 	}
 	render() {
 		const { classes, theme } = this.props
