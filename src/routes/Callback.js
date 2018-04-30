@@ -8,7 +8,7 @@ class Callback extends Component {
 		if (this.props.location.hash.length > 0) {
 			Cookie.set(
 				'spotifyAccessToken',
-				qs.parse(this.props.location.hash).access_token,
+				qs.parse(this.props.location.hash)['#access_token'],
 				{ expires: 1 / 24 }
 			)
 			this.props.history.push('/') // Redirects back home
