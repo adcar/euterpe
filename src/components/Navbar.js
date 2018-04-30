@@ -98,7 +98,7 @@ class Navbar extends React.Component {
 		this.handleDrawerToggle()
 		this.props.history.push(location)
 	}
-	handleChange(e) {
+	handleSearchChange(e) {
 		// Only do live updates on desktop browser, where on mobile (or anything else) you have to hit your (virtual) enter key
 		if (isBrowser && 1 === 2) {
 			// temp disabled with 1 === 2 to get it to resolve to false
@@ -160,7 +160,7 @@ class Navbar extends React.Component {
 								this.searchInput = input
 							}}
 							type="search"
-							onChange={this.handleChange.bind(this)}
+							onChange={this.handleSearchChange.bind(this)}
 							placeholder="Search"
 						/>
 					</form>
