@@ -45,7 +45,7 @@ class Browse extends React.Component {
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" className={classes.appBar}>
-					<Tabs value={value} onChange={this.handleChange} centered scrollable>
+					<Tabs value={value} onChange={this.handleChange} scrollable>
 						<Tab label="Featured" />
 						<Tab label="Genres & Moods" />
 						<Tab label="New Releases" />
