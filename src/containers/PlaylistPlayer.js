@@ -135,11 +135,15 @@ class PlaylistPlayer extends Component {
 							autoPlay
 							controls
 							className={classes.audio}
-							src={`https://apolloapi.herokuapp.com/${encodeURIComponent(
-								this.props.tracks[this.props.currentTrack].name
-							)}/${encodeURIComponent(
-								this.props.tracks[this.props.currentTrack].artist
-							)}`}
+							src={
+								this.props.tracks[this.props.currentTrack].name === ''
+									? null
+									: `https://apolloapi.herokuapp.com/${encodeURIComponent(
+											this.props.tracks[this.props.currentTrack].name
+									  )}/${encodeURIComponent(
+											this.props.tracks[this.props.currentTrack].artist
+									  )}`
+							}
 						/>
 						<IconButton>
 							<SkipNextIcon
