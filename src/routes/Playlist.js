@@ -77,9 +77,9 @@ class Playlist extends Component {
 							>
 								<ListItemText>
 									<Typography>
-										{item.track.name} ({convertToSeconds(
+										{`${item.track.name} (${convertToSeconds(
 											item.track.duration_ms
-										)})
+										)})`}
 									</Typography>
 								</ListItemText>
 							</ListItem>

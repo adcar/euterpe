@@ -79,9 +79,7 @@ class Album extends Component {
 							>
 								<ListItemText>
 									<Typography>
-										{this.state.playing} {item.name} ({convertToSeconds(
-											item.duration_ms
-										)})
+										{`${item.name} (${convertToSeconds(item.duration_ms)})`}
 									</Typography>
 								</ListItemText>
 							</ListItem>
