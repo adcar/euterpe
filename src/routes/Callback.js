@@ -11,7 +11,7 @@ class Callback extends Component {
 				qs.parse(this.props.location.hash)['#access_token'],
 				{ expires: 1 / 24 }
 			)
-			this.props.history.push('/') // Redirects back home
+			this.props.history.goBack() // Goes back to the previous page (since we redirecting them to the home page)
 		} else {
 			console.log('No Access Token in callback ??')
 		}
