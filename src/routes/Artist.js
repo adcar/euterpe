@@ -64,7 +64,6 @@ class Artist extends Component {
 			})
 		})
 		spotifyApi.getArtistTopTracks(id, 'US').then(data => {
-			console.log(data)
 			this.setState({
 				tracks: data.body.tracks.map(item => (
 					<TrackCard

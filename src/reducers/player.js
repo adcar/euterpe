@@ -10,8 +10,6 @@ const initialState = {
 }
 
 const player = (state = initialState, action) => {
-	console.log('player reducer called')
-	console.log(state)
 	switch (action.type) {
 		case 'PLAY_TRACK':
 			return {

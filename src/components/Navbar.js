@@ -18,6 +18,13 @@ import HomeIcon from 'material-ui-icons/Home'
 import { ListItem, ListItemIcon, ListItemText } from 'material-ui/List'
 import { isBrowser } from 'react-device-detect'
 import drawerWidth from '../drawerWidth'
+import getToken from '../getToken'
+import Menu, { MenuItem } from 'material-ui/Menu'
+import Cookie from 'js-cookie'
+
+const SpotifyWebApi = require('spotify-web-api-node')
+const spotifyApi = new SpotifyWebApi()
+spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
 const styles = theme => ({
 	root: {
@@ -56,6 +63,11 @@ const styles = theme => ({
 		'&:after': {
 			backgroundColor: theme.palette.secondary.main
 		}
+	},
+	profileIcon: {
+		height: 50,
+		width: 50,
+		borderRadius: '50%'
 	}
 })
 
@@ -65,7 +77,14 @@ class Navbar extends React.Component {
 		this.state = {
 			mobileOpen: false,
 			searchTerm: '',
-			url: this.props.match.url
+			url: this.props.match.url,
+			userInfo: {
+				images: [
+					{
+						url: ''
+					}
+				]
+			}
 		}
 	}
 	handleDrawerToggle = () => {
@@ -92,6 +111,40 @@ class Navbar extends React.Component {
 		e.preventDefault()
 		this.searchInput.blur()
 		this.updateHistory()
+	}
+	handleChange = (event, checked) => {
+		this.setState({ auth: checked })
+	}
+
+	handleMenu = event => {
+		this.setState({ anchorEl: event.currentTarget })
+	}
+
+	handleClose = () => {
+		this.setState({ anchorEl: null })
+	}
+
+	componentDidMount() {
+		spotifyApi.getMe().then(res => {
+			this.setState({
+				userInfo: res.body
+			})
+		})
+	}
+	handleLogout() {
+		var left = window.clientWidth / 2 - 450 / 2
+		var top = window.clientHeight / 2 - 450 / 2
+		Cookie.remove('spotifyAccessToken')
+		let popup = window.open(
+			'https://accounts.spotify.com/en/status',
+			'_blank',
+			`toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=450, height=450, top=${top}, left=${left}`
+		)
+
+		popup.onbeforeunload = () => {
+			console.log('unloaded')
+			window.location = '/'
+		}
 	}
 	render() {
 		const { classes, theme } = this.props
@@ -154,7 +207,35 @@ class Navbar extends React.Component {
 									: 'Apollo'}
 							</Typography>
 						</Link>
-						<Button color="inherit">Login</Button>
+						<IconButton
+							color="inherit"
+							aria-owns={Boolean(this.state.anchorEl) ? 'menu-appbar' : null}
+							aria-haspopup="true"
+							onClick={this.handleMenu}
+							color="inherit"
+						>
+							<img
+								className={classes.profileIcon}
+								src={this.state.userInfo.images[0].url}
+							/>
+						</IconButton>
+						<Menu
+							id="menu-appbar"
+							anchorEl={this.state.anchorEl}
+							anchorOrigin={{ vertical: 'top', horizontal: 'right' }}
+							transformOrigin={{ vertical: 'top', horizontal: 'right' }}
+							open={Boolean(this.state.anchorEl)}
+							onClose={this.handleClose}
+						>
+							<MenuItem
+								onClick={() => {
+									this.handleClose()
+									this.handleLogout()
+								}}
+							>
+								Logout
+							</MenuItem>
+						</Menu>
 					</Toolbar>
 				</AppBar>
 				<Hidden mdUp>
@@ -163,12 +244,10 @@ class Navbar extends React.Component {
 						anchor={theme.direction === 'rtl' ? 'right' : 'left'}
 						open={this.state.mobileOpen}
 						onClose={this.handleDrawerToggle}
-						classes={{
-							paper: classes.drawerPaper
-						}}
-						ModalProps={{
-							keepMounted: true // Better open performance on mobile.
-						}}
+						classes={{ paper: classes.drawerPaper }}
+						ModalProps={
+							{ keepMounted: true } // Better open performance on mobile.
+						}
 					>
 						{drawer}
 					</Drawer>
@@ -177,9 +256,7 @@ class Navbar extends React.Component {
 					<Drawer
 						variant="permanent"
 						open
-						classes={{
-							paper: classes.drawerPaper
-						}}
+						classes={{ paper: classes.drawerPaper }}
 					>
 						{drawer}
 					</Drawer>

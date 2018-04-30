@@ -43,7 +43,6 @@ class Playlist extends Component {
 		this.togglePlay = this.togglePlay.bind(this)
 	}
 	togglePlay(index = 0) {
-		console.log(`Click on ${index}`)
 		this.props.dispatch(
 			playPlaylist({ currentTrack: index, tracks: this.state.tracksInfo })
 		)
