@@ -33,8 +33,8 @@ const styles = theme => ({
 		height: 'calc(100% - 130px)'
 	},
 	appBar: {
-		zIndex: '0',
-		position: 'absolute',
+		zIndex: '1',
+		position: 'fixed',
 		marginLeft: drawerWidth,
 		[theme.breakpoints.up('md')]: {
 			width: `calc(100% - ${drawerWidth}px)`
@@ -54,6 +54,9 @@ const styles = theme => ({
 		}
 	},
 	content: {
+		[theme.breakpoints.up('md')]: {
+			marginLeft: drawerWidth
+		},
 		marginBottom: 138,
 		flexGrow: 1,
 		backgroundColor: theme.palette.background.default
@@ -67,6 +70,10 @@ const styles = theme => ({
 		height: 50,
 		width: 50,
 		borderRadius: '50%'
+	},
+	drawer: {
+		position: 'fixed',
+		zIndex: 2
 	}
 })
 
@@ -247,6 +254,7 @@ class Navbar extends React.Component {
 				</AppBar>
 				<Hidden mdUp>
 					<Drawer
+						className={classes.drawer}
 						variant="temporary"
 						anchor={theme.direction === 'rtl' ? 'right' : 'left'}
 						open={this.state.mobileOpen}
@@ -261,6 +269,7 @@ class Navbar extends React.Component {
 				</Hidden>
 				<Hidden smDown implementation="css">
 					<Drawer
+						className={classes.drawer}
 						variant="permanent"
 						open
 						classes={{ paper: classes.drawerPaper }}
