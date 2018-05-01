@@ -36,9 +36,9 @@ class Album extends Component {
 			tracksInfo: [],
 			playing: true
 		}
-		this.togglePlay = this.togglePlay.bind(this)
+		this.play = this.play.bind(this)
 	}
-	togglePlay(index) {
+	play(index) {
 		this.props.dispatch(
 			playPlaylist({
 				currentTrack: index,
@@ -68,10 +68,13 @@ class Album extends Component {
 					tracks: data.body.tracks.map((item, index) => {
 						return (
 							<SongItem
+								type="playlist"
 								key={item.id}
 								name={item.name}
 								duration={item.duration_ms}
 								artist={item.artists[0].name}
+								index={index}
+								play={this.play}
 							/>
 						)
 					})
@@ -82,6 +85,7 @@ class Album extends Component {
 			})
 	}
 	render() {
+		console.log(this.state.tracksInfo)
 		const { classes } = this.props
 		return (
 			<div>

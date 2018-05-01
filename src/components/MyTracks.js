@@ -51,10 +51,11 @@ class MyTracks extends Component {
 						albums: data.body.items,
 						albumItems: data.body.items.map(item => (
 							<SongItem
-								type="single"
+								type="track"
 								key={item.id}
 								name={item.name}
 								artist={item.artists[0].name}
+								image={item.album.images[0].url}
 								duration={item.duration_ms}
 							/>
 						))
