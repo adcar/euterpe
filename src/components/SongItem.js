@@ -3,7 +3,7 @@ import PropTypes from 'prop-types'
 import { ListItem, ListItemText } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import { connect } from 'react-redux'
-import { playTrack, playPlaylist } from '../actions/playerActions'
+import { playTrack } from '../actions/playerActions'
 
 const convertToSeconds = millis => {
 	let minutes = Math.floor(millis / 60000)

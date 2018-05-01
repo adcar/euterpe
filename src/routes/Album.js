@@ -31,10 +31,8 @@ class Album extends Component {
 		super()
 		this.state = {
 			tracks: [],
-			tracksJson: [],
 			albumInfo: {},
-			tracksInfo: [],
-			playing: true
+			tracksInfo: []
 		}
 		this.play = this.play.bind(this)
 	}
@@ -65,32 +63,26 @@ class Album extends Component {
 						artist: track.artists[0].name,
 						image: track.album.images[1].url
 					})),
-					tracks: data.body.tracks.map((item, index) => {
-						return (
-							<SongItem
-								type="playlist"
-								key={item.id}
-								name={item.name}
-								duration={item.duration_ms}
-								artist={item.artists[0].name}
-								index={index}
-								play={this.play}
-							/>
-						)
-					})
+					tracks: data.body.tracks.map((item, index) => (
+						<SongItem
+							type="playlist"
+							key={item.id}
+							name={item.name}
+							duration={item.duration_ms}
+							artist={item.artists[0].name}
+							index={index}
+							play={this.play}
+						/>
+					))
 				})
 			})
-			.catch(err => {
-				console.error(err)
-			})
+			.catch(console.log)
 	}
 	render() {
-		console.log(this.state.tracksInfo)
 		const { classes } = this.props
 		return (
 			<div>
 				<div className={classes.title}>
-					{' '}
 					<Typography component="h1" variant="display1" align="center">
 						{this.state.albumInfo.name}
 					</Typography>
@@ -104,7 +96,6 @@ class Album extends Component {
 						Play
 					</Button>
 				</div>
-
 				<List className={classes.trackSelector}>{this.state.tracks}</List>
 			</div>
 		)
