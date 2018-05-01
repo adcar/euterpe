@@ -219,11 +219,11 @@ class Navbar extends React.Component {
 							aria-owns={Boolean(this.state.anchorEl) ? 'menu-appbar' : null}
 							aria-haspopup="true"
 							onClick={this.handleMenu}
-							color="inherit"
 						>
 							<img
 								className={classes.profileIcon}
 								src={this.state.userInfo.images[0].url}
+								alt="Profile Icon"
 							/>
 						</IconButton>
 						<Menu

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
-import List, { ListItem, ListItemText } from 'material-ui/List'
+import List from 'material-ui/List'
 
 import Typography from 'material-ui/Typography'
 
@@ -10,16 +10,11 @@ import PlayArrow from 'material-ui-icons/PlayArrow'
 import Button from 'material-ui/Button'
 import { connect } from 'react-redux'
 import { playPlaylist } from '../actions/playerActions'
+import SongItem from '../components/SongItem'
 
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
-
-const convertToSeconds = millis => {
-	let minutes = Math.floor(millis / 60000)
-	let seconds = ((millis % 60000) / 1000).toFixed(0)
-	return `${minutes}:${(seconds < 10 ? '0' : '') + seconds}`
-}
 
 const styles = theme => ({
 	title: {
@@ -72,17 +67,12 @@ class Album extends Component {
 					})),
 					tracks: data.body.tracks.map((item, index) => {
 						return (
-							<ListItem
+							<SongItem
 								key={item.id}
-								button
-								onClick={() => this.togglePlay(index)}
-							>
-								<ListItemText>
-									<Typography>
-										{`${item.name} (${convertToSeconds(item.duration_ms)})`}
-									</Typography>
-								</ListItemText>
-							</ListItem>
+								name={item.name}
+								duration={item.duration_ms}
+								artist={item.artists[0].name}
+							/>
 						)
 					})
 				})
