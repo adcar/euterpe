@@ -2,8 +2,7 @@ import React, { Component } from 'react'
 import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
 import PlayArrow from 'material-ui-icons/PlayArrow'
-import Pause from 'material-ui-icons/Pause'
-import List, { ListItem, ListItemText } from 'material-ui/List'
+import List from 'material-ui/List'
 import { playPlaylist } from '../actions/playerActions'
 
 import Typography from 'material-ui/Typography'
@@ -14,12 +13,6 @@ import SongItem from '../components/SongItem'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
-
-const convertToSeconds = millis => {
-	let minutes = Math.floor(millis / 60000)
-	let seconds = ((millis % 60000) / 1000).toFixed(0)
-	return `${minutes}:${(seconds < 10 ? '0' : '') + seconds}`
-}
 
 const styles = theme => ({
 	title: {

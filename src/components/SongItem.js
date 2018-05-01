@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { ListItem, ListItemText } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
+import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import { playTrack } from '../actions/playerActions'
 
@@ -11,11 +12,21 @@ const convertToSeconds = millis => {
 	return `${minutes}:${(seconds < 10 ? '0' : '') + seconds}`
 }
 
+const styles = theme => ({
+	selected: {
+		color: theme.palette.primary.main
+	},
+	listItem: {}
+})
+
 class SongItem extends Component {
 	constructor() {
 		super()
 		this.handleTrack = this.handleTrack.bind(this)
 		this.handlePlaylist = this.handlePlaylist.bind(this)
+		this.state = {
+			isSelected: false
+		}
 	}
 	handleTrack() {
 		this.props.dispatch(
@@ -33,6 +44,7 @@ class SongItem extends Component {
 	}
 
 	render() {
+		const { classes } = this.props
 		return (
 			<ListItem
 				button
@@ -42,7 +54,15 @@ class SongItem extends Component {
 			>
 				<ListItemText>
 					<div>
-						<Typography>{`${this.props.name} (${convertToSeconds(
+						<Typography
+							className={
+								// TODO: use IDs instead of comparing names
+								this.props.playingTracks[this.props.currentTrack].name ===
+								this.props.name
+									? classes.selected
+									: classes.listItem
+							}
+						>{`${this.props.name} (${convertToSeconds(
 							this.props.duration
 						)})`}</Typography>
 						<Typography variant="caption">{this.props.artist}</Typography>
@@ -60,4 +80,10 @@ SongItem.propTypes = {
 	type: PropTypes.string.isRequired,
 	index: PropTypes.number
 }
-export default connect()(SongItem)
+
+const mapStateToProps = state => ({
+	currentTrack: state.player.currentTrack,
+	playingTracks: state.player.tracks
+})
+const SongItemWithStyles = withStyles(styles)(SongItem)
+export default connect(mapStateToProps)(SongItemWithStyles)

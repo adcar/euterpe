@@ -101,5 +101,6 @@ class Album extends Component {
 		)
 	}
 }
+
 const AlbumWithStyles = withStyles(styles)(Album)
 export default connect()(AlbumWithStyles)
