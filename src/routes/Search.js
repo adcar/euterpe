@@ -17,7 +17,7 @@ const styles = theme => ({
 		display: 'flex',
 		justifyContent: 'flex-start',
 		alignItems: 'center',
-		flexWrap: 'nowrap',
+		flexWrap: 'wrap',
 		overflowX: 'auto',
 		width: `calc(90vw - ${drawerWidth}px)`,
 		[theme.breakpoints.down('sm')]: {
@@ -49,7 +49,7 @@ class Search extends Component {
 				props.match.params.query,
 				['album', 'track', 'playlist', 'artist'],
 				{
-					limit: 20,
+					limit: 8,
 					offset: 0
 				}
 			)
