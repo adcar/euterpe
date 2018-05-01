@@ -9,22 +9,30 @@ const convertToSeconds = millis => {
 	return `${minutes}:${(seconds < 10 ? '0' : '') + seconds}`
 }
 
-const SongItem = props => (
-	<ListItem button onClick={() => console.log('dispatch an action here')}>
-		<ListItemText>
-			<div>
-				<Typography>{`${props.name} (${convertToSeconds(
-					props.duration
-				)})`}</Typography>
-				<Typography variant="caption">{props.artist}</Typography>
-			</div>
-		</ListItemText>
-	</ListItem>
-)
+const SongItem = props => {
+	return (
+		<ListItem
+			button
+			onClick={
+				props.type === 'single' ? this.handleSingle : this.handlePlaylist
+			}
+		>
+			<ListItemText>
+				<div>
+					<Typography>{`${props.name} (${convertToSeconds(
+						props.duration
+					)})`}</Typography>
+					<Typography variant="caption">{props.artist}</Typography>
+				</div>
+			</ListItemText>
+		</ListItem>
+	)
+}
 
 SongItem.propTypes = {
 	name: PropTypes.string.isRequired,
 	duration: PropTypes.number.isRequired,
-	artist: PropTypes.string.isRequired
+	artist: PropTypes.string.isRequired,
+	type: PropTypes.string.isRequired
 }
 export default SongItem

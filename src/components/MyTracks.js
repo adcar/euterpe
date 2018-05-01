@@ -3,7 +3,7 @@ import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
-import TrackCard from '../containers/TrackCard'
+import SongItem from './SongItem'
 
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
@@ -50,20 +50,12 @@ class MyTracks extends Component {
 					this.setState({
 						albums: data.body.items,
 						albumItems: data.body.items.map(item => (
-							<TrackCard
-								image={item.album.images[1].url}
+							<SongItem
+								type="single"
+								key={item.id}
 								name={item.name}
 								artist={item.artists[0].name}
-								id={item.id}
-								key={item.id}
-								play={e =>
-									this.props.playSong({
-										image: item.album.images[0].url,
-										name: item.name,
-										id: item.id,
-										artist: item.artists[0].name
-									})
-								}
+								duration={item.duration_ms}
 							/>
 						))
 					})
