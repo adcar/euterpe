@@ -90,7 +90,7 @@ class Album extends Component {
 						style={{ marginTop: 20 }}
 						variant="raised"
 						color="primary"
-						onClick={() => this.togglePlay(0)}
+						onClick={() => this.play(0)}
 					>
 						<PlayArrow style={{ marginRight: 10 }} />
 						Play
