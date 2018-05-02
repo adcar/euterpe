@@ -1,20 +1,21 @@
 import Cookie from 'js-cookie'
 let url
 if (process.env.NODE_ENV === 'production') {
-	url = 'https://apollomusic.tk'
+	url = 'https://euterpe.cf'
 } else if (process.env.NODE_ENV === 'development') {
 	url = 'http://localhost:3000'
 }
-
 let scope = encodeURIComponent(
 	'user-library-modify user-library-read user-top-read user-follow-read'
 )
+let clientId = 'a4dc5112192b41abb53449f9f7055355'
+
 const getToken = token => {
 	let cookie = Cookie.get(token)
 	if (cookie) {
 		return cookie
 	} else {
-		window.location = `https://accounts.spotify.com:443/authorize?client_id=88ed4852708440e6908246065f5a7ca4&response_type=token&redirect_uri=${url}/callback&scope=${scope}`
+		window.location = `https://accounts.spotify.com:443/authorize?client_id=${clientId}&response_type=token&redirect_uri=${url}/callback&scope=${scope}`
 	}
 }
 
