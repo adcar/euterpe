@@ -34,8 +34,6 @@ const styles = theme => ({
 	}
 })
 
-const YourDailyMix = props => <h1>Your Daily Mix (not ready yet)</h1>
-
 class Collection extends React.Component {
 	state = {
 		value: 0
@@ -58,13 +56,8 @@ class Collection extends React.Component {
 							component={Link}
 							to="/collection/playlists"
 						/>
-						<Tab
-							label="Your Daily Mix"
-							component={Link}
-							to="/collection/your-daily-mix"
-						/>
-						<Tab label="Songs" component={Link} to="/collection/songs" />
 						<Tab label="Albums" component={Link} to="/collection/albums" />
+						<Tab label="Songs" component={Link} to="/collection/songs" />
 						<Tab label="Artists" component={Link} to="/collection/artists" />
 					</Tabs>
 				</AppBar>
@@ -74,7 +67,6 @@ class Collection extends React.Component {
 					render={() => <Redirect to="/collection/playlists" />}
 				/>
 				<Route path="/collection/playlists" component={Playlists} />
-				<Route path="/collection/your-daily-mix" component={YourDailyMix} />
 				<Route path="/collection/songs" component={Songs} />
 				<Route path="/collection/albums" component={Albums} />
 			</div>
