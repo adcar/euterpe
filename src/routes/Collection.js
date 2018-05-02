@@ -43,6 +43,27 @@ class Collection extends React.Component {
 	handleChange = (event, value) => {
 		this.setState({ value })
 	}
+	componentDidMount() {
+		// This is needed for showing the correct tab on refresh
+		switch (this.props.location.pathname) {
+			case '/collection/playlists':
+				this.setState({
+					value: 0
+				})
+			case '/collection/albums':
+				this.setState({
+					value: 1
+				})
+			case '/collection/songs':
+				this.setState({
+					value: 2
+				})
+			case '/collection/artists':
+				this.setState({
+					value: 3
+				})
+		}
+	}
 
 	render() {
 		const { classes } = this.props
