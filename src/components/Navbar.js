@@ -222,7 +222,7 @@ class Navbar extends React.Component {
 							<Typography variant="title" color="inherit" noWrap>
 								{window.location.href.includes('collection')
 									? 'Your Music'
-									: 'Apollo'}
+									: 'Euterpe'}
 							</Typography>
 						</Link>
 						<IconButton
