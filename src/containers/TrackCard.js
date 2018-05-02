@@ -37,7 +37,8 @@ class TrackCard extends Component {
 				{
 					image: this.props.image,
 					name: this.props.name,
-					artist: this.props.artist
+					artist: this.props.artist,
+					id: this.props.id
 				}
 			])
 		)

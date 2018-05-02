@@ -3,7 +3,8 @@ const initialState = {
 		{
 			image: 'https://via.placeholder.com/120x120',
 			name: '',
-			artist: ''
+			artist: '',
+			id: ''
 		}
 	],
 	currentTrack: 0

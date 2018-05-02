@@ -53,6 +53,7 @@ class MyTracks extends Component {
 							<SongItem
 								type="track"
 								key={item.id}
+								id={item.id}
 								name={item.name}
 								artist={item.artists[0].name}
 								image={item.album.images[0].url}

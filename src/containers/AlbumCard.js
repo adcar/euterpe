@@ -24,7 +24,6 @@ const styles = theme => ({
 
 class AlbumCard extends Component {
 	save() {
-		console.log(this.props.id)
 		spotifyApi
 			.addToMySavedAlbums({ ids: [this.props.id] })
 			.then(data => console.log(data))

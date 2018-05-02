@@ -63,13 +63,15 @@ class Playlist extends Component {
 					tracksInfo: data.body.items.map(item => ({
 						name: item.track.name,
 						artist: item.track.artists[0].name,
-						image: item.track.album.images[1].url
+						image: item.track.album.images[1].url,
+						id: item.track.id
 					})),
 
 					tracks: data.body.items.map((item, index) => (
 						<SongItem
 							type="playlist"
 							key={item.track.id}
+							id={item.track.id}
 							name={item.track.name}
 							duration={item.track.duration_ms}
 							artist={item.track.artists[0].name}

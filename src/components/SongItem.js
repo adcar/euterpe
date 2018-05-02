@@ -34,7 +34,8 @@ class SongItem extends Component {
 				{
 					name: this.props.name,
 					artist: this.props.artist,
-					image: this.props.image
+					image: this.props.image,
+					id: this.props.id
 				}
 			])
 		)
@@ -56,9 +57,8 @@ class SongItem extends Component {
 					<div>
 						<Typography
 							className={
-								// TODO: use IDs instead of comparing names
-								this.props.playingTracks[this.props.currentTrack].name ===
-								this.props.name
+								this.props.playingTracks[this.props.currentTrack].id ===
+								this.props.id
 									? classes.selected
 									: classes.listItem
 							}
