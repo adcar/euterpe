@@ -8,6 +8,7 @@ import { Route, Link, Redirect } from 'react-router-dom'
 
 import Albums from '../components/MyAlbums'
 import Playlists from '../components/MyPlaylists'
+import Artists from '../components/MyArtists'
 import Songs from '../components/MyTracks'
 
 function TabContainer(props) {
@@ -69,6 +70,7 @@ class Collection extends React.Component {
 				<Route path="/collection/playlists" component={Playlists} />
 				<Route path="/collection/songs" component={Songs} />
 				<Route path="/collection/albums" component={Albums} />
+				<Route path="/collection/Artists" component={Artists} />
 			</div>
 		)
 	}

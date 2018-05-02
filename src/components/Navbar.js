@@ -67,8 +67,12 @@ const styles = theme => ({
 		}
 	},
 	profileIcon: {
-		height: 50,
-		width: 50,
+		[theme.breakpoints.up('sm')]: {
+			height: 50,
+			width: 50
+		},
+		height: 40,
+		width: 40,
 		borderRadius: '50%'
 	},
 	drawer: {
@@ -158,7 +162,7 @@ class Navbar extends React.Component {
 				Cookie.remove('spotifyAccessToken')
 				window.location = '/'
 			}
-		}, 1000)
+		}, 500)
 	}
 	render() {
 		const { classes, theme } = this.props
