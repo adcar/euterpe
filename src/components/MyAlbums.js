@@ -6,6 +6,7 @@ import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
 
 import AlbumCard from '../containers/AlbumCard'
+import PageLabel from './PageLabel'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 
@@ -65,9 +66,7 @@ class MyAlbums extends Component {
 		if (this.state.albumItems.length > 0) {
 			return (
 				<div>
-					<Typography component="h1" variant="display1" align="center">
-						My Albums
-					</Typography>
+					<PageLabel>My Albums</PageLabel>
 					<div className={classes.cardWrapper}>{this.state.albumItems}</div>
 				</div>
 			)

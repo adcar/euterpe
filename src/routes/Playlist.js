@@ -8,6 +8,7 @@ import { playPlaylist } from '../actions/playerActions'
 import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import { connect } from 'react-redux'
+import PageLabel from '../components/PageLabel'
 import SongItem from '../components/SongItem'
 
 const SpotifyWebApi = require('spotify-web-api-node')
@@ -90,9 +91,7 @@ class Playlist extends Component {
 		return (
 			<div>
 				<div className={classes.title}>
-					<Typography component="h1" variant="display1" align="center">
-						{this.state.playlistName}
-					</Typography>
+					<PageLabel>{this.state.playlistName}</PageLabel>
 					<Button
 						style={{ marginTop: 20 }}
 						variant="raised"

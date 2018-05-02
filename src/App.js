@@ -6,7 +6,7 @@ import Navbar from './components/Navbar'
 import PlaylistPlayer from './containers/PlaylistPlayer'
 import { createStore } from 'redux'
 import { Provider } from 'react-redux'
-import { BrowserRouter as Router, Route } from 'react-router-dom'
+import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
 import rootReducer from './reducers'
 
@@ -46,7 +46,12 @@ class App extends Component {
 					<Router>
 						<div>
 							<Navbar>
-								<Route path="/" exact component={Home} />
+								<Route
+									exact
+									path="/"
+									render={() => <Redirect to="/browse" />}
+								/>
+								<Route path="/browse" component={Home} />
 								<Route path="/callback" component={Callback} />
 								<Route path="/artist/:id" component={Artist} />
 								<Route path="/collection" component={Collection} />

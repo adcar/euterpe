@@ -4,6 +4,10 @@ import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
+import { Route, Link, Redirect } from 'react-router-dom'
+import Categories from '../components/Categories'
+
+import Playlists from '../components/MyPlaylists'
 
 function TabContainer(props) {
 	return (
@@ -46,16 +50,15 @@ class Browse extends React.Component {
 			<div className={classes.root}>
 				<AppBar position="static" className={classes.appBar}>
 					<Tabs value={value} onChange={this.handleChange} scrollable>
-						<Tab label="Featured" />
-						<Tab label="Genres & Moods" />
-						<Tab label="New Releases" />
-						<Tab label="Discover" href="#basic-tabs" />
+						<Tab label="Genres & Moods" component={Link} to="/browse/genres" />
 					</Tabs>
 				</AppBar>
-
-				{value === 0 && <TabContainer>Item One</TabContainer>}
-				{value === 1 && <TabContainer>Item Two</TabContainer>}
-				{value === 2 && <TabContainer>Item Three</TabContainer>}
+				<Route
+					exact
+					path="/browse"
+					render={() => <Redirect to="/browse/genres" />}
+				/>
+				<Route path="/browse/genres" component={Categories} />
 			</div>
 		)
 	}
