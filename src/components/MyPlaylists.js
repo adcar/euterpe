@@ -29,6 +29,7 @@ class MyPlaylists extends Component {
 				this.setState({
 					playlists: res.body.items.map(item => (
 						<AlbumCard
+							type="playlist"
 							name={item.name}
 							image={item.images[0].url}
 							id={item.id}

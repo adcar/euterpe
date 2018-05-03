@@ -57,6 +57,7 @@ class Search extends Component {
 				this.setState({
 					albums: data.body.albums.items.map(item => (
 						<AlbumCard
+							type="album"
 							key={item.id}
 							image={item.images[1].url}
 							name={item.name}
@@ -82,6 +83,7 @@ class Search extends Component {
 						if (item.images.length > 0) {
 							return (
 								<AlbumCard
+									type="playlist"
 									playlist
 									key={item.id}
 									image={item.images[0].url}

@@ -6,7 +6,7 @@ if (process.env.NODE_ENV === 'production') {
 	url = 'http://localhost:3000'
 }
 let scope = encodeURIComponent(
-	'user-library-modify user-library-read user-top-read user-follow-read'
+	'user-library-modify user-library-read user-top-read user-follow-read playlist-modify-public playlist-modify-private'
 )
 let clientId = 'a4dc5112192b41abb53449f9f7055355'
 

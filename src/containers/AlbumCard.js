@@ -24,10 +24,14 @@ const styles = theme => ({
 
 class AlbumCard extends Component {
 	save() {
-		spotifyApi
-			.addToMySavedAlbums({ ids: [this.props.id] })
-			.then(data => console.log(data))
-			.catch(err => console.log(err))
+		if (this.props.type === 'album') {
+			spotifyApi
+				.addToMySavedAlbums([this.props.id])
+				.catch(err => console.log(err))
+		}
+		if (this.props.type === 'playlist') {
+			console.log('follow the playlist')
+		}
 	}
 	render() {
 		const artist = this.props.artist.name ? (
@@ -38,12 +42,7 @@ class AlbumCard extends Component {
 			this.props.artist.display_name
 		)
 		const saveBtn = !this.props.saved ? (
-			<Button
-				disabled
-				size="small"
-				color="primary"
-				onClick={this.save.bind(this)}
-			>
+			<Button size="small" color="primary" onClick={this.save.bind(this)}>
 				Save
 			</Button>
 		) : null
@@ -115,7 +114,8 @@ AlbumCard.propTypes = {
 	image: PropTypes.string.isRequired,
 	name: PropTypes.string.isRequired,
 	artist: PropTypes.object.isRequired,
-	id: PropTypes.string.isRequired
+	id: PropTypes.string.isRequired,
+	type: PropTypes.string.isRequired
 }
 
 const AlbumCardWithStyles = withStyles(styles)(AlbumCard)

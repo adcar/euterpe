@@ -45,30 +45,38 @@ class Collection extends React.Component {
 	}
 	componentDidMount() {
 		// This is needed for showing the correct tab on refresh
+		const { pathname } = this.props.location
+		if (pathname.includes('playlist')) {
+		}
+		if (pathname.includes('albums')) {
+			this.setState({ value: 1 })
+		}
+		if (pathname.includes('songs')) {
+			this.setState({ value: 2 })
+		}
+		if (pathname.includes('artists')) {
+			this.setState({ value: 0 })
+		}
+
 		switch (this.props.location.pathname) {
 			case '/collection/playlists':
-				this.setState({
-					value: 0
-				})
+				this.setState({ value: 0 })
+				break
 			case '/collection/albums':
-				this.setState({
-					value: 1
-				})
+				this.setState({ value: 1 })
+				break
 			case '/collection/songs':
-				this.setState({
-					value: 2
-				})
+				this.setState({ value: 2 })
+				break
 			case '/collection/artists':
-				this.setState({
-					value: 3
-				})
+				this.setState({ value: 3 })
+				break
 		}
 	}
 
 	render() {
 		const { classes } = this.props
 		const { value } = this.state
-
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" className={classes.appBar}>

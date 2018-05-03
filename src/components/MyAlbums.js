@@ -46,6 +46,7 @@ class MyAlbums extends Component {
 						albums: data.body.items,
 						albumItems: data.body.items.map(item => (
 							<AlbumCard
+								type="album"
 								image={item.album.images[1].url}
 								name={item.album.name}
 								id={item.album.id}

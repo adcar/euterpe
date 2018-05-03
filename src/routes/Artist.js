@@ -54,6 +54,7 @@ class Artist extends Component {
 			this.setState({
 				albums: data.body.items.map(item => (
 					<AlbumCard
+						type="album"
 						key={item.id}
 						image={item.images[1].url}
 						name={item.name}
