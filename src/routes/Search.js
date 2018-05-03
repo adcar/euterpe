@@ -1,165 +1,104 @@
 import React, { Component } from 'react'
-import getToken from '../getToken'
+import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import AppBar from 'material-ui/AppBar'
+import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
-import AlbumCard from '../containers/AlbumCard'
-import ArtistCard from '../components/ArtistCard'
-import TrackCard from '../containers/TrackCard'
-import drawerWidth from '../drawerWidth'
+import { Route, Link, Redirect } from 'react-router-dom'
 
-const SpotifyWebApi = require('spotify-web-api-node')
-const spotifyApi = new SpotifyWebApi()
-spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
+// import Albums from '../components/SearchAlbums'
+// import Playlists from '../components/SearchPlaylists'
+// import Artists from '../components/SearchArtists'
+// import Songs from '../components/SearchTracks'
+
+const Albums = () => <h1>test</h1>
+const Playlists = ({ match }) => <h1>test: {match.params.term}</h1>
+const Artists = () => <h1>test</h1>
+const Songs = () => <h1>test</h1>
+
+function TabContainer(props) {
+	return (
+		<Typography component="div" style={{ padding: 8 * 3 }}>
+			{props.children}
+		</Typography>
+	)
+}
+
+TabContainer.propTypes = {
+	children: PropTypes.node.isRequired
+}
 
 const styles = theme => ({
-	cardWrapper: {
-		margin: '0 auto',
-		display: 'flex',
-		justifyContent: 'flex-start',
-		alignItems: 'center',
-		flexWrap: 'wrap',
-		overflowX: 'auto',
-		width: `calc(90vw - ${drawerWidth}px)`,
-		[theme.breakpoints.down('sm')]: {
-			width: `calc(80vw)`
-		}
+	root: {
+		flexGrow: 1,
+		backgroundColor: theme.palette.background.paper,
+		zIndex: 1,
+		position: 'relative'
 	},
-	category: {
-		marginTop: theme.spacing.unit * 5,
-		marginBottom: theme.spacing.unit * 5
+	appBar: {
+		boxShadow: 'none'
 	}
 })
 
 class Search extends Component {
-	constructor() {
-		super()
-		this.state = {
-			albums: [],
-			artists: [],
-			tracks: []
-		}
-		this.play = this.play.bind(this)
+	state = {
+		value: 0
 	}
-	play(object) {
-		this.props.playSong(object)
-	}
-	searchSpotify(props) {
-		spotifyApi
-			.search(
-				props.match.params.query,
-				['album', 'track', 'playlist', 'artist'],
-				{
-					limit: 8,
-					offset: 0
-				}
-			)
-			.then(data => {
-				this.setState({
-					albums: data.body.albums.items.map(item => (
-						<AlbumCard
-							type="album"
-							key={item.id}
-							image={item.images[1].url}
-							name={item.name}
-							id={item.id}
-							artist={item.artists[0]}
-						/>
-					)),
-					artists: data.body.artists.items.map(item => {
-						if (item.images.length > 0) {
-							return (
-								<ArtistCard
-									key={item.id}
-									image={item.images[0].url}
-									name={item.name}
-									id={item.id}
-								/>
-							)
-						} else {
-							return null
-						}
-					}),
-					playlists: data.body.playlists.items.map(item => {
-						if (item.images.length > 0) {
-							return (
-								<AlbumCard
-									type="playlist"
-									playlist
-									key={item.id}
-									image={item.images[0].url}
-									id={item.id}
-									name={item.name}
-									artist={item.owner}
-								/>
-							)
-						} else {
-							return null
-						}
-					}),
-					tracks: data.body.tracks.items.map(item => {
-						if (item.album.images.length > 0) {
-							return (
-								<TrackCard
-									key={item.id}
-									image={item.album.images[0].url}
-									name={item.name}
-									id={item.id}
-									artist={item.artists[0].name}
-									play={e =>
-										this.play({
-											image: item.album.images[0].url,
-											name: item.name,
-											id: item.id,
-											artist: item.artists[0].name
-										})
-									}
-								/>
-							)
-						} else {
-							return null
-						}
-					})
-				})
-			})
-			.catch(console.log)
-	}
-	componentWillReceiveProps(nextProps) {
-		this.searchSpotify(nextProps)
+
+	handleChange = (event, value) => {
+		this.setState({ value })
 	}
 	componentDidMount() {
-		this.searchSpotify(this.props)
+		const { pathname } = this.props.location
+		// This is needed for showing the correct tab on refresh
+		switch (pathname) {
+			case '/collection/playlists':
+				this.setState({ value: 0 })
+				break
+			case '/collection/albums':
+				this.setState({ value: 1 })
+				break
+			case '/collection/songs':
+				this.setState({ value: 2 })
+				break
+			case '/collection/artists':
+				this.setState({ value: 3 })
+				break
+		}
 	}
+
 	render() {
 		const { classes } = this.props
+		const { value } = this.state
+		console.log(this.props.match)
+		const { term } = this.props.match.params
+		console.log(term)
 		return (
-			<div>
-				<div className={classes.category}>
-					<Typography variant="display1" component="h2" align="center">
-						Tracks
-					</Typography>
-					<div className={classes.cardWrapper}>{this.state.tracks}</div>
-				</div>
-				<div className={classes.category}>
-					<Typography variant="display1" component="h2" align="center">
-						Albums
-					</Typography>
-					<div className={classes.cardWrapper}>{this.state.albums}</div>
-				</div>
-				<div className={classes.category}>
-					<Typography variant="display1" component="h2" align="center">
-						Playlists
-					</Typography>
-					<div className={classes.cardWrapper}>{this.state.playlists}</div>
-				</div>
-				<div className={classes.category}>
-					<Typography variant="display1" component="h2" align="center">
-						Artists
-					</Typography>
-					<div className={classes.cardWrapper}>{this.state.artists}</div>
-				</div>
+			<div className={classes.root}>
+				<AppBar position="static" className={classes.appBar}>
+					<Tabs value={value} onChange={this.handleChange} scrollable>
+						<Tab
+							label="Playlists"
+							component={Link}
+							to="/collection/playlists"
+						/>
+						<Tab label="Albums" component={Link} to="/search/albums" />
+						<Tab label="Songs" component={Link} to="/search/songs" />
+						<Tab label="Artists" component={Link} to="/search/artists" />
+					</Tabs>
+				</AppBar>
+
+				<Route path="/search/playlists/:term" component={Playlists} />
+				<Route path="/search/songs/:term" component={Songs} />
+				<Route path="/search/albums/:term" component={Albums} />
+				<Route path="/search/Artists/:term" component={Artists} />
 			</div>
 		)
 	}
+}
+
+Search.propTypes = {
+	classes: PropTypes.object.isRequired
 }
 
 export default withStyles(styles)(Search)

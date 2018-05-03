@@ -58,7 +58,7 @@ class App extends Component {
 								<Route path="/album/:id" component={Album} />
 								<Route path="/playlist/:user/:id" component={Playlist} />
 								<Route path="/category/:id" component={Category} />
-								<Route path="/search/:query" component={Search} />
+								<Route path="/search" component={Search} />
 							</Navbar>
 						</div>
 					</Router>

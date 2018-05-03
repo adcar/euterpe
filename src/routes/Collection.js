@@ -44,10 +44,9 @@ class Collection extends React.Component {
 		this.setState({ value })
 	}
 	componentDidMount() {
-		// This is needed for showing the correct tab on refresh
 		const { pathname } = this.props.location
-
-		switch (this.props.location.pathname) {
+		// This is needed for showing the correct tab on refresh
+		switch (pathname) {
 			case '/collection/playlists':
 				this.setState({ value: 0 })
 				break

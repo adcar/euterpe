@@ -101,7 +101,10 @@ class Navbar extends React.Component {
 		this.setState({ mobileOpen: !this.state.mobileOpen })
 	}
 	updateHistory() {
-		this.props.history.push(`/search/${this.state.searchTerm}`)
+		this.props.history.push(`/search/playlists/${this.state.searchTerm}`)
+		this.setState({
+			mobileOpen: false
+		})
 	}
 
 	redirect(location, e) {
