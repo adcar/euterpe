@@ -7,9 +7,9 @@ import Typography from 'material-ui/Typography'
 import { Route, Link, Redirect } from 'react-router-dom'
 
 import Albums from '../components/MyAlbums'
-import Playlists from '../components/MyPlaylists'
-import Artists from '../components/MyArtists'
-import Songs from '../components/MyTracks'
+import Playlists from '../routes/MyPlaylists'
+import Artists from '../routes/MyArtists'
+import Songs from '../routes/MyTracks'
 
 function TabContainer(props) {
 	return (

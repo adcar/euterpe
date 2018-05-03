@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 import ArtistCard from '../components/ArtistCard'
 import { CircularProgress } from 'material-ui/Progress'
-import PageLabel from './PageLabel'
+import PageLabel from '../components/PageLabel'
 
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()

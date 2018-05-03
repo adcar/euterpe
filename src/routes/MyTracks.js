@@ -3,8 +3,8 @@ import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
 import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
-import SongItem from './SongItem'
-import PageLabel from './PageLabel'
+import SongItem from '../components/SongItem'
+import PageLabel from '../components/PageLabel'
 
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
