@@ -6,12 +6,12 @@ import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
 import { Route, Link } from 'react-router-dom'
 
-// import Albums from '../components/SearchAlbums'
-// import Playlists from '../components/SearchPlaylists'
-// import Artists from '../components/SearchArtists'
-// import Songs from '../components/SearchTracks'
+import Albums from './SearchAlbums'
+import { connect } from 'react-redux'
+// import Playlists from './SearchPlaylists'
+// import Artists from './SearchArtists'
+// import Songs from './SearchTracks'
 
-const Albums = () => <h1>test</h1>
 const Playlists = ({ match }) => <h1>test: {match.params.term}</h1>
 const Artists = () => <h1>test</h1>
 const Songs = () => <h1>test</h1>
@@ -68,11 +68,8 @@ class Search extends Component {
 	}
 
 	render() {
-		const { classes } = this.props
+		const { classes, searchTerm } = this.props
 		const { value } = this.state
-		console.log(this.props.match)
-		const { term } = this.props.match.params
-		console.log(term)
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" className={classes.appBar}>
@@ -80,11 +77,23 @@ class Search extends Component {
 						<Tab
 							label="Playlists"
 							component={Link}
-							to="/collection/playlists"
+							to={`/search/playlists/${searchTerm}`}
 						/>
-						<Tab label="Albums" component={Link} to="/search/albums" />
-						<Tab label="Songs" component={Link} to="/search/songs" />
-						<Tab label="Artists" component={Link} to="/search/artists" />
+						<Tab
+							label="Albums"
+							component={Link}
+							to={`/search/albums/${searchTerm}`}
+						/>
+						<Tab
+							label="Songs"
+							component={Link}
+							to={`/search/songs/${searchTerm}`}
+						/>
+						<Tab
+							label="Artists"
+							component={Link}
+							to={`/search/artists/${searchTerm}`}
+						/>
 					</Tabs>
 				</AppBar>
 
@@ -98,7 +107,13 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-	classes: PropTypes.object.isRequired
+	classes: PropTypes.object.isRequired,
+	searchTerm: PropTypes.string.isRequired
 }
 
-export default withStyles(styles)(Search)
+const SearchWithStyles = withStyles(styles)(Search)
+
+const mapStateToProps = state => ({
+	searchTerm: state.search.searchTerm
+})
+export default connect(mapStateToProps)(SearchWithStyles)

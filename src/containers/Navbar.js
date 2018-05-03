@@ -20,6 +20,8 @@ import drawerWidth from '../drawerWidth'
 import getToken from '../getToken'
 import Menu, { MenuItem } from 'material-ui/Menu'
 import Cookie from 'js-cookie'
+import { search } from '../actions/searchActions'
+import { connect } from 'react-redux'
 
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
@@ -101,6 +103,7 @@ class Navbar extends React.Component {
 		this.setState({ mobileOpen: !this.state.mobileOpen })
 	}
 	updateHistory() {
+		this.props.dispatch(search(this.state.searchTerm))
 		this.props.history.push(`/search/playlists/${this.state.searchTerm}`)
 		this.setState({
 			mobileOpen: false
@@ -295,7 +298,11 @@ class Navbar extends React.Component {
 
 Navbar.propTypes = {
 	classes: PropTypes.object.isRequired,
-	theme: PropTypes.object.isRequired
+	theme: PropTypes.object.isRequired,
+	dispatch: PropTypes.func.isRequired
 }
 
-export default withRouter(withStyles(styles, { withTheme: true })(Navbar))
+const NavbarWithRouterAndStyles = withRouter(
+	withStyles(styles, { withTheme: true })(Navbar)
+)
+export default connect()(NavbarWithRouterAndStyles)
