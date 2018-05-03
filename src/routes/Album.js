@@ -3,8 +3,6 @@ import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
 import List from 'material-ui/List'
 
-import Typography from 'material-ui/Typography'
-
 import PlayArrow from 'material-ui-icons/PlayArrow'
 
 import Button from 'material-ui/Button'

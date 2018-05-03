@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
 import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
-import Typography from 'material-ui/Typography'
 import { CircularProgress } from 'material-ui/Progress'
 import SongItem from '../components/SongItem'
 import PageLabel from '../components/PageLabel'

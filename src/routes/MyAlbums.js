@@ -1,12 +1,10 @@
 import React, { Component } from 'react'
 import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
-import Typography from 'material-ui/Typography'
-
 import { CircularProgress } from 'material-ui/Progress'
 
 import AlbumCard from '../containers/AlbumCard'
-import PageLabel from './PageLabel'
+import PageLabel from '../components/PageLabel'
 const SpotifyWebApi = require('spotify-web-api-node')
 const spotifyApi = new SpotifyWebApi()
 

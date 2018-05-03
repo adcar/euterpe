@@ -4,7 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
-import { Route, Link, Redirect } from 'react-router-dom'
+import { Route, Link } from 'react-router-dom'
 
 // import Albums from '../components/SearchAlbums'
 // import Playlists from '../components/SearchPlaylists'
@@ -49,22 +49,22 @@ class Search extends Component {
 		this.setState({ value })
 	}
 	componentDidMount() {
-		const { pathname } = this.props.location
-		// This is needed for showing the correct tab on refresh
-		switch (pathname) {
-			case '/collection/playlists':
-				this.setState({ value: 0 })
-				break
-			case '/collection/albums':
-				this.setState({ value: 1 })
-				break
-			case '/collection/songs':
-				this.setState({ value: 2 })
-				break
-			case '/collection/artists':
-				this.setState({ value: 3 })
-				break
-		}
+		// const { pathname } = this.props.location
+		// // This is needed for showing the correct tab on refresh
+		// switch (pathname) {
+		// 	case '/collection/playlists':
+		// 		this.setState({ value: 0 })
+		// 		break
+		// 	case '/collection/albums':
+		// 		this.setState({ value: 1 })
+		// 		break
+		// 	case '/collection/songs':
+		// 		this.setState({ value: 2 })
+		// 		break
+		// 	case '/collection/artists':
+		// 		this.setState({ value: 3 })
+		// 		break
+		// }
 	}
 
 	render() {

@@ -4,8 +4,6 @@ import { withStyles } from 'material-ui/styles'
 import PlayArrow from 'material-ui-icons/PlayArrow'
 import List from 'material-ui/List'
 import { playPlaylist } from '../actions/playerActions'
-
-import Typography from 'material-ui/Typography'
 import Button from 'material-ui/Button'
 import { connect } from 'react-redux'
 import PageLabel from '../components/PageLabel'
