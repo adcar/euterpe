@@ -302,7 +302,6 @@ Navbar.propTypes = {
 	dispatch: PropTypes.func.isRequired
 }
 
-const NavbarWithRouterAndStyles = withRouter(
-	withStyles(styles, { withTheme: true })(Navbar)
-)
-export default connect()(NavbarWithRouterAndStyles)
+const NavbarWithStyles = withStyles(styles, { withTheme: true })(Navbar)
+
+export default withRouter(connect()(NavbarWithStyles))
