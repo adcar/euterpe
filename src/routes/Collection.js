@@ -46,17 +46,6 @@ class Collection extends React.Component {
 	componentDidMount() {
 		// This is needed for showing the correct tab on refresh
 		const { pathname } = this.props.location
-		if (pathname.includes('playlist')) {
-		}
-		if (pathname.includes('albums')) {
-			this.setState({ value: 1 })
-		}
-		if (pathname.includes('songs')) {
-			this.setState({ value: 2 })
-		}
-		if (pathname.includes('artists')) {
-			this.setState({ value: 0 })
-		}
 
 		switch (this.props.location.pathname) {
 			case '/collection/playlists':
