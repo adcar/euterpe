@@ -35,7 +35,6 @@ class MyPlaylists extends Component {
 		})
 	}
 	render() {
-		const { classes } = this.props
 		return (
 			<div>
 				<PageLabel>My Playlists</PageLabel>

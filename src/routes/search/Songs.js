@@ -1,9 +1,7 @@
 import React, { Component } from 'react'
 import getToken from '../../getToken'
-import { withStyles } from 'material-ui/styles'
 import { CircularProgress } from 'material-ui/Progress'
 import SongItem from '../../components/SongItem'
-import PageLabel from '../../components/PageLabel'
 import CardWrapper from '../../components/CardWrapper'
 
 import SpotifyWebApi from 'spotify-web-api-node'
@@ -38,9 +36,6 @@ class Songs extends Component {
 		)
 	}
 	render() {
-		const { term } = this.props.match.params
-		const { classes } = this.props
-
 		if (this.state.songs.length > 0) {
 			return <CardWrapper>{this.state.songs}</CardWrapper>
 		} else {

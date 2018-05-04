@@ -64,8 +64,6 @@ class MyTracks extends Component {
 			)
 	}
 	render() {
-		const { classes } = this.props
-
 		if (this.state.albumItems.length > 0) {
 			return (
 				<div>

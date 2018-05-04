@@ -37,8 +37,6 @@ class MyAlbums extends Component {
 		)
 	}
 	render() {
-		const { classes } = this.props
-
 		if (this.state.artists.length > 0) {
 			return (
 				<div>
