@@ -50,7 +50,7 @@ class Categories extends Component {
 								style={{ width: 150, height: 150 }}
 							/>
 							<CardContent>
-								<Typography>
+								<Typography title={item.name}>
 									<Truncate lines={1} ellipsis="...">
 										{item.name}
 									</Truncate>

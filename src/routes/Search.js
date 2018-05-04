@@ -5,6 +5,7 @@ import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
 import { Route, Link } from 'react-router-dom'
+import { search } from '../actions/searchActions'
 
 import Albums from './SearchAlbums'
 import { connect } from 'react-redux'
@@ -41,8 +42,12 @@ const styles = theme => ({
 })
 
 class Search extends Component {
-	state = {
-		value: 0
+	constructor() {
+		super()
+		this.search = this.search.bind(this)
+		this.state = {
+			value: 0
+		}
 	}
 
 	handleChange = (event, value) => {
@@ -66,10 +71,13 @@ class Search extends Component {
 		// 		break
 		// }
 	}
-
+	search(query) {
+		this.props.dispatch(search(query))
+	}
 	render() {
 		const { classes, searchTerm } = this.props
 		const { value } = this.state
+
 		return (
 			<div className={classes.root}>
 				<AppBar position="static" className={classes.appBar}>
@@ -97,10 +105,26 @@ class Search extends Component {
 					</Tabs>
 				</AppBar>
 
-				<Route path="/search/playlists/:term" component={Playlists} />
-				<Route path="/search/songs/:term" component={Songs} />
-				<Route path="/search/albums/:term" component={Albums} />
-				<Route path="/search/Artists/:term" component={Artists} />
+				<Route
+					path="/search/playlists/:term"
+					render={routeProps => (
+						<Playlists search={this.search} {...routeProps} />
+					)}
+				/>
+				<Route
+					path="/search/songs/:term"
+					render={routeProps => <Songs search={this.search} {...routeProps} />}
+				/>
+				<Route
+					path="/search/albums/:term"
+					render={routeProps => <Albums search={this.search} {...routeProps} />}
+				/>
+				<Route
+					path="/search/artists/:term"
+					render={routeProps => (
+						<Artists search={this.search} {...routeProps} />
+					)}
+				/>
 			</div>
 		)
 	}
