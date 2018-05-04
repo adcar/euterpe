@@ -5,7 +5,7 @@ import ArtistCard from '../components/ArtistCard'
 import { CircularProgress } from 'material-ui/Progress'
 import PageLabel from '../components/PageLabel'
 
-const SpotifyWebApi = require('spotify-web-api-node')
+import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
 
 const styles = theme => ({

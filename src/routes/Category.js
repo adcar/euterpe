@@ -3,7 +3,7 @@ import AlbumCard from '../containers/AlbumCard'
 import getToken from '../getToken'
 import { withStyles } from 'material-ui/styles'
 import PageLabel from '../components/PageLabel'
-const SpotifyWebApi = require('spotify-web-api-node')
+import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 

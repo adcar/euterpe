@@ -9,7 +9,7 @@ import { connect } from 'react-redux'
 import PageLabel from '../components/PageLabel'
 import SongItem from '../components/SongItem'
 
-const SpotifyWebApi = require('spotify-web-api-node')
+import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 

@@ -23,7 +23,7 @@ import Cookie from 'js-cookie'
 import { search } from '../actions/searchActions'
 import { connect } from 'react-redux'
 
-const SpotifyWebApi = require('spotify-web-api-node')
+import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
