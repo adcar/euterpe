@@ -1,20 +1,12 @@
 import React, { Component } from 'react'
 import getToken from '../getToken'
-import { withStyles } from 'material-ui/styles'
 import ArtistCard from '../components/ArtistCard'
 import { CircularProgress } from 'material-ui/Progress'
 import PageLabel from '../components/PageLabel'
+import CardWrapper from '../components/CardWrapper'
 
 import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
-
-const styles = theme => ({
-	cardWrapper: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'center'
-	}
-})
 
 class MyAlbums extends Component {
 	constructor() {
@@ -51,7 +43,7 @@ class MyAlbums extends Component {
 			return (
 				<div>
 					<PageLabel>Artists</PageLabel>
-					<div className={classes.cardWrapper}>{this.state.artists}</div>
+					<CardWrapper>{this.state.artists}</CardWrapper>
 				</div>
 			)
 		} else {
@@ -60,4 +52,4 @@ class MyAlbums extends Component {
 	}
 }
 
-export default withStyles(styles)(MyAlbums)
+export default MyAlbums

@@ -5,15 +5,11 @@ import { CircularProgress } from 'material-ui/Progress'
 
 import AlbumCard from '../containers/AlbumCard'
 import PageLabel from '../components/PageLabel'
+import CardWrapper from '../components/CardWrapper'
 import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
 
 const styles = theme => ({
-	cardWrapper: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'center'
-	},
 	card: {
 		width: 300,
 		height: 300,
@@ -66,7 +62,7 @@ class MyAlbums extends Component {
 			return (
 				<div>
 					<PageLabel>My Albums</PageLabel>
-					<div className={classes.cardWrapper}>{this.state.albumItems}</div>
+					<CardWrapper>{this.state.albumItems}</CardWrapper>
 				</div>
 			)
 		} else {

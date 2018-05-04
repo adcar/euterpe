@@ -7,15 +7,11 @@ import Typography from 'material-ui/Typography'
 import { Route, Link } from 'react-router-dom'
 import { search } from '../actions/searchActions'
 
-import Albums from './SearchAlbums'
+import Albums from './search/Albums'
+import Playlists from './search/Playlists'
+import Artists from './search/Artists'
+import Songs from './search/Songs'
 import { connect } from 'react-redux'
-// import Playlists from './SearchPlaylists'
-// import Artists from './SearchArtists'
-// import Songs from './SearchTracks'
-
-const Playlists = ({ match }) => <h1>test: {match.params.term}</h1>
-const Artists = () => <h1>test</h1>
-const Songs = () => <h1>test</h1>
 
 function TabContainer(props) {
 	return (
@@ -53,23 +49,21 @@ class Search extends Component {
 	handleChange = (event, value) => {
 		this.setState({ value })
 	}
-	componentDidMount() {
-		// const { pathname } = this.props.location
+	static getDerivedStateFromProps(nextProps) {
+		const { pathname } = nextProps.location
 		// // This is needed for showing the correct tab on refresh
-		// switch (pathname) {
-		// 	case '/collection/playlists':
-		// 		this.setState({ value: 0 })
-		// 		break
-		// 	case '/collection/albums':
-		// 		this.setState({ value: 1 })
-		// 		break
-		// 	case '/collection/songs':
-		// 		this.setState({ value: 2 })
-		// 		break
-		// 	case '/collection/artists':
-		// 		this.setState({ value: 3 })
-		// 		break
-		// }
+		if (pathname.includes('playlists')) {
+			return { value: 0 }
+		}
+		if (pathname.includes('albums')) {
+			return { value: 1 }
+		}
+		if (pathname.includes('songs')) {
+			return { value: 2 }
+		}
+		if (pathname.includes('artists')) {
+			return { value: 3 }
+		}
 	}
 	search(query) {
 		this.props.dispatch(search(query))
@@ -131,8 +125,7 @@ class Search extends Component {
 }
 
 Search.propTypes = {
-	classes: PropTypes.object.isRequired,
-	searchTerm: PropTypes.string.isRequired
+	classes: PropTypes.object.isRequired
 }
 
 const SearchWithStyles = withStyles(styles)(Search)

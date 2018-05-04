@@ -35,8 +35,9 @@ const styles = theme => ({
 		height: 'calc(100% - 130px)'
 	},
 	appBar: {
-		zIndex: '1',
+		zIndex: '99999',
 		position: 'fixed',
+		boxShadow: 'none',
 		marginLeft: drawerWidth,
 		[theme.breakpoints.up('md')]: {
 			width: `calc(100% - ${drawerWidth}px)`

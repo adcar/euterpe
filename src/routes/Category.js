@@ -1,19 +1,12 @@
 import React, { Component } from 'react'
 import AlbumCard from '../containers/AlbumCard'
 import getToken from '../getToken'
-import { withStyles } from 'material-ui/styles'
 import PageLabel from '../components/PageLabel'
+import CardWrapper from '../components/CardWrapper'
 import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
-const styles = theme => ({
-	cardWrapper: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'center'
-	}
-})
 class Category extends Component {
 	constructor() {
 		super()
@@ -50,10 +43,10 @@ class Category extends Component {
 		return (
 			<div>
 				<PageLabel>{this.state.name}</PageLabel>
-				<div className={classes.cardWrapper}>{this.state.playlists}</div>
+				<CardWrapper>{this.state.playlists}</CardWrapper>
 			</div>
 		)
 	}
 }
 
-export default withStyles(styles)(Category)
+export default Category

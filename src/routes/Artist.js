@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import Typography from 'material-ui/Typography'
 import getToken from '../getToken'
+import CardWrapper from '../components/CardWrapper'
 import AlbumCard from '../containers/AlbumCard'
 import TrackCard from '../containers/TrackCard'
 import { withStyles } from 'material-ui/styles'
@@ -21,11 +22,6 @@ const styles = theme => ({
 	},
 	artistLabel: {
 		marginTop: theme.spacing.unit
-	},
-	cardWrapper: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'center'
 	},
 	section: {
 		marginTop: theme.spacing.unit * 5,
@@ -109,13 +105,13 @@ class Artist extends Component {
 					<Typography variant="display1" align="center">
 						Albums
 					</Typography>
-					<div className={classes.cardWrapper}>{this.state.albums}</div>
+					<CardWrapper>{this.state.albums}</CardWrapper>
 				</div>
 				<div className={classes.section}>
 					<Typography variant="display1" align="center">
 						Top Tracks
 					</Typography>
-					<div className={classes.cardWrapper}>{this.state.tracks}</div>
+					<CardWrapper>{this.state.tracks}</CardWrapper>
 				</div>
 			</div>
 		)
