@@ -4,6 +4,7 @@ import { withStyles } from 'material-ui/styles'
 import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
+import PageLabel from '../components/PageLabel'
 import { Route, Link } from 'react-router-dom'
 import { search } from '../actions/searchActions'
 
@@ -98,7 +99,9 @@ class Search extends Component {
 						/>
 					</Tabs>
 				</AppBar>
-
+				<PageLabel>
+					Results for <strong>{searchTerm}</strong>
+				</PageLabel>
 				<Route
 					path="/search/playlists/:term"
 					render={routeProps => (

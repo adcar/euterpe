@@ -10,11 +10,8 @@ import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 class Songs extends Component {
-	constructor() {
-		super()
-		this.state = {
-			songs: []
-		}
+	state = {
+		songs: []
 	}
 	componentDidMount() {
 		const { term } = this.props.match.params
@@ -45,12 +42,7 @@ class Songs extends Component {
 		const { classes } = this.props
 
 		if (this.state.songs.length > 0) {
-			return (
-				<div>
-					<PageLabel>{term}</PageLabel>
-					<CardWrapper>{this.state.songs}</CardWrapper>
-				</div>
-			)
+			return <CardWrapper>{this.state.songs}</CardWrapper>
 		} else {
 			return <CircularProgress />
 		}
