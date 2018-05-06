@@ -59,6 +59,10 @@ const styles = theme => ({
 		width: '80%',
 		height: '80%'
 	},
+	smallIcon: {
+		height: 30,
+		width: 30
+	},
 	playerWrapper: {
 		display: 'flex',
 		width: '100%',
@@ -166,7 +170,8 @@ const styles = theme => ({
 	mobileSongInfo: {
 		display: 'flex',
 		flexDirection: 'column',
-		justifyContent: 'center'
+		justifyContent: 'center',
+		overflow: 'hidden'
 	},
 	row: {
 		display: 'flex',
@@ -313,12 +318,12 @@ class PlaylistPlayer extends Component {
 		)
 		const mobilePlayer = (
 			<div>
-				<Card
-					className={classes.mobileCard}
-					onClick={this.handleLaunch.bind(this)}
-				>
+				<Card className={classes.mobileCard}>
 					<div className={classes.row}>
-						<IconButton className={classes.mobileLaunch}>
+						<IconButton
+							className={classes.mobileLaunch}
+							onClick={this.handleLaunch.bind(this)}
+						>
 							{this.state.isLaunched ? <ArrowDownIcon /> : <ArrowUpIcon />}
 						</IconButton>
 						<div className={classes.mobileSongInfo}>
@@ -338,15 +343,22 @@ class PlaylistPlayer extends Component {
 							</Typography>
 						</div>
 					</div>
-					<input
-						type="range"
-						step="0.1"
-						max="1"
-						min="0"
-						value={volumeLvl}
-						onChange={this.changeVolumeLvl.bind(this)}
-						className={classes.mobileVolumeSelector}
-					/>
+					<IconButton
+						disabled={this.props.id === '' ? true : false}
+						className={classes.playPauseIcon}
+					>
+						{isPlaying ? (
+							<PauseIcon
+								onClick={this.handlePlayPause}
+								className={classes.smallIcon}
+							/>
+						) : (
+							<PlayIcon
+								onClick={this.handlePlayPause}
+								className={classes.smallIcon}
+							/>
+						)}
+					</IconButton>
 				</Card>
 				<SwipeableDrawer
 					anchor="bottom"
