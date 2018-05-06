@@ -46,22 +46,23 @@ class AlbumCard extends Component {
 				Save
 			</Button>
 		) : null
-		const linkBtn = this.props.playlist ? (
-			<Link
-				to={`/playlist/${this.props.artist.id}/${this.props.id}`}
-				style={{ textDecoration: 'none' }}
-			>
-				<Button size="small" color="primary">
-					View
-				</Button>
-			</Link>
-		) : (
-			<Link to={`/album/${this.props.id}`} style={{ textDecoration: 'none' }}>
-				<Button size="small" color="primary">
-					View
-				</Button>
-			</Link>
-		)
+		const linkBtn =
+			this.props.type === 'playlist' ? (
+				<Link
+					to={`/playlist/${this.props.artist.id}/${this.props.id}`}
+					style={{ textDecoration: 'none' }}
+				>
+					<Button size="small" color="primary">
+						View
+					</Button>
+				</Link>
+			) : (
+				<Link to={`/album/${this.props.id}`} style={{ textDecoration: 'none' }}>
+					<Button size="small" color="primary">
+						View
+					</Button>
+				</Link>
+			)
 		const { classes } = this.props
 		if (this.props.image && this.props.name && this.props.id) {
 			return (
