@@ -318,7 +318,10 @@ class PlaylistPlayer extends Component {
 		)
 		const mobilePlayer = (
 			<div>
-				<Card className={classes.mobileCard}>
+				<Card
+					className={classes.mobileCard}
+					onClick={this.handleLaunch.bind(this)}
+				>
 					<div className={classes.row}>
 						<IconButton
 							className={classes.mobileLaunch}
