@@ -4,7 +4,11 @@ import { withStyles } from 'material-ui/styles'
 import Card from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
+import Hidden from 'material-ui/Hidden'
+import SwipeableDrawer from 'material-ui/SwipeableDrawer'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
+import ArrowUpIcon from 'material-ui-icons/KeyboardArrowUp'
+import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
 import SkipNextIcon from 'material-ui-icons/SkipNext'
 import PlayIcon from 'material-ui-icons/PlayArrow'
 import PauseIcon from 'material-ui-icons/Pause'
@@ -117,6 +121,57 @@ const styles = theme => ({
 			backgroundColor: 'white',
 			boxShadow: theme.shadows[2]
 		}
+	},
+	mobileVolumeSelector: {
+		marginRight: theme.spacing.unit * 2,
+		borderRadius: 7.5,
+		backgroundColor: theme.palette.primary.main,
+		width: 80,
+		'&::-webkit-slider-thumb': {
+			height: 15,
+			width: 15,
+			borderRadius: '50%',
+			backgroundColor: 'white',
+			boxShadow: theme.shadows[2]
+		}
+	},
+	mobileCard: {
+		position: 'fixed',
+		bottom: 0,
+		width: '100%',
+		height: 50,
+		display: 'flex',
+		justifyContent: 'space-between',
+		alignItems: 'center'
+	},
+	mobileLaunch: {
+		marginRight: 15,
+		marginLeft: 15
+	},
+	mobileDrawer: {
+		marginTop: 50,
+		padding: theme.spacing.unit,
+		height: 500,
+		display: 'flex',
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'space-around',
+		marginBottom: 50
+	},
+	mobileSongArt: {
+		height: 200,
+		width: 200,
+		marginBottom: theme.spacing.unit
+	},
+	mobileSongInfo: {
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'center'
+	},
+	row: {
+		display: 'flex',
+		width: '70%',
+		marginRight: theme.spacing.unit
 	}
 })
 
@@ -129,7 +184,8 @@ class PlaylistPlayer extends Component {
 			currentTime: 0,
 			duration: 0,
 			volumeLvl: 1,
-			source: ''
+			source: '',
+			isLaunched: false
 		}
 		this.audio = React.createRef()
 		this.input = React.createRef()
@@ -198,10 +254,144 @@ class PlaylistPlayer extends Component {
 				.then(url => this.setState({ source: url }))
 		}
 	}
+	handleOpen() {
+		this.setState({
+			isLaunched: true
+		})
+	}
+	handleClose() {
+		this.setState({
+			isLaunched: false
+		})
+	}
+	handleLaunch() {
+		console.log('launched')
+		this.setState({
+			isLaunched: !this.state.isLaunched
+		})
+	}
 	render() {
 		const { duration, currentTime, volumeLvl } = this.state
 		const { classes, isPlaying } = this.props
-
+		const controls = (
+			<div className={classes.controls}>
+				<IconButton
+					disabled={this.props.id === '' ? true : false}
+					className={classes.icon}
+				>
+					<SkipPreviousIcon
+						onClick={this.handlePrev}
+						className={classes.innerIcon}
+					/>
+				</IconButton>
+				<IconButton
+					disabled={this.props.id === '' ? true : false}
+					className={classes.playPauseIcon}
+				>
+					{isPlaying ? (
+						<PauseIcon
+							onClick={this.handlePlayPause}
+							className={classes.innerIcon}
+						/>
+					) : (
+						<PlayIcon
+							onClick={this.handlePlayPause}
+							className={classes.innerIcon}
+						/>
+					)}
+				</IconButton>
+				<IconButton
+					disabled={this.props.id === '' ? true : false}
+					className={classes.icon}
+				>
+					<SkipNextIcon
+						onClick={this.handleNext}
+						className={classes.innerIcon}
+					/>
+				</IconButton>
+			</div>
+		)
+		const mobilePlayer = (
+			<div>
+				<Card
+					className={classes.mobileCard}
+					onClick={this.handleLaunch.bind(this)}
+				>
+					<div className={classes.row}>
+						<IconButton className={classes.mobileLaunch}>
+							{this.state.isLaunched ? <ArrowDownIcon /> : <ArrowUpIcon />}
+						</IconButton>
+						<div className={classes.mobileSongInfo}>
+							<Typography
+								className={classes.truncate}
+								component="h3"
+								title={this.props.tracks[this.props.currentTrack].name}
+							>
+								{this.props.tracks[this.props.currentTrack].name}
+							</Typography>
+							<Typography
+								className={classes.truncate}
+								variant="caption"
+								title={this.props.tracks[this.props.currentTrack].artist}
+							>
+								{this.props.tracks[this.props.currentTrack].artist}
+							</Typography>
+						</div>
+					</div>
+					<input
+						type="range"
+						step="0.1"
+						max="1"
+						min="0"
+						value={volumeLvl}
+						onChange={this.changeVolumeLvl.bind(this)}
+						className={classes.mobileVolumeSelector}
+					/>
+				</Card>
+				<SwipeableDrawer
+					anchor="bottom"
+					open={this.state.isLaunched}
+					onOpen={this.handleOpen.bind(this)}
+					onClose={this.handleClose.bind(this)}
+				>
+					<div className={classes.mobileDrawer}>
+						<img
+							className={classes.mobileSongArt}
+							alt="Song Cover Art"
+							src={this.props.tracks[this.props.currentTrack].image}
+						/>
+						<div>
+							<Typography
+								align="center"
+								className={classes.truncate}
+								variant="headline"
+								component="h3"
+								title={this.props.tracks[this.props.currentTrack].name}
+							>
+								{this.props.tracks[this.props.currentTrack].name}
+							</Typography>
+							<Typography
+								align="center"
+								className={classes.truncate}
+								variant="subheading"
+								title={this.props.tracks[this.props.currentTrack].artist}
+							>
+								{this.props.tracks[this.props.currentTrack].artist}
+							</Typography>
+						</div>
+						<input
+							type="range"
+							value={currentTime}
+							max={duration}
+							onChange={this.handleChange.bind(this)}
+							ref={this.input}
+							className={classes.progressInput}
+						/>
+						{controls}
+					</div>
+				</SwipeableDrawer>
+			</div>
+		)
 		const player = (
 			<Card className={classes.card}>
 				<div className={classes.playerWrapper}>
@@ -221,7 +411,6 @@ class PlaylistPlayer extends Component {
 							>
 								{this.props.tracks[this.props.currentTrack].name}
 							</Typography>
-
 							<Typography
 								className={classes.truncate}
 								variant="subheading"
@@ -232,42 +421,7 @@ class PlaylistPlayer extends Component {
 						</div>
 					</div>
 					<div>
-						<div className={classes.controls}>
-							<IconButton
-								disabled={this.props.id === '' ? true : false}
-								className={classes.icon}
-							>
-								<SkipPreviousIcon
-									onClick={this.handlePrev}
-									className={classes.innerIcon}
-								/>
-							</IconButton>
-							<IconButton
-								disabled={this.props.id === '' ? true : false}
-								className={classes.playPauseIcon}
-							>
-								{isPlaying ? (
-									<PauseIcon
-										onClick={this.handlePlayPause}
-										className={classes.innerIcon}
-									/>
-								) : (
-									<PlayIcon
-										onClick={this.handlePlayPause}
-										className={classes.innerIcon}
-									/>
-								)}
-							</IconButton>
-							<IconButton
-								disabled={this.props.id === '' ? true : false}
-								className={classes.icon}
-							>
-								<SkipNextIcon
-									onClick={this.handleNext}
-									className={classes.innerIcon}
-								/>
-							</IconButton>
-						</div>
+						{controls}
 						<div className={classes.progress}>
 							<Typography className={classes.currentTime} variant="caption">
 								{convertToSeconds(this.state.currentTime * 1000)}
@@ -308,7 +462,16 @@ class PlaylistPlayer extends Component {
 				</div>
 			</Card>
 		)
-		return <div className={classes.root}>{player}</div>
+		return (
+			<div className={classes.root}>
+				<Hidden smDown implementation="css">
+					{player}
+				</Hidden>
+				<Hidden mdUp implementation="css">
+					{mobilePlayer}
+				</Hidden>
+			</div>
+		)
 	}
 }
 
