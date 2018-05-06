@@ -109,7 +109,8 @@ class PlaylistPlayer extends Component {
 			tracks: [],
 			currentTime: 0,
 			duration: 0,
-			volumeLvl: 1
+			volumeLvl: 1,
+			source: ''
 		}
 		this.audio = React.createRef()
 		this.input = React.createRef()
@@ -161,6 +162,22 @@ class PlaylistPlayer extends Component {
 	}
 	handleOnPlay() {
 		this.props.dispatch(play())
+	}
+	componentDidUpdate(prevProps) {
+		if (
+			prevProps.tracks[prevProps.currentTrack].id !==
+			this.props.tracks[this.props.currentTrack].id
+		) {
+			fetch(
+				`https://apolloapi.herokuapp.com/${encodeURIComponent(
+					this.props.tracks[this.props.currentTrack].name
+				)}/${encodeURIComponent(
+					this.props.tracks[this.props.currentTrack].artist
+				)}`
+			)
+				.then(res => res.text())
+				.then(url => this.setState({ source: url }))
+		}
 	}
 	render() {
 		const { duration, currentTime, volumeLvl } = this.state
@@ -240,15 +257,7 @@ class PlaylistPlayer extends Component {
 								autoPlay
 								onPlay={this.handleOnPlay.bind(this)}
 								ref={this.audio}
-								src={
-									this.props.tracks[this.props.currentTrack].name === ''
-										? null
-										: `https://apolloapi.herokuapp.com/${encodeURIComponent(
-												this.props.tracks[this.props.currentTrack].name
-										  )}/${encodeURIComponent(
-												this.props.tracks[this.props.currentTrack].artist
-										  )}`
-								}
+								src={this.state.source}
 								onTimeUpdate={this.handleTimeUpdate}
 								onEnded={this.handleNext}
 								onError={this.handleNext}
