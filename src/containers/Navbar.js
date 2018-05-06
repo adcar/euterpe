@@ -81,6 +81,9 @@ const styles = theme => ({
 	drawer: {
 		position: 'fixed',
 		zIndex: 2
+	},
+	menu: {
+		zIndex: 99999
 	}
 })
 
@@ -158,7 +161,7 @@ class Navbar extends React.Component {
 
 		let popup = window.open(
 			'https://accounts.spotify.com/en/status',
-			'Log Out',
+			'Logout of Spotify',
 			`toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no, width=${width}, height=${height}, top=${top}, left=${left}`
 		)
 
@@ -245,6 +248,7 @@ class Navbar extends React.Component {
 							/>
 						</IconButton>
 						<Menu
+							className={classes.menu}
 							id="menu-appbar"
 							anchorEl={this.state.anchorEl}
 							anchorOrigin={{ vertical: 'top', horizontal: 'right' }}

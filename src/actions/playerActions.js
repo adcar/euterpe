@@ -17,3 +17,10 @@ export const prevSong = () => ({
 export const nextSong = () => ({
 	type: 'NEXT_SONG'
 })
+
+export const play = () => ({
+	type: 'PLAY'
+})
+export const pause = () => ({
+	type: 'PAUSE'
+})

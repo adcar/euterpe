@@ -5,13 +5,7 @@ import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
 import { playTrack } from '../actions/playerActions'
-
-const convertToSeconds = millis => {
-	let minutes = Math.floor(millis / 60000)
-	let seconds = ((millis % 60000) / 1000).toFixed(0)
-	return `${minutes}:${(seconds < 10 ? '0' : '') + seconds}`
-}
-
+import convertToSeconds from '../convertToSeconds'
 const styles = theme => ({
 	selected: {
 		color: theme.palette.primary.main

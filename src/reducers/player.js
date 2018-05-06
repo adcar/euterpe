@@ -7,7 +7,8 @@ const initialState = {
 			id: ''
 		}
 	],
-	currentTrack: 0
+	currentTrack: 0,
+	isPlaying: false
 }
 
 const player = (state = initialState, action) => {
@@ -42,7 +43,16 @@ const player = (state = initialState, action) => {
 			} else {
 				return state
 			}
-
+		case 'PLAY':
+			return {
+				...state,
+				isPlaying: true
+			}
+		case 'PAUSE':
+			return {
+				...state,
+				isPlaying: false
+			}
 		default:
 			return state
 	}
