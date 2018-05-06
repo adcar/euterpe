@@ -3,6 +3,7 @@ import PropTypes from 'prop-types'
 import { withRouter, Link } from 'react-router-dom'
 import { withStyles } from 'material-ui/styles'
 import Drawer from 'material-ui/Drawer'
+import SwipeableDrawer from 'material-ui/SwipeableDrawer'
 import AppBar from 'material-ui/AppBar'
 import Toolbar from 'material-ui/Toolbar'
 import Input from 'material-ui/Input'
@@ -268,7 +269,7 @@ class Navbar extends React.Component {
 					</Toolbar>
 				</AppBar>
 				<Hidden mdUp>
-					<Drawer
+					<SwipeableDrawer
 						className={classes.drawer}
 						variant="temporary"
 						anchor={theme.direction === 'rtl' ? 'right' : 'left'}
@@ -280,7 +281,7 @@ class Navbar extends React.Component {
 						}
 					>
 						{drawer}
-					</Drawer>
+					</SwipeableDrawer>
 				</Hidden>
 				<Hidden smDown implementation="css">
 					<Drawer

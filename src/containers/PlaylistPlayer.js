@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
-import Card, { CardContent } from 'material-ui/Card'
+import Card from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
@@ -79,10 +79,6 @@ const styles = theme => ({
 		justifyContent: 'center',
 		paddingLeft: theme.spacing.unit,
 		paddingBottom: theme.spacing.unit
-	},
-	progress: {
-		display: 'flex',
-		alignItems: 'center'
 	},
 	progressInput: {
 		width: 200
@@ -266,7 +262,6 @@ class PlaylistPlayer extends Component {
 								type="range"
 								value={currentTime}
 								max={duration}
-								value={currentTime}
 								onChange={this.handleChange.bind(this)}
 								ref={this.input}
 								className={classes.progressInput}
