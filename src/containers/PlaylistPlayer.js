@@ -11,6 +11,7 @@ import PauseIcon from 'material-ui-icons/Pause'
 import { connect } from 'react-redux'
 import convertToSeconds from '../convertToSeconds'
 import { prevSong, nextSong, play, pause } from '../actions/playerActions'
+import './slider.css'
 const styles = theme => ({
 	root: {
 		position: 'fixed',
@@ -81,7 +82,16 @@ const styles = theme => ({
 		paddingBottom: theme.spacing.unit
 	},
 	progressInput: {
-		width: 200
+		borderRadius: 7.5,
+		backgroundColor: theme.palette.primary.main,
+		width: 200,
+		'&::-webkit-slider-thumb': {
+			height: 15,
+			width: 15,
+			borderRadius: '50%',
+			backgroundColor: 'white',
+			boxShadow: theme.shadows[2]
+		}
 	},
 	duration: {
 		marginLeft: theme.spacing.unit * 2
@@ -94,6 +104,19 @@ const styles = theme => ({
 		whiteSpace: 'nowrap',
 		overflow: 'hidden',
 		textOverflow: 'ellipsis'
+	},
+	volumeSelector: {
+		borderRadius: 7.5,
+		backgroundColor: theme.palette.primary.main,
+		transform: 'rotate(-90deg)',
+		width: 80,
+		'&::-webkit-slider-thumb': {
+			height: 15,
+			width: 15,
+			borderRadius: '50%',
+			backgroundColor: 'white',
+			boxShadow: theme.shadows[2]
+		}
 	}
 })
 
@@ -279,6 +302,7 @@ class PlaylistPlayer extends Component {
 							min="0"
 							value={volumeLvl}
 							onChange={this.changeVolumeLvl.bind(this)}
+							className={classes.volumeSelector}
 						/>
 					</div>
 				</div>
