@@ -314,7 +314,6 @@ class PlaylistPlayer extends Component {
 		}
 	}
 	fetchUrl() {
-		console.log('called fetch url')
 		fetch(
 			`https://apolloapi.herokuapp.com/${encodeURIComponent(
 				this.state.tracks[this.props.currentTrack].name
@@ -331,30 +330,14 @@ class PlaylistPlayer extends Component {
 				prevState.tracks[prevProps.currentTrack].id !==
 				this.state.tracks[this.props.currentTrack].id
 			) {
-				fetch(
-					`https://apolloapi.herokuapp.com/${encodeURIComponent(
-						this.state.tracks[this.props.currentTrack].name
-					)}/${encodeURIComponent(
-						this.state.tracks[this.props.currentTrack].artist
-					)}`
-				)
-					.then(res => res.text())
-					.then(url => this.setState({ source: url }))
+				this.fetchUrl()
 			}
 		} else if (!this.state.isShuffled) {
 			if (
 				prevProps.tracks[prevProps.currentTrack].id !==
 				this.props.tracks[this.props.currentTrack].id
 			) {
-				fetch(
-					`https://apolloapi.herokuapp.com/${encodeURIComponent(
-						this.state.tracks[this.props.currentTrack].name
-					)}/${encodeURIComponent(
-						this.state.tracks[this.props.currentTrack].artist
-					)}`
-				)
-					.then(res => res.text())
-					.then(url => this.setState({ source: url }))
+				this.fetchUrl()
 			}
 		}
 	}
