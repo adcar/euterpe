@@ -12,11 +12,20 @@ import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
 import ArrowUpIcon from 'material-ui-icons/KeyboardArrowUp'
 import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
 import SkipNextIcon from 'material-ui-icons/SkipNext'
+import RepeatIcon from 'material-ui-icons/Repeat'
+import RepeatOneIcon from 'material-ui-icons/RepeatOne'
+import ShuffleIcon from 'material-ui-icons/Shuffle'
 import PlayIcon from 'material-ui-icons/PlayArrow'
 import PauseIcon from 'material-ui-icons/Pause'
 import { connect } from 'react-redux'
 import convertToSeconds from '../convertToSeconds'
-import { prevSong, nextSong, play, pause } from '../actions/playerActions'
+import {
+	prevSong,
+	nextSong,
+	play,
+	pause,
+	shuffle
+} from '../actions/playerActions'
 import './slider.css'
 const styles = theme => ({
 	root: {
@@ -60,6 +69,15 @@ const styles = theme => ({
 	innerIcon: {
 		width: '80%',
 		height: '80%'
+	},
+	extraIcon: {
+		width: 20,
+		height: 20
+	},
+	extraIconSelected: {
+		height: 20,
+		width: 20,
+		color: theme.palette.primary.main
 	},
 	smallIcon: {
 		height: 30,
@@ -192,7 +210,10 @@ class PlaylistPlayer extends Component {
 			duration: 0,
 			volumeLvl: 1,
 			source: '',
-			isLaunched: false
+			isLaunched: false,
+			isShuffled: false,
+			isLooped: false,
+			isSingleLooped: false
 		}
 		this.audio = React.createRef()
 		this.input = React.createRef()
@@ -202,6 +223,7 @@ class PlaylistPlayer extends Component {
 		this.handlePrev = this.handlePrev.bind(this)
 		this.handlePlayPause = this.handlePlayPause.bind(this)
 	}
+
 	handlePrev() {
 		this.props.dispatch(prevSong())
 	}
@@ -319,11 +341,36 @@ class PlaylistPlayer extends Component {
 			isLaunched: !this.state.isLaunched
 		})
 	}
+	handleShuffle() {
+		// console.log('shuffled')
+		// console.log(this.props.tracks)
+		// this.shuffle(this.props.tracks)
+		this.props.dispatch(shuffle(this.props.tracks))
+		this.setState({
+			isShuffled: !this.state.isShuffled
+		})
+	}
 	render() {
-		const { duration, currentTime, volumeLvl } = this.state
+		const { duration, currentTime, volumeLvl, isShuffled } = this.state
 		const { classes, isPlaying } = this.props
 		const controls = (
 			<div className={classes.controls}>
+				<IconButton
+					disabled={this.props.id === '' ? true : false}
+					className={classes.icon}
+				>
+					{isShuffled ? (
+						<ShuffleIcon
+							className={classes.extraIconSelected}
+							onClick={this.handleShuffle.bind(this)}
+						/>
+					) : (
+						<ShuffleIcon
+							className={classes.extraIcon}
+							onClick={this.handleShuffle.bind(this)}
+						/>
+					)}
+				</IconButton>
 				<IconButton
 					disabled={this.props.id === '' ? true : false}
 					className={classes.icon}
@@ -357,6 +404,12 @@ class PlaylistPlayer extends Component {
 						onClick={this.handleNext}
 						className={classes.innerIcon}
 					/>
+				</IconButton>
+				<IconButton
+					disabled={this.props.id === '' ? true : false}
+					className={classes.icon}
+				>
+					<RepeatIcon className={classes.extraIcon} />
 				</IconButton>
 			</div>
 		)

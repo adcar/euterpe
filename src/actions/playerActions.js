@@ -24,3 +24,8 @@ export const play = () => ({
 export const pause = () => ({
 	type: 'PAUSE'
 })
+
+export const shuffle = tracks => ({
+	type: 'SHUFFLE',
+	payload: tracks
+})

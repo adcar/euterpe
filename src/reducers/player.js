@@ -8,7 +8,8 @@ const initialState = {
 		}
 	],
 	currentTrack: 0,
-	isPlaying: false
+	isPlaying: false,
+	shuffledTracks: []
 }
 
 const player = (state = initialState, action) => {
@@ -53,6 +54,17 @@ const player = (state = initialState, action) => {
 				...state,
 				isPlaying: false
 			}
+		case 'SHUFFLE':
+			let a = action.payload
+			for (let i = a.length - 1; i > 0; i--) {
+				const j = Math.floor(Math.random() * (i + 1))
+				;[a[i], a[j]] = [a[j], a[i]]
+			}
+			return {
+				...state,
+				shuffledTracks: a
+			}
+
 		default:
 			return state
 	}
