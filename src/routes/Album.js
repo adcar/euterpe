@@ -9,19 +9,49 @@ import Button from 'material-ui/Button'
 import { connect } from 'react-redux'
 import { playPlaylist } from '../actions/playerActions'
 import SongItem from '../components/SongItem'
-import PageLabel from '../components/PageLabel'
-
+import Card, { CardMedia, CardContent, CardActions } from 'material-ui/Card'
 import SpotifyWebApi from 'spotify-web-api-node'
+import Typography from 'material-ui/Typography'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
 const styles = theme => ({
-	title: {
-		width: '100%',
+	twoColumn: {
 		display: 'flex',
+		alignItems: 'center',
 		flexDirection: 'column',
-		jusitfyContent: 'center',
-		alignItems: 'center'
+		[theme.breakpoints.up('md')]: {
+			justifyContent: 'space-around',
+			flexDirection: 'row',
+			alignItems: 'start'
+		}
+	},
+	media: {
+		width: 400,
+		height: 400
+	},
+	title: {
+		maxWidth: 300
+	},
+	subheading: {
+		marginTop: theme.spacing.unit
+	},
+	card: {
+		display: 'flex',
+		alignItems: 'center',
+		flexDirection: 'column',
+		top: 100,
+		marginTop: theme.spacing.unit * 2,
+		marginBottom: theme.spacing.unit * 2,
+
+		[theme.breakpoints.up('xl')]: {
+			position: 'fixed'
+		}
+	},
+	center: {
+		display: 'flex',
+		alignItems: 'center',
+		flexDirection: 'column'
 	}
 })
 
@@ -30,7 +60,8 @@ class Album extends Component {
 		super()
 		this.state = {
 			tracks: [],
-			albumInfo: {},
+			albumArt: 'https://via.placeholder.com/120x120',
+			albumName: '',
 			tracksInfo: []
 		}
 		this.play = this.play.bind(this)
@@ -48,7 +79,9 @@ class Album extends Component {
 			.getAlbum(this.props.match.params.id)
 			.then(data => {
 				this.setState({
-					albumInfo: data.body
+					albumArt: data.body.images[0].url,
+					albumName: data.body.name,
+					albumArtist: data.body.artists[0].name
 				})
 				return Array.from(data.body.tracks.items).map(function(t) {
 					return t.id
@@ -82,20 +115,45 @@ class Album extends Component {
 	render() {
 		const { classes } = this.props
 		return (
-			<div>
-				<div className={classes.title}>
-					<PageLabel>{this.state.albumInfo.name}</PageLabel>
-					<Button
-						style={{ marginTop: 20 }}
-						variant="raised"
-						color="primary"
-						onClick={() => this.play(0)}
-					>
-						<PlayArrow style={{ marginRight: 10 }} />
-						Play
-					</Button>
+			<div className={classes.twoColumn}>
+				<div>
+					<Card className={classes.card}>
+						<CardMedia
+							image={this.state.albumArt}
+							className={classes.media}
+							title={this.state.albumName}
+						/>
+						<CardContent className={classes.center}>
+							<Typography
+								className={classes.title}
+								variant="headline"
+								align="center"
+							>
+								{this.state.albumName}
+							</Typography>
+							<Typography
+								align="center"
+								className={classes.subheading}
+								variant="subheading"
+							>
+								{this.state.albumArtist}
+							</Typography>
+
+							<Button
+								style={{ marginTop: 20 }}
+								variant="raised"
+								color="primary"
+								onClick={() => this.play(0)}
+							>
+								<PlayArrow style={{ marginRight: 10 }} />
+								Play
+							</Button>
+						</CardContent>
+					</Card>
 				</div>
-				<List className={classes.trackSelector}>{this.state.tracks}</List>
+				<div>
+					<List className={classes.trackSelector}>{this.state.tracks}</List>
+				</div>
 			</div>
 		)
 	}
