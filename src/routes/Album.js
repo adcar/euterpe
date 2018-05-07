@@ -9,7 +9,7 @@ import Button from 'material-ui/Button'
 import { connect } from 'react-redux'
 import { playPlaylist } from '../actions/playerActions'
 import SongItem from '../components/SongItem'
-import Card, { CardMedia, CardContent, CardActions } from 'material-ui/Card'
+import Card, { CardMedia, CardContent } from 'material-ui/Card'
 import SpotifyWebApi from 'spotify-web-api-node'
 import Typography from 'material-ui/Typography'
 const spotifyApi = new SpotifyWebApi()
