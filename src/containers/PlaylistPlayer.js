@@ -6,6 +6,8 @@ import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import Hidden from 'material-ui/Hidden'
 import Drawer from 'material-ui/Drawer'
+import Slide from 'material-ui/transitions/Slide'
+import Paper from 'material-ui/Paper'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
 import ArrowUpIcon from 'material-ui-icons/KeyboardArrowUp'
 import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
@@ -404,43 +406,50 @@ class PlaylistPlayer extends Component {
 						)}
 					</IconButton>
 				</Card>
-				<Drawer anchor="bottom" open={this.state.isLaunched}>
-					<div className={classes.mobileDrawer}>
-						<img
-							className={classes.mobileSongArt}
-							alt="Song Cover Art"
-							src={this.props.tracks[this.props.currentTrack].image}
-						/>
-						<div>
-							<Typography
-								align="center"
-								className={classes.truncate}
-								variant="headline"
-								component="h3"
-								title={this.props.tracks[this.props.currentTrack].name}
-							>
-								{this.props.tracks[this.props.currentTrack].name}
-							</Typography>
-							<Typography
-								align="center"
-								className={classes.truncate}
-								variant="subheading"
-								title={this.props.tracks[this.props.currentTrack].artist}
-							>
-								{this.props.tracks[this.props.currentTrack].artist}
-							</Typography>
+				<Slide
+					direction="up"
+					in={this.state.isLaunched}
+					mountOnEnter
+					unmountOnExit
+				>
+					<Paper>
+						<div className={classes.mobileDrawer}>
+							<img
+								className={classes.mobileSongArt}
+								alt="Song Cover Art"
+								src={this.props.tracks[this.props.currentTrack].image}
+							/>
+							<div>
+								<Typography
+									align="center"
+									className={classes.truncate}
+									variant="headline"
+									component="h3"
+									title={this.props.tracks[this.props.currentTrack].name}
+								>
+									{this.props.tracks[this.props.currentTrack].name}
+								</Typography>
+								<Typography
+									align="center"
+									className={classes.truncate}
+									variant="subheading"
+									title={this.props.tracks[this.props.currentTrack].artist}
+								>
+									{this.props.tracks[this.props.currentTrack].artist}
+								</Typography>
+							</div>
+							<input
+								type="range"
+								value={currentTime}
+								max={duration}
+								onChange={this.handleChange.bind(this)}
+								ref={this.input}
+								className={classes.progressInput}
+							/>
+							{controls}
 						</div>
-						<input
-							type="range"
-							value={currentTime}
-							max={duration}
-							onChange={this.handleChange.bind(this)}
-							ref={this.input}
-							className={classes.progressInput}
-						/>
-						{controls}
-					</div>
-				</Drawer>
+					</Paper>
+				</Slide>
 			</div>
 		)
 		const player = (
