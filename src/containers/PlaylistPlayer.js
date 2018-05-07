@@ -205,7 +205,11 @@ class PlaylistPlayer extends Component {
 		super(props)
 		this.state = {
 			sources: [],
-			tracks: [],
+			tracks: [
+				{
+					name: ''
+				}
+			],
 			currentTime: 0,
 			duration: 0,
 			volumeLvl: 1,
@@ -309,20 +313,48 @@ class PlaylistPlayer extends Component {
 			})
 		}
 	}
-	componentDidUpdate(prevProps) {
-		if (
-			prevProps.tracks[prevProps.currentTrack].id !==
-			this.props.tracks[this.props.currentTrack].id
-		) {
-			fetch(
-				`https://apolloapi.herokuapp.com/${encodeURIComponent(
-					this.props.tracks[this.props.currentTrack].name
-				)}/${encodeURIComponent(
-					this.props.tracks[this.props.currentTrack].artist
-				)}`
-			)
-				.then(res => res.text())
-				.then(url => this.setState({ source: url }))
+	componentDidUpdate(prevProps, prevState) {
+		if (this.state.isShuffled) {
+			if (
+				prevState.tracks[prevProps.currentTrack].id !==
+				this.state.tracks[this.props.currentTrack].id
+			) {
+				fetch(
+					`https://apolloapi.herokuapp.com/${encodeURIComponent(
+						this.props.tracks[this.props.currentTrack].name
+					)}/${encodeURIComponent(
+						this.props.tracks[this.props.currentTrack].artist
+					)}`
+				)
+					.then(res => res.text())
+					.then(url => this.setState({ source: url }))
+			}
+		} else if (!this.state.isShuffled) {
+			if (
+				prevProps.tracks[prevProps.currentTrack].id !==
+				this.props.tracks[this.props.currentTrack].id
+			) {
+				fetch(
+					`https://apolloapi.herokuapp.com/${encodeURIComponent(
+						this.props.tracks[this.props.currentTrack].name
+					)}/${encodeURIComponent(
+						this.props.tracks[this.props.currentTrack].artist
+					)}`
+				)
+					.then(res => res.text())
+					.then(url => this.setState({ source: url }))
+			}
+		}
+	}
+	static getDerivedStateFromProps(nextProps, prevState) {
+		if (prevState.isShuffled) {
+			return {
+				tracks: nextProps.shuffledTracks
+			}
+		} else {
+			return {
+				tracks: nextProps.tracks
+			}
 		}
 	}
 	handleOpen() {
@@ -343,9 +375,30 @@ class PlaylistPlayer extends Component {
 	}
 	handleShuffle() {
 		// console.log('shuffled')
-		// console.log(this.props.tracks)
-		// this.shuffle(this.props.tracks)
-		this.props.dispatch(shuffle(this.props.tracks))
+		// console.log(this.state.tracks)
+		// this.shuffle(this.state.tracks)
+
+		if (!this.state.isShuffled) {
+			console.log('shuffling...')
+			this.props.dispatch(shuffle(this.state.tracks.slice(0)))
+			this.setState(
+				{
+					tracks: this.props.shuffledTracks
+				},
+				() => {
+					this.audio.current.src = ''
+				}
+			)
+		} else if (this.state.isShuffled) {
+			console.log('setting back to normal...')
+			this.setState(
+				{
+					tracks: this.props.shuffledTracks // CHANGE THIS FIXME
+				},
+				() => (this.audio.current.src = '')
+			)
+		}
+
 		this.setState({
 			isShuffled: !this.state.isShuffled
 		})
@@ -430,16 +483,16 @@ class PlaylistPlayer extends Component {
 							<Typography
 								className={classes.truncate}
 								component="h3"
-								title={this.props.tracks[this.props.currentTrack].name}
+								title={this.state.tracks[this.props.currentTrack].name}
 							>
-								{this.props.tracks[this.props.currentTrack].name}
+								{this.state.tracks[this.props.currentTrack].name}
 							</Typography>
 							<Typography
 								className={classes.truncate}
 								variant="caption"
-								title={this.props.tracks[this.props.currentTrack].artist}
+								title={this.state.tracks[this.props.currentTrack].artist}
 							>
-								{this.props.tracks[this.props.currentTrack].artist}
+								{this.state.tracks[this.props.currentTrack].artist}
 							</Typography>
 						</div>
 					</div>
@@ -472,7 +525,7 @@ class PlaylistPlayer extends Component {
 								<img
 									className={classes.mobileSongArt}
 									alt="Song Cover Art"
-									src={this.props.tracks[this.props.currentTrack].image}
+									src={this.state.tracks[this.props.currentTrack].image}
 								/>
 								<div>
 									<Typography
@@ -480,17 +533,17 @@ class PlaylistPlayer extends Component {
 										className={classes.truncate}
 										variant="headline"
 										component="h3"
-										title={this.props.tracks[this.props.currentTrack].name}
+										title={this.state.tracks[this.props.currentTrack].name}
 									>
-										{this.props.tracks[this.props.currentTrack].name}
+										{this.state.tracks[this.props.currentTrack].name}
 									</Typography>
 									<Typography
 										align="center"
 										className={classes.truncate}
 										variant="subheading"
-										title={this.props.tracks[this.props.currentTrack].artist}
+										title={this.state.tracks[this.props.currentTrack].artist}
 									>
-										{this.props.tracks[this.props.currentTrack].artist}
+										{this.state.tracks[this.props.currentTrack].artist}
 									</Typography>
 								</div>
 								<input
@@ -515,7 +568,7 @@ class PlaylistPlayer extends Component {
 						<img
 							className={classes.songArt}
 							alt="Song Cover Art"
-							src={this.props.tracks[this.props.currentTrack].image}
+							src={this.state.tracks[this.props.currentTrack].image}
 						/>
 
 						<div>
@@ -523,16 +576,16 @@ class PlaylistPlayer extends Component {
 								className={classes.truncate}
 								variant="headline"
 								component="h3"
-								title={this.props.tracks[this.props.currentTrack].name}
+								title={this.state.tracks[this.props.currentTrack].name}
 							>
-								{this.props.tracks[this.props.currentTrack].name}
+								{this.state.tracks[this.props.currentTrack].name}
 							</Typography>
 							<Typography
 								className={classes.truncate}
 								variant="subheading"
-								title={this.props.tracks[this.props.currentTrack].artist}
+								title={this.state.tracks[this.props.currentTrack].artist}
 							>
-								{this.props.tracks[this.props.currentTrack].artist}
+								{this.state.tracks[this.props.currentTrack].artist}
 							</Typography>
 						</div>
 					</div>
@@ -600,13 +653,15 @@ const mapStateToProps = state => {
 		tracks: state.player.tracks,
 		currentTrack: parseInt(state.player.currentTrack, 10),
 		isPlaying: state.player.isPlaying,
-		id: state.player.tracks[0].id
+		id: state.player.tracks[0].id,
+		shuffledTracks: state.player.shuffledTracks
 	}
 }
 PlaylistPlayer.propTypes = {
 	tracks: PropTypes.array.isRequired,
 	currentTrack: PropTypes.number.isRequired,
 	isPlaying: PropTypes.bool.isRequired,
-	id: PropTypes.string.isRequired
+	id: PropTypes.string.isRequired,
+	shuffledTracks: PropTypes.array.isRequired
 }
 export default connect(mapStateToProps)(PlaylistPlayerWithStyles)

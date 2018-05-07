@@ -55,14 +55,11 @@ const player = (state = initialState, action) => {
 				isPlaying: false
 			}
 		case 'SHUFFLE':
-			let a = action.payload
-			for (let i = a.length - 1; i > 0; i--) {
-				const j = Math.floor(Math.random() * (i + 1))
-				;[a[i], a[j]] = [a[j], a[i]]
-			}
 			return {
 				...state,
-				shuffledTracks: a
+				shuffledTracks: action.payload.sort(function() {
+					return 0.5 - Math.random()
+				})
 			}
 
 		default:
