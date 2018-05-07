@@ -275,6 +275,7 @@ class Navbar extends React.Component {
 						anchor={theme.direction === 'rtl' ? 'right' : 'left'}
 						open={this.state.mobileOpen}
 						onClose={this.handleDrawerToggle}
+						onOpen={this.handleDrawerToggle}
 						classes={{ paper: classes.drawerPaper }}
 						ModalProps={
 							{ keepMounted: true } // Better open performance on mobile.
