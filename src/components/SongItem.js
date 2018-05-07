@@ -19,7 +19,12 @@ class SongItem extends Component {
 		this.handleTrack = this.handleTrack.bind(this)
 		this.handlePlaylist = this.handlePlaylist.bind(this)
 		this.state = {
-			isSelected: false
+			isSelected: false,
+			tracks: [
+				{
+					id: ''
+				}
+			]
 		}
 	}
 	handleTrack() {
@@ -38,6 +43,17 @@ class SongItem extends Component {
 		this.props.play(this.props.index)
 	}
 
+	static getDerivedStateFromProps(prevProps) {
+		if (prevProps.currentTracks === 'shuffledTracks') {
+			return {
+				tracks: prevProps.shuffledTracks
+			}
+		} else if (prevProps.currentTracks === 'tracks') {
+			return {
+				tracks: prevProps.tracks
+			}
+		}
+	}
 	render() {
 		const { classes } = this.props
 		return (
@@ -51,8 +67,7 @@ class SongItem extends Component {
 					<div>
 						<Typography
 							className={
-								this.props.playingTracks[this.props.currentTrack].id ===
-								this.props.id
+								this.state.tracks[this.props.currentTrack].id === this.props.id
 									? classes.selected
 									: classes.listItem
 							}
@@ -77,7 +92,9 @@ SongItem.propTypes = {
 
 const mapStateToProps = state => ({
 	currentTrack: state.player.currentTrack,
-	playingTracks: state.player.tracks
+	tracks: state.player.tracks,
+	shuffledTracks: state.player.shuffledTracks,
+	currentTracks: state.player.currentTracks
 })
 const SongItemWithStyles = withStyles(styles)(SongItem)
 export default connect(mapStateToProps)(SongItemWithStyles)

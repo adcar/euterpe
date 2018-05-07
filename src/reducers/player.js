@@ -9,6 +9,7 @@ const initialState = {
 	],
 	currentTrack: 0,
 	isPlaying: false,
+	currentTracks: 'tracks',
 	shuffledTracks: []
 }
 
@@ -59,7 +60,8 @@ const player = (state = initialState, action) => {
 				...state,
 				shuffledTracks: action.payload.sort(function() {
 					return 0.5 - Math.random()
-				})
+				}),
+				currentTracks: 'shuffledTracks'
 			}
 
 		default:

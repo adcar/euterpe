@@ -313,8 +313,20 @@ class PlaylistPlayer extends Component {
 			})
 		}
 	}
+	fetchUrl() {
+		console.log('called fetch url')
+		fetch(
+			`https://apolloapi.herokuapp.com/${encodeURIComponent(
+				this.props.tracks[this.props.currentTrack].name
+			)}/${encodeURIComponent(
+				this.props.tracks[this.props.currentTrack].artist
+			)}`
+		)
+			.then(res => res.text())
+			.then(url => this.setState({ source: url }))
+	}
 	componentDidUpdate(prevProps, prevState) {
-		if (this.state.isShuffled) {
+		if (prevState.isShuffled) {
 			if (
 				prevState.tracks[prevProps.currentTrack].id !==
 				this.state.tracks[this.props.currentTrack].id
@@ -385,9 +397,7 @@ class PlaylistPlayer extends Component {
 				{
 					tracks: this.props.shuffledTracks
 				},
-				() => {
-					this.audio.current.src = ''
-				}
+				() => this.fetchUrl()
 			)
 		} else if (this.state.isShuffled) {
 			console.log('setting back to normal...')
@@ -395,7 +405,7 @@ class PlaylistPlayer extends Component {
 				{
 					tracks: this.props.shuffledTracks // CHANGE THIS FIXME
 				},
-				() => (this.audio.current.src = '')
+				() => this.fetchUrl()
 			)
 		}
 
