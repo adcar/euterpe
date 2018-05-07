@@ -142,6 +142,7 @@ const styles = theme => ({
 	},
 	mobileCard: {
 		position: 'fixed',
+		zIndex: 5,
 		bottom: 0,
 		width: '100%',
 		height: 50,
@@ -412,43 +413,45 @@ class PlaylistPlayer extends Component {
 					mountOnEnter
 					unmountOnExit
 				>
-					<Paper>
-						<div className={classes.mobileDrawer}>
-							<img
-								className={classes.mobileSongArt}
-								alt="Song Cover Art"
-								src={this.props.tracks[this.props.currentTrack].image}
-							/>
-							<div>
-								<Typography
-									align="center"
-									className={classes.truncate}
-									variant="headline"
-									component="h3"
-									title={this.props.tracks[this.props.currentTrack].name}
-								>
-									{this.props.tracks[this.props.currentTrack].name}
-								</Typography>
-								<Typography
-									align="center"
-									className={classes.truncate}
-									variant="subheading"
-									title={this.props.tracks[this.props.currentTrack].artist}
-								>
-									{this.props.tracks[this.props.currentTrack].artist}
-								</Typography>
+					<div>
+						<Paper className={classes.mobilePaper}>
+							<div className={classes.mobileDrawer}>
+								<img
+									className={classes.mobileSongArt}
+									alt="Song Cover Art"
+									src={this.props.tracks[this.props.currentTrack].image}
+								/>
+								<div>
+									<Typography
+										align="center"
+										className={classes.truncate}
+										variant="headline"
+										component="h3"
+										title={this.props.tracks[this.props.currentTrack].name}
+									>
+										{this.props.tracks[this.props.currentTrack].name}
+									</Typography>
+									<Typography
+										align="center"
+										className={classes.truncate}
+										variant="subheading"
+										title={this.props.tracks[this.props.currentTrack].artist}
+									>
+										{this.props.tracks[this.props.currentTrack].artist}
+									</Typography>
+								</div>
+								<input
+									type="range"
+									value={currentTime}
+									max={duration}
+									onChange={this.handleChange.bind(this)}
+									ref={this.input}
+									className={classes.progressInput}
+								/>
+								{controls}
 							</div>
-							<input
-								type="range"
-								value={currentTime}
-								max={duration}
-								onChange={this.handleChange.bind(this)}
-								ref={this.input}
-								className={classes.progressInput}
-							/>
-							{controls}
-						</div>
-					</Paper>
+						</Paper>
+					</div>
 				</Slide>
 			</div>
 		)
