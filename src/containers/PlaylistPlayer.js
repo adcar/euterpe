@@ -317,9 +317,9 @@ class PlaylistPlayer extends Component {
 		console.log('called fetch url')
 		fetch(
 			`https://apolloapi.herokuapp.com/${encodeURIComponent(
-				this.props.tracks[this.props.currentTrack].name
+				this.state.tracks[this.props.currentTrack].name
 			)}/${encodeURIComponent(
-				this.props.tracks[this.props.currentTrack].artist
+				this.state.tracks[this.props.currentTrack].artist
 			)}`
 		)
 			.then(res => res.text())
@@ -333,9 +333,9 @@ class PlaylistPlayer extends Component {
 			) {
 				fetch(
 					`https://apolloapi.herokuapp.com/${encodeURIComponent(
-						this.props.tracks[this.props.currentTrack].name
+						this.state.tracks[this.props.currentTrack].name
 					)}/${encodeURIComponent(
-						this.props.tracks[this.props.currentTrack].artist
+						this.state.tracks[this.props.currentTrack].artist
 					)}`
 				)
 					.then(res => res.text())
@@ -348,9 +348,9 @@ class PlaylistPlayer extends Component {
 			) {
 				fetch(
 					`https://apolloapi.herokuapp.com/${encodeURIComponent(
-						this.props.tracks[this.props.currentTrack].name
+						this.state.tracks[this.props.currentTrack].name
 					)}/${encodeURIComponent(
-						this.props.tracks[this.props.currentTrack].artist
+						this.state.tracks[this.props.currentTrack].artist
 					)}`
 				)
 					.then(res => res.text())
