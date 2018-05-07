@@ -211,7 +211,7 @@ class PlaylistPlayer extends Component {
 				}
 			],
 			currentTime: 0,
-			duration: 0,
+			duration: 100,
 			volumeLvl: 1,
 			source: '',
 			isLaunched: false,
@@ -542,7 +542,7 @@ class PlaylistPlayer extends Component {
 								<input
 									type="range"
 									value={currentTime}
-									max={duration}
+									max={duration.toString()}
 									onChange={this.handleChange.bind(this)}
 									ref={this.input}
 									className={classes.progressInput}
@@ -600,7 +600,7 @@ class PlaylistPlayer extends Component {
 							<input
 								type="range"
 								value={currentTime}
-								max={duration}
+								max={duration.toString()}
 								onChange={this.handleChange.bind(this)}
 								ref={this.input}
 								className={classes.progressInput}
