@@ -5,7 +5,7 @@ import Card from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import Hidden from 'material-ui/Hidden'
-import SwipeableDrawer from 'material-ui/SwipeableDrawer'
+import Drawer from 'material-ui/Drawer'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
 import ArrowUpIcon from 'material-ui-icons/KeyboardArrowUp'
 import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
@@ -359,10 +359,7 @@ class PlaylistPlayer extends Component {
 		)
 		const mobilePlayer = (
 			<div>
-				<Card
-					className={classes.mobileCard}
-					onClick={this.handleLaunch.bind(this)}
-				>
+				<Card className={classes.mobileCard}>
 					<div className={classes.row}>
 						<IconButton
 							className={classes.mobileLaunch}
@@ -370,7 +367,10 @@ class PlaylistPlayer extends Component {
 						>
 							{this.state.isLaunched ? <ArrowDownIcon /> : <ArrowUpIcon />}
 						</IconButton>
-						<div className={classes.mobileSongInfo}>
+						<div
+							className={classes.mobileSongInfo}
+							onClick={this.handleLaunch.bind(this)}
+						>
 							<Typography
 								className={classes.truncate}
 								component="h3"
@@ -404,12 +404,7 @@ class PlaylistPlayer extends Component {
 						)}
 					</IconButton>
 				</Card>
-				<SwipeableDrawer
-					anchor="bottom"
-					open={this.state.isLaunched}
-					onOpen={this.handleOpen.bind(this)}
-					onClose={this.handleClose.bind(this)}
-				>
+				<Drawer anchor="bottom" open={this.state.isLaunched}>
 					<div className={classes.mobileDrawer}>
 						<img
 							className={classes.mobileSongArt}
@@ -445,7 +440,7 @@ class PlaylistPlayer extends Component {
 						/>
 						{controls}
 					</div>
-				</SwipeableDrawer>
+				</Drawer>
 			</div>
 		)
 		const player = (
