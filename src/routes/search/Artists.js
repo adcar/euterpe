@@ -14,7 +14,6 @@ class Artists extends Component {
 		const { term } = this.props.match.params
 		this.props.search(term)
 		spotifyApi.searchArtists(term).then(res => {
-			console.log(res)
 			this.setState({
 				artists: res.body.artists.items.map(item => (
 					<ArtistCard

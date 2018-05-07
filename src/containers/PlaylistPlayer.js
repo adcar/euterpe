@@ -241,7 +241,6 @@ class PlaylistPlayer extends Component {
 		})
 	}
 	handleChange() {
-		console.log(this.input.current.value)
 		this.setState(
 			{
 				currentTime: this.input.current.value
@@ -369,10 +368,6 @@ class PlaylistPlayer extends Component {
 		})
 	}
 	handleShuffle() {
-		// console.log('shuffled')
-		// console.log(this.state.tracks)
-		// this.shuffle(this.state.tracks)
-
 		if (!this.state.isShuffled) {
 			console.log('shuffling...')
 			this.props.dispatch(shuffle(this.state.tracks.slice(0)))

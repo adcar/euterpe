@@ -20,7 +20,6 @@ class MyAlbums extends Component {
 		spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 		spotifyApi.getFollowedArtists({ limit: 50, offset: 0 }).then(
 			data => {
-				console.log(data)
 				this.setState({
 					artists: data.body.artists.items.map(artist => (
 						<ArtistCard
