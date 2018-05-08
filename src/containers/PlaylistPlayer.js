@@ -457,9 +457,9 @@ class PlaylistPlayer extends Component {
 					onClick={this.handlePlayPause}
 				>
 					{isPlaying ? (
-						<PauseIcon className={classes.innerIcon} />
+						<PauseIcon className={classes.icon} />
 					) : (
-						<PlayIcon onClick={this.handlePlayPause} />
+						<PlayIcon className={classes.icon} />
 					)}
 				</IconButton>
 				<IconButton
@@ -561,14 +561,25 @@ class PlaylistPlayer extends Component {
 										{this.state.tracks[this.props.currentTrack].artist}
 									</Typography>
 								</div>
-								<input
-									type="range"
-									value={currentTime}
-									max={duration.toString()}
-									onChange={this.handleChange.bind(this)}
-									ref={this.input}
-									className={classes.progressInput}
-								/>
+								<div>
+									<input
+										type="range"
+										value={currentTime}
+										max={duration.toString()}
+										onChange={this.handleChange.bind(this)}
+										ref={this.input}
+										className={classes.progressInput}
+									/>
+									<Typography
+										className={classes.currentTime}
+										variant="caption"
+										align="center"
+									>
+										{`${convertToSeconds(
+											this.state.currentTime * 1000
+										)} / ${convertToSeconds(this.state.duration * 1000)}`}
+									</Typography>
+								</div>
 								{controls}
 							</div>
 						</Paper>
