@@ -234,8 +234,9 @@ class PlaylistPlayer extends Component {
 	handleNext() {
 		if (this.state.isLooped) {
 			if (
-				this.state.tracks[this.state.tracks.length - 1] ===
-				this.state.tracks[this.props.currentTrack]
+				// Arrays should start at 1 ;)
+				this.state.tracks[this.state.tracks.length - 1].id ===
+				this.state.tracks[this.props.currentTrack].id
 			) {
 				this.props.dispatch(
 					playPlaylist({
@@ -426,7 +427,6 @@ class PlaylistPlayer extends Component {
 				isSingleLooped: false
 			})
 		}
-		// Arrays should start at 1 ;)
 	}
 	render() {
 		const { duration, currentTime, volumeLvl, isShuffled } = this.state
