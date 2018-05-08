@@ -37,7 +37,7 @@ class Songs extends Component {
 	}
 	render() {
 		if (this.state.songs.length > 0) {
-			return <CardWrapper>{this.state.songs}</CardWrapper>
+			return <div>{this.state.songs}</div>
 		} else {
 			return <CircularProgress />
 		}
