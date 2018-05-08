@@ -109,7 +109,7 @@ class Navbar extends React.Component {
 	}
 	updateHistory() {
 		this.props.dispatch(search(this.state.searchTerm))
-		this.props.history.push(`/search/playlists/${this.state.searchTerm}`)
+		this.props.history.push(`/search/songs/${this.state.searchTerm}`)
 		this.setState({
 			mobileOpen: false
 		})

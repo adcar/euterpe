@@ -53,15 +53,16 @@ class Search extends Component {
 	static getDerivedStateFromProps(nextProps) {
 		const { pathname } = nextProps.location
 		// // This is needed for showing the correct tab on refresh
-		if (pathname.includes('playlists')) {
+		if (pathname.includes('songs')) {
 			return { value: 0 }
 		}
 		if (pathname.includes('albums')) {
 			return { value: 1 }
 		}
-		if (pathname.includes('songs')) {
+		if (pathname.includes('playlists')) {
 			return { value: 2 }
 		}
+
 		if (pathname.includes('artists')) {
 			return { value: 3 }
 		}
@@ -78,6 +79,11 @@ class Search extends Component {
 				<AppBar position="static" className={classes.appBar}>
 					<Tabs value={value} onChange={this.handleChange} scrollable>
 						<Tab
+							label="Songs"
+							component={Link}
+							to={`/search/songs/${searchTerm}`}
+						/>
+						<Tab
 							label="Playlists"
 							component={Link}
 							to={`/search/playlists/${searchTerm}`}
@@ -87,11 +93,7 @@ class Search extends Component {
 							component={Link}
 							to={`/search/albums/${searchTerm}`}
 						/>
-						<Tab
-							label="Songs"
-							component={Link}
-							to={`/search/songs/${searchTerm}`}
-						/>
+
 						<Tab
 							label="Artists"
 							component={Link}
