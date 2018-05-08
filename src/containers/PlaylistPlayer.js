@@ -5,7 +5,6 @@ import Card from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import Hidden from 'material-ui/Hidden'
-import Drawer from 'material-ui/Drawer'
 import Slide from 'material-ui/transitions/Slide'
 import Paper from 'material-ui/Paper'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
@@ -24,7 +23,8 @@ import {
 	nextSong,
 	play,
 	pause,
-	shuffle
+	shuffle,
+	playPlaylist
 } from '../actions/playerActions'
 import './slider.css'
 const styles = theme => ({
@@ -232,7 +232,24 @@ class PlaylistPlayer extends Component {
 		this.props.dispatch(prevSong())
 	}
 	handleNext() {
-		this.props.dispatch(nextSong())
+		if (this.state.isLooped) {
+			if (
+				this.state.tracks[this.state.tracks.length - 1] ===
+				this.state.tracks[this.props.currentTrack]
+			) {
+				this.props.dispatch(
+					playPlaylist({
+						currentTrack: 0,
+						tracks: this.state.tracks
+					})
+				)
+			}
+		} else if (this.state.isSingleLooped) {
+			this.audio.current.currentTime = 0
+			this.audio.current.play()
+		} else {
+			this.props.dispatch(nextSong())
+		}
 	}
 	handleTimeUpdate() {
 		this.setState({
@@ -391,6 +408,26 @@ class PlaylistPlayer extends Component {
 			isShuffled: !this.state.isShuffled
 		})
 	}
+	handleRepeat() {
+		console.log('repeat')
+		if (!this.state.isLooped && !this.state.isSingleLooped) {
+			this.setState({
+				isLooped: true
+			})
+		}
+		if (this.state.isLooped) {
+			this.setState({
+				isLooped: false,
+				isSingleLooped: true
+			})
+		}
+		if (this.state.isSingleLooped) {
+			this.setState({
+				isSingleLooped: false
+			})
+		}
+		// Arrays should start at 1 ;)
+	}
 	render() {
 		const { duration, currentTime, volumeLvl, isShuffled } = this.state
 		const { classes, isPlaying } = this.props
@@ -399,58 +436,53 @@ class PlaylistPlayer extends Component {
 				<IconButton
 					disabled={this.props.id === '' ? true : false}
 					className={classes.icon}
+					onClick={this.handleShuffle.bind(this)}
 				>
 					{isShuffled ? (
-						<ShuffleIcon
-							className={classes.extraIconSelected}
-							onClick={this.handleShuffle.bind(this)}
-						/>
+						<ShuffleIcon className={classes.extraIconSelected} />
 					) : (
-						<ShuffleIcon
-							className={classes.extraIcon}
-							onClick={this.handleShuffle.bind(this)}
-						/>
+						<ShuffleIcon className={classes.extraIcon} />
 					)}
 				</IconButton>
 				<IconButton
 					disabled={this.props.id === '' ? true : false}
 					className={classes.icon}
+					onClick={this.handlePrev}
 				>
-					<SkipPreviousIcon
-						onClick={this.handlePrev}
-						className={classes.innerIcon}
-					/>
+					<SkipPreviousIcon className={classes.innerIcon} />
 				</IconButton>
 				<IconButton
 					disabled={this.props.id === '' ? true : false}
 					className={classes.playPauseIcon}
+					onClick={this.handlePlayPause}
 				>
 					{isPlaying ? (
-						<PauseIcon
-							onClick={this.handlePlayPause}
-							className={classes.innerIcon}
-						/>
+						<PauseIcon className={classes.innerIcon} />
 					) : (
-						<PlayIcon
-							onClick={this.handlePlayPause}
-							className={classes.innerIcon}
-						/>
+						<PlayIcon onClick={this.handlePlayPause} />
 					)}
 				</IconButton>
 				<IconButton
 					disabled={this.props.id === '' ? true : false}
 					className={classes.icon}
+					onClick={this.handleNext}
 				>
-					<SkipNextIcon
-						onClick={this.handleNext}
-						className={classes.innerIcon}
-					/>
+					<SkipNextIcon className={classes.innerIcon} />
 				</IconButton>
 				<IconButton
 					disabled={this.props.id === '' ? true : false}
 					className={classes.icon}
+					onClick={this.handleRepeat.bind(this)}
 				>
-					<RepeatIcon className={classes.extraIcon} />
+					{this.state.isLooped ? (
+						<RepeatIcon className={classes.extraIconSelected} />
+					) : null}
+					{this.state.isSingleLooped ? (
+						<RepeatOneIcon className={classes.extraIconSelected} />
+					) : null}
+					{!this.state.isLooped && !this.state.isSingleLooped ? (
+						<RepeatIcon className={classes.extraIcon} />
+					) : null}
 				</IconButton>
 			</div>
 		)
@@ -487,17 +519,12 @@ class PlaylistPlayer extends Component {
 					<IconButton
 						disabled={this.props.id === '' ? true : false}
 						className={classes.playPauseIcon}
+						onClick={this.handlePlayPause}
 					>
 						{isPlaying ? (
-							<PauseIcon
-								onClick={this.handlePlayPause}
-								className={classes.smallIcon}
-							/>
+							<PauseIcon className={classes.smallIcon} />
 						) : (
-							<PlayIcon
-								onClick={this.handlePlayPause}
-								className={classes.smallIcon}
-							/>
+							<PlayIcon className={classes.smallIcon} />
 						)}
 					</IconButton>
 				</Card>
