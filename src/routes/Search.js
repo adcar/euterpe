@@ -56,10 +56,11 @@ class Search extends Component {
 		if (pathname.includes('songs')) {
 			return { value: 0 }
 		}
-		if (pathname.includes('albums')) {
+		if (pathname.includes('playlists')) {
 			return { value: 1 }
 		}
-		if (pathname.includes('playlists')) {
+
+		if (pathname.includes('albums')) {
 			return { value: 2 }
 		}
 
