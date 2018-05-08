@@ -4,9 +4,11 @@ import Typography from 'material-ui/Typography'
 import getToken from '../getToken'
 import CardWrapper from '../components/CardWrapper'
 import AlbumCard from '../containers/AlbumCard'
-import TrackCard from '../containers/TrackCard'
+import SongItem from '../components/SongItem'
 import { withStyles } from 'material-ui/styles'
-const SpotifyWebApi = require('spotify-web-api-node')
+import { connect } from 'react-redux'
+import SpotifyWebApi from 'spotify-web-api-node'
+import { playPlaylist } from '../actions/playerActions'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 const styles = theme => ({
@@ -38,6 +40,14 @@ class Artist extends Component {
 			}
 		}
 	}
+	play(index) {
+		this.props.dispatch(
+			playPlaylist({
+				currentTrack: index,
+				tracks: this.state.tracksInfo
+			})
+		)
+	}
 	componentDidMount() {
 		const { id } = this.props.match.params
 		spotifyApi.getArtist(id).then(data => {
@@ -62,21 +72,21 @@ class Artist extends Component {
 		})
 		spotifyApi.getArtistTopTracks(id, 'US').then(data => {
 			this.setState({
-				tracks: data.body.tracks.map(item => (
-					<TrackCard
+				tracksInfo: data.body.tracks.map(track => ({
+					name: track.name,
+					artist: track.artists[0].name,
+					image: track.album.images[1].url,
+					id: track.id
+				})),
+				tracks: data.body.tracks.map((item, index) => (
+					<SongItem
 						key={item.id}
-						image={item.album.images[1].url}
 						name={item.name}
 						id={item.id}
+						index={index}
+						duration={item.duration_ms}
 						artist={item.artists[0].name}
-						play={e =>
-							this.props.playSong({
-								image: item.album.images[0].url,
-								name: item.name,
-								id: item.id,
-								artist: item.artists[0].name
-							})
-						}
+						play={this.play.bind(this)}
 					/>
 				))
 			})
@@ -120,4 +130,7 @@ class Artist extends Component {
 Artist.propTypes = {
 	match: PropTypes.object.isRequired
 }
-export default withStyles(styles)(Artist)
+
+const ArtistWithStyles = withStyles(styles)(Artist)
+
+export default connect()(ArtistWithStyles)
