@@ -34,13 +34,17 @@ class AlbumCard extends Component {
 		}
 	}
 	render() {
-		const artist = this.props.artist.name ? (
-			<Link style={{ color: 'inherit' }} to={`/artist/${this.props.artist.id}`}>
-				{this.props.artist.name}
-			</Link>
-		) : (
-			this.props.artist.display_name
-		)
+		const artist =
+			this.props.type === 'album' ? (
+				<Link
+					style={{ color: 'inherit' }}
+					to={`/artist/${this.props.artist.id}`}
+				>
+					{this.props.artist.name}
+				</Link>
+			) : (
+				this.props.artist.display_name
+			)
 		const saveBtn = !this.props.saved ? (
 			<Button size="small" color="primary" onClick={this.save.bind(this)}>
 				Save
@@ -96,7 +100,7 @@ class AlbumCard extends Component {
 								textOverflow: 'ellipsis'
 							}}
 						>
-							{artist.name}
+							{artist}
 						</Typography>
 					</CardContent>
 					<CardActions>
