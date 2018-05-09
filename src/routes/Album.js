@@ -60,7 +60,7 @@ class Album extends Component {
 		super()
 		this.state = {
 			tracks: [],
-			albumArt: 'https://via.placeholder.com/120x120',
+			albumArt: 'https://via.placeholder.com/400x400',
 			albumName: '',
 			tracksInfo: []
 		}

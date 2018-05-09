@@ -61,7 +61,7 @@ class Playlist extends Component {
 			tracksJson: [],
 			playlistName: '',
 			playlistArtist: '',
-			playlistArt: '',
+			playlistArt: 'https://via.placeholder.com/400x400',
 			tracksInfo: [],
 			song: ''
 		}
@@ -80,7 +80,6 @@ class Playlist extends Component {
 		spotifyApi
 			.getPlaylist(this.props.match.params.user, this.props.match.params.id)
 			.then(data => {
-				console.log(data)
 				this.setState({
 					playlistName: data.body.name,
 					playlistArtist: data.body.owner.display_name,
