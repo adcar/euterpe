@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from 'material-ui/styles'
+import { Link } from 'react-router-dom'
 import Card from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
@@ -335,7 +336,7 @@ class PlaylistPlayer extends Component {
 			`https://euterpe-api.herokuapp.com/${encodeURIComponent(
 				this.state.tracks[this.props.currentTrack].name
 			)}/${encodeURIComponent(
-				this.state.tracks[this.props.currentTrack].artist
+				this.state.tracks[this.props.currentTrack].artist.name
 			)}`
 		)
 			.then(res => res.text())
@@ -431,6 +432,9 @@ class PlaylistPlayer extends Component {
 	render() {
 		const { duration, currentTime, volumeLvl, isShuffled } = this.state
 		const { classes, isPlaying } = this.props
+
+		const title = this.state.tracks[this.props.currentTrack].name
+		const artist = this.state.tracks[this.props.currentTrack].artist
 		const controls = (
 			<div className={classes.controls}>
 				<IconButton
@@ -503,16 +507,18 @@ class PlaylistPlayer extends Component {
 							<Typography
 								className={classes.truncate}
 								component="h3"
-								title={this.state.tracks[this.props.currentTrack].name}
+								title={title}
 							>
-								{this.state.tracks[this.props.currentTrack].name}
+								{title}
 							</Typography>
 							<Typography
+								component={Link}
+								to={`/artist/${artist.id}`}
 								className={classes.truncate}
 								variant="caption"
-								title={this.state.tracks[this.props.currentTrack].artist}
+								title={artist.name}
 							>
-								{this.state.tracks[this.props.currentTrack].artist}
+								{artist.name}
 							</Typography>
 						</div>
 					</div>
@@ -548,17 +554,19 @@ class PlaylistPlayer extends Component {
 										className={classes.truncate}
 										variant="headline"
 										component="h3"
-										title={this.state.tracks[this.props.currentTrack].name}
+										title={title}
 									>
-										{this.state.tracks[this.props.currentTrack].name}
+										{title}
 									</Typography>
 									<Typography
+										component={Link}
+										to={`/artist/${artist.id}`}
 										align="center"
 										className={classes.truncate}
 										variant="subheading"
-										title={this.state.tracks[this.props.currentTrack].artist}
+										title={artist.name}
 									>
-										{this.state.tracks[this.props.currentTrack].artist}
+										{artist.name}
 									</Typography>
 								</div>
 								<div>
@@ -602,16 +610,16 @@ class PlaylistPlayer extends Component {
 								className={classes.truncate}
 								variant="headline"
 								component="h3"
-								title={this.state.tracks[this.props.currentTrack].name}
+								title={title}
 							>
-								{this.state.tracks[this.props.currentTrack].name}
+								{title}
 							</Typography>
 							<Typography
 								className={classes.truncate}
 								variant="subheading"
-								title={this.state.tracks[this.props.currentTrack].artist}
+								title={artist.name}
 							>
-								{this.state.tracks[this.props.currentTrack].artist}
+								{artist.name}
 							</Typography>
 						</div>
 					</div>

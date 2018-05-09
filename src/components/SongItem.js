@@ -79,6 +79,10 @@ class SongItem extends Component {
 							variant="caption"
 							component={Link}
 							to={`/artist/${artist.id}`}
+							align="center"
+							style={{
+								display: 'inline-flex'
+							}}
 						>
 							{artist.name}
 						</Typography>

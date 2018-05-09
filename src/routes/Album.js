@@ -92,7 +92,7 @@ class Album extends Component {
 				this.setState({
 					tracksInfo: data.body.tracks.map(track => ({
 						name: track.name,
-						artist: track.artists[0].name,
+						artist: track.artists[0],
 						image: track.album.images[1].url,
 						id: track.id
 					})),

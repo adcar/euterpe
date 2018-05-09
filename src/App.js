@@ -60,9 +60,9 @@ class App extends Component {
 								<Route path="/category/:id" component={Category} />
 								<Route path="/search" component={Search} />
 							</Navbar>
+							<PlaylistPlayer />
 						</div>
 					</Router>
-					<PlaylistPlayer />
 				</MuiThemeProvider>
 			</Provider>
 		)

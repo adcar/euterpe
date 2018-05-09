@@ -96,7 +96,7 @@ class Playlist extends Component {
 				this.setState({
 					tracksInfo: data.body.items.map(item => ({
 						name: item.track.name,
-						artist: item.track.artists[0].name,
+						artist: item.track.artists[0],
 						image: item.track.album.images[1].url,
 						id: item.track.id
 					})),
