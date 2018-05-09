@@ -33,7 +33,7 @@ class SongItem extends Component {
 			playTrack([
 				{
 					name: this.props.name,
-					artist: this.props.artist.name,
+					artist: this.props.artist,
 					image: this.props.image,
 					id: this.props.id
 				}
