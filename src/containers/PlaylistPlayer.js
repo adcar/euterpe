@@ -615,6 +615,8 @@ class PlaylistPlayer extends Component {
 								{title}
 							</Typography>
 							<Typography
+								component={Link}
+								to={`/artist/${artist.id}`}
 								className={classes.truncate}
 								variant="subheading"
 								title={artist.name}

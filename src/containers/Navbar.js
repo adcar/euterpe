@@ -110,9 +110,6 @@ class Navbar extends React.Component {
 	updateHistory() {
 		this.props.dispatch(search(this.state.searchTerm))
 		this.props.history.push(`/search/songs/${this.state.searchTerm}`)
-		this.setState({
-			mobileOpen: false
-		})
 	}
 
 	redirect(location, e) {
@@ -130,8 +127,8 @@ class Navbar extends React.Component {
 	}
 	handleSubmit(e) {
 		e.preventDefault()
-		this.searchInput.blur()
 		this.updateHistory()
+		this.handleDrawerToggle()
 	}
 	handleChange = (event, checked) => {
 		this.setState({ auth: checked })
@@ -182,9 +179,6 @@ class Navbar extends React.Component {
 					<form onSubmit={this.handleSubmit.bind(this)}>
 						<Input
 							className={classes.searchInput}
-							inputRef={input => {
-								this.searchInput = input
-							}}
 							type="search"
 							onChange={this.handleSearchChange.bind(this)}
 							placeholder="Search"
