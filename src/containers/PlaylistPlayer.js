@@ -332,7 +332,7 @@ class PlaylistPlayer extends Component {
 	}
 	fetchUrl() {
 		fetch(
-			`https://apolloapi.herokuapp.com/${encodeURIComponent(
+			`https://euterpe-api.herokuapp.com/${encodeURIComponent(
 				this.state.tracks[this.props.currentTrack].name
 			)}/${encodeURIComponent(
 				this.state.tracks[this.props.currentTrack].artist

@@ -108,7 +108,7 @@ class Playlist extends Component {
 							id={item.track.id}
 							name={item.track.name}
 							duration={item.track.duration_ms}
-							artist={item.track.artists[0].name}
+							artist={item.track.artists[0]}
 							index={index}
 							play={this.play}
 						/>

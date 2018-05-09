@@ -103,7 +103,7 @@ class Album extends Component {
 							id={item.id}
 							name={item.name}
 							duration={item.duration_ms}
-							artist={item.artists[0].name}
+							artist={item.artists[0]}
 							index={index}
 							play={this.play}
 						/>

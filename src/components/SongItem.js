@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { Link } from 'react-router-dom'
 import { ListItem, ListItemText } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
@@ -32,7 +33,7 @@ class SongItem extends Component {
 			playTrack([
 				{
 					name: this.props.name,
-					artist: this.props.artist,
+					artist: this.props.artist.name,
 					image: this.props.image,
 					id: this.props.id
 				}
@@ -55,7 +56,7 @@ class SongItem extends Component {
 		}
 	}
 	render() {
-		const { classes } = this.props
+		const { classes, artist } = this.props
 		return (
 			<ListItem
 				button
@@ -74,7 +75,13 @@ class SongItem extends Component {
 						>{`${this.props.name} (${convertToSeconds(
 							this.props.duration
 						)})`}</Typography>
-						<Typography variant="caption">{this.props.artist}</Typography>
+						<Typography
+							variant="caption"
+							component={Link}
+							to={`/artist/${artist.id}`}
+						>
+							{artist.name}
+						</Typography>
 					</div>
 				</ListItemText>
 			</ListItem>
@@ -85,7 +92,7 @@ class SongItem extends Component {
 SongItem.propTypes = {
 	name: PropTypes.string.isRequired,
 	duration: PropTypes.number.isRequired,
-	artist: PropTypes.string.isRequired,
+	artist: PropTypes.object.isRequired,
 	type: PropTypes.string.isRequired,
 	index: PropTypes.number
 }

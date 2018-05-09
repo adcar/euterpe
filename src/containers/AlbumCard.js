@@ -96,7 +96,7 @@ class AlbumCard extends Component {
 								textOverflow: 'ellipsis'
 							}}
 						>
-							{artist}
+							{artist.name}
 						</Typography>
 					</CardContent>
 					<CardActions>

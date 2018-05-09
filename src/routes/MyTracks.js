@@ -51,7 +51,7 @@ class MyTracks extends Component {
 								key={item.id}
 								id={item.id}
 								name={item.name}
-								artist={item.artists[0].name}
+								artist={item.artists[0]}
 								image={item.album.images[0].url}
 								duration={item.duration_ms}
 							/>

@@ -80,12 +80,13 @@ class Artist extends Component {
 				})),
 				tracks: data.body.tracks.map((item, index) => (
 					<SongItem
+						type="playlist"
 						key={item.id}
 						name={item.name}
 						id={item.id}
 						index={index}
 						duration={item.duration_ms}
-						artist={item.artists[0].name}
+						artist={item.artists[0]}
 						play={this.play.bind(this)}
 					/>
 				))
@@ -121,7 +122,7 @@ class Artist extends Component {
 					<Typography variant="display1" align="center">
 						Top Tracks
 					</Typography>
-					<CardWrapper>{this.state.tracks}</CardWrapper>
+					<div>{this.state.tracks}</div>
 				</div>
 			</div>
 		)
