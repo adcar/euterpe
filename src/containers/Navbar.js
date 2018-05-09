@@ -126,7 +126,6 @@ class Navbar extends React.Component {
 		}
 	}
 	handleSubmit(e) {
-		e.preventDefault()
 		this.updateHistory()
 		this.handleDrawerToggle()
 	}
@@ -176,7 +175,7 @@ class Navbar extends React.Component {
 				<div className={classes.toolbar} />
 				<Divider />
 				<ListItem>
-					<form onSubmit={this.handleSubmit.bind(this)}>
+					<form onSubmit={this.handleSubmit.bind(this)} action="#">
 						<Input
 							className={classes.searchInput}
 							type="search"
