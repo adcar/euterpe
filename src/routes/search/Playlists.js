@@ -3,6 +3,8 @@ import getToken from '../../getToken'
 import SpotifyWebApi from 'spotify-web-api-node'
 import AlbumCard from '../../containers/AlbumCard'
 import CardWrapper from '../../components/CardWrapper'
+import { fetchFollowedPlaylists } from '../../actions/apiActions'
+import { connect } from 'react-redux'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
@@ -11,6 +13,7 @@ class Playlists extends Component {
 		playlists: []
 	}
 	componentDidMount() {
+		this.props.dispatch(fetchFollowedPlaylists())
 		const { term } = this.props.match.params
 		this.props.search(term)
 		spotifyApi.searchPlaylists(term).then(res => {
@@ -33,4 +36,4 @@ class Playlists extends Component {
 	}
 }
 
-export default Playlists
+export default connect()(Playlists)

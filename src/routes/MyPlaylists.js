@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import AlbumCard from '../containers/AlbumCard'
-import getToken from '../getToken'
 import PageLabel from '../components/PageLabel'
 import CardWrapper from '../components/CardWrapper'
 import { connect } from 'react-redux'

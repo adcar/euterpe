@@ -8,7 +8,7 @@ import Typography from 'material-ui/Typography'
 import { Link } from 'react-router-dom'
 import getToken from '../getToken'
 import { connect } from 'react-redux'
-import { fetchSavedAlbums } from '../actions/apiActions'
+import { fetchSavedAlbums, fetchFollowedPlaylists } from '../actions/apiActions'
 
 import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
@@ -26,31 +26,67 @@ const styles = theme => ({
 
 class AlbumCard extends Component {
 	state = {
-		ids: []
+		albumIds: []
 	}
+
+	// You have to wait (250?) miliseconds to re-fetch because spotify needs time to update its database
+	waitTime = 250
 	save() {
 		if (this.props.type === 'album') {
 			spotifyApi
 				.addToMySavedAlbums([this.props.id])
-				.then(setTimeout(() => this.props.dispatch(fetchSavedAlbums()), 500))
+
+				.then(
+					setTimeout(
+						() => this.props.dispatch(fetchSavedAlbums()),
+						this.waitTime
+					)
+				)
 				.catch(err => console.log(err))
 		}
 		if (this.props.type === 'playlist') {
-			console.log('follow the playlist')
+			spotifyApi
+				.followPlaylist(this.props.artist.id, this.props.id)
+				.then(
+					setTimeout(
+						() => this.props.dispatch(fetchFollowedPlaylists()),
+						this.waitTime
+					)
+				)
 		}
 	}
 
 	remove() {
-		console.log('removed')
-		spotifyApi
-			.removeFromMySavedAlbums([this.props.id])
-			// You have to wait 500 miliseconds to re fetch because spotify needs time to update its database
-			.then(setTimeout(() => this.props.dispatch(fetchSavedAlbums()), 500))
-			.catch(console.log)
+		if (this.props.type === 'album') {
+			spotifyApi
+				.removeFromMySavedAlbums([this.props.id])
+
+				.then(
+					setTimeout(
+						() => this.props.dispatch(fetchSavedAlbums()),
+						this.waitTime
+					)
+				)
+				.catch(console.log)
+		}
+		if (this.props.type === 'playlist') {
+			console.log('remove the playlist')
+			spotifyApi
+				.unfollowPlaylist(this.props.artist.id, this.props.id)
+				.then(
+					setTimeout(
+						() => this.props.dispatch(fetchFollowedPlaylists()),
+						this.waitTime
+					)
+				)
+		}
 	}
 
 	static getDerivedStateFromProps(nextProps) {
-		return { ids: nextProps.albums.map(album => album.id) }
+		return {
+			albumIds: nextProps.albums.map(album => album.id),
+			playlistIds: nextProps.playlists.map(playlist => playlist.id)
+		}
 	}
 
 	render() {
@@ -65,15 +101,17 @@ class AlbumCard extends Component {
 			) : (
 				this.props.artist.display_name
 			)
-		const saveBtn = this.state.ids.includes(this.props.id) ? (
-			<Button size="small" color="primary" onClick={this.remove.bind(this)}>
-				Remove
-			</Button>
-		) : (
-			<Button size="small" color="primary" onClick={this.save.bind(this)}>
-				Save
-			</Button>
-		)
+		const saveBtn =
+			this.state.albumIds.includes(this.props.id) ||
+			this.state.playlistIds.includes(this.props.id) ? (
+				<Button size="small" color="primary" onClick={this.remove.bind(this)}>
+					Remove
+				</Button>
+			) : (
+				<Button size="small" color="primary" onClick={this.save.bind(this)}>
+					Save
+				</Button>
+			)
 		const linkBtn =
 			this.props.type === 'playlist' ? (
 				<Link
@@ -147,7 +185,8 @@ AlbumCard.propTypes = {
 	type: PropTypes.string.isRequired
 }
 const mapStateToProps = state => ({
-	albums: state.api.savedAlbums
+	albums: state.api.savedAlbums,
+	playlists: state.api.followedPlaylists
 })
 const AlbumCardWithStyles = withStyles(styles)(AlbumCard)
 export default connect(mapStateToProps)(AlbumCardWithStyles)
