@@ -177,7 +177,6 @@ class Navbar extends React.Component {
 				<ListItem>
 					<form onSubmit={this.handleSubmit.bind(this)}>
 						<Input
-							className={classes.searchInput}
 							type="search"
 							onChange={this.handleSearchChange.bind(this)}
 							placeholder="Search"
@@ -209,6 +208,7 @@ class Navbar extends React.Component {
 				<AppBar className={classes.appBar}>
 					<Toolbar>
 						<IconButton
+							disableRipple
 							color="inherit"
 							aria-label="open drawer"
 							onClick={this.handleDrawerToggle}
@@ -262,7 +262,7 @@ class Navbar extends React.Component {
 					<SwipeableDrawer
 						className={classes.drawer}
 						variant="temporary"
-						anchor={theme.direction === 'rtl' ? 'right' : 'left'}
+						anchor={'left'}
 						open={this.state.mobileOpen}
 						onClose={this.handleDrawerToggle}
 						onOpen={this.handleDrawerToggle}
