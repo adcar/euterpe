@@ -1,5 +1,6 @@
 const initialState = {
-	savedAlbums: []
+	savedAlbums: [],
+	followedPlaylists: []
 }
 
 const api = (state = initialState, action) => {

@@ -22,7 +22,10 @@ const getFollowedPlaylists = playlists => ({
 })
 
 export const fetchFollowedPlaylists = () => dispatch => {
-	spotifyApi
-		.getMySavedAlbums({ limit: 50, offset: 0 })
-		.then(res => dispatch(getFollowedPlaylists(res.body.items)))
+	spotifyApi.getMe().then(res => {
+		let userId = res.body.id
+		spotifyApi
+			.getUserPlaylists(userId)
+			.then(res => dispatch(getFollowedPlaylists(res.body.items)))
+	})
 }
