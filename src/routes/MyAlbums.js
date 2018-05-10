@@ -2,12 +2,11 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 
 import { withStyles } from 'material-ui/styles'
-import { CircularProgress } from 'material-ui/Progress'
 
 import AlbumCard from '../containers/AlbumCard'
 import PageLabel from '../components/PageLabel'
 import CardWrapper from '../components/CardWrapper'
-
+import NothingHere from '../components/NothingHere'
 import { fetchSavedAlbums } from '../actions/apiActions'
 import { connect } from 'react-redux'
 
@@ -48,16 +47,13 @@ class MyAlbums extends Component {
 		}
 	}
 	render() {
-		if (this.state.albumItems.length > 0) {
-			return (
-				<div>
-					<PageLabel>My Albums</PageLabel>
-					<CardWrapper>{this.state.albumItems}</CardWrapper>
-				</div>
-			)
-		} else {
-			return <CircularProgress />
-		}
+		return (
+			<div>
+				<PageLabel>My Albums</PageLabel>
+				{this.state.albums.length <= 0 ? <NothingHere type="albums" /> : null}
+				<CardWrapper>{this.state.albumItems}</CardWrapper>
+			</div>
+		)
 	}
 }
 

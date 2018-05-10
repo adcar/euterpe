@@ -4,6 +4,7 @@ import PageLabel from '../components/PageLabel'
 import CardWrapper from '../components/CardWrapper'
 import { connect } from 'react-redux'
 import { fetchFollowedPlaylists } from '../actions/apiActions'
+import NothingHere from '../components/NothingHere'
 
 class MyPlaylists extends Component {
 	constructor() {
@@ -34,6 +35,9 @@ class MyPlaylists extends Component {
 		return (
 			<div>
 				<PageLabel>My Playlists</PageLabel>
+				{this.state.playlists.length <= 0 ? (
+					<NothingHere type="playlists" />
+				) : null}
 				<CardWrapper>{this.state.playlists}</CardWrapper>
 			</div>
 		)
