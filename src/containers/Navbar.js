@@ -126,6 +126,7 @@ class Navbar extends React.Component {
 		}
 	}
 	handleSubmit(e) {
+		e.preventDefault()
 		this.updateHistory()
 		this.handleDrawerToggle()
 	}
@@ -140,7 +141,6 @@ class Navbar extends React.Component {
 	handleClose = () => {
 		this.setState({ anchorEl: null })
 	}
-
 	componentDidMount() {
 		spotifyApi.getMe().then(res => {
 			this.setState({
@@ -175,7 +175,7 @@ class Navbar extends React.Component {
 				<div className={classes.toolbar} />
 				<Divider />
 				<ListItem>
-					<form onSubmit={this.handleSubmit.bind(this)} action="#">
+					<form onSubmit={this.handleSubmit.bind(this)}>
 						<Input
 							className={classes.searchInput}
 							type="search"
