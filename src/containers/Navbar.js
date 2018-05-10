@@ -169,7 +169,7 @@ class Navbar extends React.Component {
 		}, 500)
 	}
 	render() {
-		const { classes, theme } = this.props
+		const { classes } = this.props
 		const drawer = (
 			<div>
 				<div className={classes.toolbar} />

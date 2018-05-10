@@ -6,15 +6,15 @@ import { withStyles } from 'material-ui/styles'
 import { Link } from 'react-router-dom'
 import Truncate from 'react-truncate'
 import PageLabel from '../components/PageLabel'
-const SpotifyWebApi = require('spotify-web-api-node')
+import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
 const styles = theme => ({
 	genres: {
-		display: 'flex',
-		flexWrap: 'wrap',
-		justifyContent: 'center'
+		display: 'grid',
+		gridTemplateColumns: 'repeat(auto-fit, minmax(160px, 1fr))',
+		justifyItems: 'center'
 	},
 	genreCard: {
 		width: 150,

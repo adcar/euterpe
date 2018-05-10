@@ -5,7 +5,7 @@ import AppBar from 'material-ui/AppBar'
 import Tabs, { Tab } from 'material-ui/Tabs'
 import Typography from 'material-ui/Typography'
 import { Route, Link, Redirect } from 'react-router-dom'
-import Categories from '../components/Categories'
+import Categories from './Categories'
 
 function TabContainer(props) {
 	return (
