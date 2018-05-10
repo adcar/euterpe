@@ -3,7 +3,10 @@ import AlbumCard from '../containers/AlbumCard'
 import getToken from '../getToken'
 import PageLabel from '../components/PageLabel'
 import CardWrapper from '../components/CardWrapper'
+import { connect } from 'react-redux'
+import { fetchFollowedPlaylists } from '../actions/apiActions'
 import SpotifyWebApi from 'spotify-web-api-node'
+
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
@@ -15,6 +18,7 @@ class MyPlaylists extends Component {
 		}
 	}
 	componentDidMount() {
+		this.props.dispatch(fetchFollowedPlaylists())
 		spotifyApi.getMe().then(res => {
 			let userId = res.body.id
 			spotifyApi.getUserPlaylists(userId).then(res => {
@@ -34,6 +38,21 @@ class MyPlaylists extends Component {
 			})
 		})
 	}
+
+	static getDerivedStateFromProps(nextProps) {
+		return {
+			playlissts: nextProps.albums.map(album => (
+				<AlbumCard
+					type="album"
+					image={album.images[1].url}
+					name={album.name}
+					id={album.id}
+					artist={album.artists[0]}
+					key={album.id}
+				/>
+			))
+		}
+	}
 	render() {
 		return (
 			<div>
@@ -44,4 +63,7 @@ class MyPlaylists extends Component {
 	}
 }
 
-export default MyPlaylists
+const mapStateToProps = state => ({
+	playlists: state.api.followedPlaylists
+})
+export default connect(mapStateToProps)(MyPlaylists)

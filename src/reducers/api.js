@@ -9,6 +9,11 @@ const api = (state = initialState, action) => {
 				...state,
 				savedAlbums: action.payload
 			}
+		case 'FETCH_FOLLOWED_PLAYLISTS':
+			return {
+				...state,
+				followedPlaylists: action.payload
+			}
 		default:
 			return state
 	}
