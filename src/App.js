@@ -4,8 +4,10 @@ import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
 import CssBaseline from 'material-ui/CssBaseline'
 import Navbar from './containers/Navbar'
 import PlaylistPlayer from './containers/PlaylistPlayer'
-import { createStore } from 'redux'
+import { createStore, applyMiddleware } from 'redux'
 import { Provider } from 'react-redux'
+import { composeWithDevTools } from 'redux-devtools-extension'
+import thunk from 'redux-thunk'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
 import rootReducer from './reducers'
@@ -24,7 +26,7 @@ import amber from 'material-ui/colors/amber'
 
 const store = createStore(
 	rootReducer,
-	window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
+	composeWithDevTools(applyMiddleware(thunk))
 )
 const theme = createMuiTheme({
 	palette: {

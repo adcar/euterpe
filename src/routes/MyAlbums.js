@@ -7,6 +7,10 @@ import AlbumCard from '../containers/AlbumCard'
 import PageLabel from '../components/PageLabel'
 import CardWrapper from '../components/CardWrapper'
 import SpotifyWebApi from 'spotify-web-api-node'
+
+import { fetchSavedAlbums } from '../actions/apiActions'
+import { connect } from 'react-redux'
+
 const spotifyApi = new SpotifyWebApi()
 
 const styles = theme => ({
@@ -28,32 +32,22 @@ class MyAlbums extends Component {
 		}
 	}
 	componentDidMount() {
-		spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
-		spotifyApi
-			.getMySavedAlbums({
-				limit: 50,
-				offset: 0
-			})
-			.then(
-				data => {
-					this.setState({
-						albums: data.body.items,
-						albumItems: data.body.items.map(item => (
-							<AlbumCard
-								type="album"
-								image={item.album.images[1].url}
-								name={item.album.name}
-								id={item.album.id}
-								artist={item.album.artists[0]}
-								key={item.album.id}
-							/>
-						))
-					})
-				},
-				function(err) {
-					console.log('Something went wrong!', err)
-				}
-			)
+		this.props.dispatch(fetchSavedAlbums())
+	}
+	static getDerivedStateFromProps(nextProps) {
+		return {
+			albums: nextProps.albums,
+			albumItems: nextProps.albums.map(album => (
+				<AlbumCard
+					type="album"
+					image={album.images[1].url}
+					name={album.name}
+					id={album.id}
+					artist={album.artists[0]}
+					key={album.id}
+				/>
+			))
+		}
 	}
 	render() {
 		if (this.state.albumItems.length > 0) {
@@ -69,4 +63,7 @@ class MyAlbums extends Component {
 	}
 }
 
-export default withStyles(styles)(MyAlbums)
+const mapStateToProps = state => ({
+	albums: state.api.savedAlbums
+})
+export default connect(mapStateToProps)(withStyles(styles)(MyAlbums))
