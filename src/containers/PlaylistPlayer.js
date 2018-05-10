@@ -37,21 +37,20 @@ const styles = theme => ({
 		zIndex: 5000
 	},
 	progress: {
+		margin: '0 auto',
 		width: '100%',
 		height: '100%',
 		display: 'flex',
-		jusitfyContent: 'center',
+		justifyContent: 'center',
 		alignItems: 'center'
 	},
 	songArt: {
-		marginRight: theme.spacing.unit * 2,
-		marginTop: theme.spacing.unit * 2,
-		height: 70
+		height: 130,
+		marginRight: theme.spacing.unit * 2
 	},
 	songLabel: {
-		marginBottom: 10,
-		height: 70,
-		width: 400,
+		alignSelf: 'start',
+		justifySelf: 'start',
 		display: 'flex',
 		justifyContent: 'flex-start',
 		alignItems: 'center'
@@ -85,11 +84,14 @@ const styles = theme => ({
 		width: 30
 	},
 	playerWrapper: {
-		display: 'flex',
-		width: '100%',
+		display: 'grid',
+		gridTemplateColumns: 'repeat(3, minmax(350px, 1fr))',
+
 		height: '100%',
-		justifyContent: 'space-around',
-		alignItems: 'center'
+		justifyContent: 'stretch',
+		alignContent: 'center',
+		alignItems: 'center',
+		justifyItems: 'center'
 	},
 	card: {
 		height: 130
@@ -128,10 +130,13 @@ const styles = theme => ({
 		marginRight: theme.spacing.unit * 2
 	},
 	truncate: {
-		width: 250,
+		maxWidth: 270,
 		whiteSpace: 'nowrap',
 		overflow: 'hidden',
-		textOverflow: 'ellipsis'
+		textOverflow: 'ellipsis',
+		[theme.breakpoints.up('xl')]: {
+			maxWidth: 400
+		}
 	},
 	volumeSelector: {
 		borderRadius: 7.5,
@@ -653,17 +658,15 @@ class PlaylistPlayer extends Component {
 							</Typography>
 						</div>
 					</div>
-					<div className={classes.volume}>
-						<input
-							type="range"
-							step="0.1"
-							max="1"
-							min="0"
-							value={volumeLvl}
-							onChange={this.changeVolumeLvl.bind(this)}
-							className={classes.volumeSelector}
-						/>
-					</div>
+					<input
+						type="range"
+						step="0.1"
+						max="1"
+						min="0"
+						value={volumeLvl}
+						onChange={this.changeVolumeLvl.bind(this)}
+						className={classes.volumeSelector}
+					/>
 				</div>
 			</Card>
 		)
