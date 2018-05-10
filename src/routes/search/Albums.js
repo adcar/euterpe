@@ -3,6 +3,9 @@ import getToken from '../../getToken'
 import SpotifyWebApi from 'spotify-web-api-node'
 import AlbumCard from '../../containers/AlbumCard'
 import CardWrapper from '../../components/CardWrapper'
+import { fetchSavedAlbums } from '../../actions/apiActions'
+import { connect } from 'react-redux'
+
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
@@ -11,7 +14,19 @@ class Albums extends Component {
 		albums: []
 	}
 	componentDidMount() {
+		this.search()
+	}
+	componentDidUpdate(prevProps) {
+		if (prevProps !== this.props) {
+			this.search()
+		}
+	}
+	search() {
+		console.log('yay')
+		this.props.dispatch(fetchSavedAlbums())
+
 		const { term } = this.props.match.params
+
 		this.props.search(term)
 		spotifyApi.searchAlbums(term).then(res => {
 			this.setState({
@@ -28,9 +43,10 @@ class Albums extends Component {
 			})
 		})
 	}
+
 	render() {
 		return <CardWrapper>{this.state.albums}</CardWrapper>
 	}
 }
 
-export default Albums
+export default connect()(Albums)

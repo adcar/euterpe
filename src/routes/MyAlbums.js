@@ -1,17 +1,15 @@
 import React, { Component } from 'react'
-import getToken from '../getToken'
+import PropTypes from 'prop-types'
+
 import { withStyles } from 'material-ui/styles'
 import { CircularProgress } from 'material-ui/Progress'
 
 import AlbumCard from '../containers/AlbumCard'
 import PageLabel from '../components/PageLabel'
 import CardWrapper from '../components/CardWrapper'
-import SpotifyWebApi from 'spotify-web-api-node'
 
 import { fetchSavedAlbums } from '../actions/apiActions'
 import { connect } from 'react-redux'
-
-const spotifyApi = new SpotifyWebApi()
 
 const styles = theme => ({
 	card: {
@@ -66,4 +64,8 @@ class MyAlbums extends Component {
 const mapStateToProps = state => ({
 	albums: state.api.savedAlbums
 })
+
+MyAlbums.propTypes = {
+	albums: PropTypes.array.isRequired
+}
 export default connect(mapStateToProps)(withStyles(styles)(MyAlbums))

@@ -8,6 +8,8 @@ import Typography from 'material-ui/Typography'
 import { Link } from 'react-router-dom'
 import getToken from '../getToken'
 import { connect } from 'react-redux'
+import { fetchSavedAlbums } from '../actions/apiActions'
+
 import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
@@ -23,16 +25,34 @@ const styles = theme => ({
 })
 
 class AlbumCard extends Component {
+	state = {
+		ids: []
+	}
 	save() {
 		if (this.props.type === 'album') {
 			spotifyApi
 				.addToMySavedAlbums([this.props.id])
+				.then(setTimeout(() => this.props.dispatch(fetchSavedAlbums()), 500))
 				.catch(err => console.log(err))
 		}
 		if (this.props.type === 'playlist') {
 			console.log('follow the playlist')
 		}
 	}
+
+	remove() {
+		console.log('removed')
+		spotifyApi
+			.removeFromMySavedAlbums([this.props.id])
+			// You have to wait 500 miliseconds to re fetch because spotify needs time to update its database
+			.then(setTimeout(() => this.props.dispatch(fetchSavedAlbums()), 500))
+			.catch(console.log)
+	}
+
+	static getDerivedStateFromProps(nextProps) {
+		return { ids: nextProps.albums.map(album => album.id) }
+	}
+
 	render() {
 		const artist =
 			this.props.type === 'album' ? (
@@ -45,11 +65,15 @@ class AlbumCard extends Component {
 			) : (
 				this.props.artist.display_name
 			)
-		const saveBtn = !this.props.saved ? (
+		const saveBtn = this.state.ids.includes(this.props.id) ? (
+			<Button size="small" color="primary" onClick={this.remove.bind(this)}>
+				Remove
+			</Button>
+		) : (
 			<Button size="small" color="primary" onClick={this.save.bind(this)}>
 				Save
 			</Button>
-		) : null
+		)
 		const linkBtn =
 			this.props.type === 'playlist' ? (
 				<Link
@@ -122,6 +146,8 @@ AlbumCard.propTypes = {
 	id: PropTypes.string.isRequired,
 	type: PropTypes.string.isRequired
 }
-
+const mapStateToProps = state => ({
+	albums: state.api.savedAlbums
+})
 const AlbumCardWithStyles = withStyles(styles)(AlbumCard)
-export default connect()(AlbumCardWithStyles)
+export default connect(mapStateToProps)(AlbumCardWithStyles)
