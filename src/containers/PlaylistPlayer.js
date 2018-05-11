@@ -698,6 +698,7 @@ PlaylistPlayer.propTypes = {
 	currentTrack: PropTypes.number.isRequired,
 	isPlaying: PropTypes.bool.isRequired,
 	id: PropTypes.string.isRequired,
-	shuffledTracks: PropTypes.array.isRequired
+	shuffledTracks: PropTypes.array.isRequired,
+	artist: PropTypes.object.isRequired
 }
 export default connect(mapStateToProps)(PlaylistPlayerWithStyles)
