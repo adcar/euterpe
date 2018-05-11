@@ -188,8 +188,8 @@ AlbumCard.propTypes = {
 	type: PropTypes.string.isRequired
 }
 const mapStateToProps = state => ({
-	albums: state.api.savedAlbums,
-	playlists: state.api.followedPlaylists
+	albums: state.spotifyApi.savedAlbums,
+	playlists: state.spotifyApi.followedPlaylists
 })
 const AlbumCardWithStyles = withStyles(styles)(AlbumCard)
 export default connect(mapStateToProps)(AlbumCardWithStyles)

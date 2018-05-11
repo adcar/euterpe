@@ -45,6 +45,6 @@ class MyPlaylists extends Component {
 }
 
 const mapStateToProps = state => ({
-	playlists: state.api.followedPlaylists
+	playlists: state.spotifyApi.followedPlaylists
 })
 export default connect(mapStateToProps)(MyPlaylists)

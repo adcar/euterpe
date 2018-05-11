@@ -25,7 +25,8 @@ import {
 	play,
 	pause,
 	shuffle,
-	playPlaylist
+	playPlaylist,
+	fetchAudioSource
 } from '../actions/playerActions'
 import './slider.css'
 const styles = theme => ({
@@ -337,15 +338,12 @@ class PlaylistPlayer extends Component {
 		}
 	}
 	fetchUrl() {
-		fetch(
-			`https://euterpe-api.herokuapp.com/${encodeURIComponent(
-				this.state.tracks[this.props.currentTrack].name
-			)}/${encodeURIComponent(
+		this.props.dispatch(
+			fetchAudioSource(
+				this.state.tracks[this.props.currentTrack].name,
 				this.state.tracks[this.props.currentTrack].artist.name
-			)}`
+			)
 		)
-			.then(res => res.text())
-			.then(url => this.setState({ source: url }))
 	}
 	componentDidUpdate(prevProps, prevState) {
 		if (prevState.isShuffled) {
@@ -638,7 +636,7 @@ class PlaylistPlayer extends Component {
 								autoPlay
 								onPlay={this.handleOnPlay.bind(this)}
 								ref={this.audio}
-								src={this.state.source}
+								src={this.props.audioSource}
 								onTimeUpdate={this.handleTimeUpdate}
 								onEnded={this.handleNext}
 								onError={this.fetchUrl.bind(this)}
@@ -691,7 +689,8 @@ const mapStateToProps = state => {
 		currentTrack: parseInt(state.player.currentTrack, 10),
 		isPlaying: state.player.isPlaying,
 		id: state.player.tracks[0].id,
-		shuffledTracks: state.player.shuffledTracks
+		shuffledTracks: state.player.shuffledTracks,
+		audioSource: state.player.audioSource
 	}
 }
 PlaylistPlayer.propTypes = {

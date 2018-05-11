@@ -3,7 +3,7 @@ const initialState = {
 	followedPlaylists: []
 }
 
-const api = (state = initialState, action) => {
+const spotifyApi = (state = initialState, action) => {
 	switch (action.type) {
 		case 'FETCH_SAVED_ALBUMS':
 			return {
@@ -20,4 +20,4 @@ const api = (state = initialState, action) => {
 	}
 }
 
-export default api
+export default spotifyApi

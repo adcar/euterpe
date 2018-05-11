@@ -66,7 +66,11 @@ const player = (state = initialState, action) => {
 				}),
 				currentTracks: 'shuffledTracks'
 			}
-
+		case 'FETCH_AUDIO_SOURCE':
+			return {
+				...state,
+				audioSource: action.payload
+			}
 		default:
 			return state
 	}
