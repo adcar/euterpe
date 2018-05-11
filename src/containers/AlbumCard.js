@@ -8,7 +8,10 @@ import Typography from 'material-ui/Typography'
 import { Link } from 'react-router-dom'
 import getToken from '../getToken'
 import { connect } from 'react-redux'
-import { fetchSavedAlbums, fetchFollowedPlaylists } from '../actions/apiActions'
+import {
+	fetchSavedAlbums,
+	fetchFollowedPlaylists
+} from '../actions/spotifyApiActions'
 
 import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()

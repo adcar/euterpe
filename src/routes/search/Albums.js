@@ -3,7 +3,7 @@ import getToken from '../../getToken'
 import SpotifyWebApi from 'spotify-web-api-node'
 import AlbumCard from '../../containers/AlbumCard'
 import CardWrapper from '../../components/CardWrapper'
-import { fetchSavedAlbums } from '../../actions/apiActions'
+import { fetchSavedAlbums } from '../../actions/spotifyApiActions'
 import { connect } from 'react-redux'
 
 const spotifyApi = new SpotifyWebApi()
