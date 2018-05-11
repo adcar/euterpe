@@ -643,7 +643,7 @@ class PlaylistPlayer extends Component {
 								src={this.state.source}
 								onTimeUpdate={this.handleTimeUpdate}
 								onEnded={this.handleNext}
-								onError={this.handleNext}
+								onError={this.fetchUrl.bind(this)}
 							/>
 							<input
 								type="range"
