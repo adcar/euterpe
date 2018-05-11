@@ -6,8 +6,8 @@ import Card from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import Hidden from 'material-ui/Hidden'
-import Slide from 'material-ui/transitions/Slide'
-import Paper from 'material-ui/Paper'
+
+import Drawer from 'material-ui/Drawer'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
 import ArrowUpIcon from 'material-ui-icons/KeyboardArrowUp'
 import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
@@ -539,65 +539,63 @@ class PlaylistPlayer extends Component {
 						)}
 					</IconButton>
 				</Card>
-				<Slide
-					direction="up"
-					in={this.state.isLaunched}
-					mountOnEnter
-					unmountOnExit
+				<Drawer
+					anchor="bottom"
+					open={this.state.isLaunched}
+					ModalProps={{ onBackdropClick: this.handleLaunch.bind(this) }}
+					variant="temporary"
 				>
 					<div>
-						<Paper className={classes.mobilePaper}>
-							<div className={classes.mobileDrawer}>
-								<img
-									className={classes.mobileSongArt}
-									alt="Song Cover Art"
-									src={this.state.tracks[this.props.currentTrack].image}
-								/>
-								<div>
-									<Typography
-										align="center"
-										className={classes.truncate}
-										variant="headline"
-										component="h3"
-										title={title}
-									>
-										{title}
-									</Typography>
-									<Typography
-										component={Link}
-										to={`/artist/${artist.id}`}
-										align="center"
-										className={classes.truncate}
-										variant="subheading"
-										title={artist.name}
-									>
-										{artist.name}
-									</Typography>
-								</div>
-								<div>
-									<input
-										type="range"
-										value={currentTime}
-										max={duration.toString()}
-										onChange={this.handleChange.bind(this)}
-										ref={this.input}
-										className={classes.progressInput}
-									/>
-									<Typography
-										className={classes.currentTime}
-										variant="caption"
-										align="center"
-									>
-										{`${convertToSeconds(
-											this.state.currentTime * 1000
-										)} / ${convertToSeconds(this.state.duration * 1000)}`}
-									</Typography>
-								</div>
-								{controls}
+						<div className={classes.mobileDrawer}>
+							<img
+								className={classes.mobileSongArt}
+								alt="Song Cover Art"
+								src={this.state.tracks[this.props.currentTrack].image}
+							/>
+							<div>
+								<Typography
+									align="center"
+									className={classes.truncate}
+									variant="headline"
+									component="h3"
+									title={title}
+								>
+									{title}
+								</Typography>
+								<Typography
+									component={Link}
+									to={`/artist/${artist.id}`}
+									align="center"
+									className={classes.truncate}
+									variant="subheading"
+									title={artist.name}
+								>
+									{artist.name}
+								</Typography>
 							</div>
-						</Paper>
+							<div>
+								<input
+									type="range"
+									value={currentTime}
+									max={duration.toString()}
+									onChange={this.handleChange.bind(this)}
+									ref={this.input}
+									className={classes.progressInput}
+								/>
+								<Typography
+									className={classes.currentTime}
+									variant="caption"
+									align="center"
+								>
+									{`${convertToSeconds(
+										this.state.currentTime * 1000
+									)} / ${convertToSeconds(this.state.duration * 1000)}`}
+								</Typography>
+							</div>
+							{controls}
+						</div>
 					</div>
-				</Slide>
+				</Drawer>
 			</div>
 		)
 		const player = (
@@ -643,7 +641,7 @@ class PlaylistPlayer extends Component {
 								src={this.state.source}
 								onTimeUpdate={this.handleTimeUpdate}
 								onEnded={this.handleNext}
-								onError={this.handleNext}
+								onError={this.fetchUrl.bind(this)}
 							/>
 							<input
 								type="range"
