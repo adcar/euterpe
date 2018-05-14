@@ -29,3 +29,18 @@ export const shuffle = tracks => ({
 	type: 'SHUFFLE',
 	payload: tracks
 })
+
+const getAudioSource = source => ({
+	type: 'FETCH_AUDIO_SOURCE',
+	payload: source
+})
+
+export const fetchAudioSource = (song, artist) => dispatch => {
+	fetch(
+		`https://euterpe-api.herokuapp.com/${encodeURIComponent(
+			song
+		)}/${encodeURIComponent(artist)}`
+	)
+		.then(res => res.text())
+		.then(url => dispatch(getAudioSource(url)))
+}

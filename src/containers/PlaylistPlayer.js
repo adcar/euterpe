@@ -6,8 +6,8 @@ import Card from 'material-ui/Card'
 import IconButton from 'material-ui/IconButton'
 import Typography from 'material-ui/Typography'
 import Hidden from 'material-ui/Hidden'
-import Slide from 'material-ui/transitions/Slide'
-import Paper from 'material-ui/Paper'
+
+import Drawer from 'material-ui/Drawer'
 import SkipPreviousIcon from 'material-ui-icons/SkipPrevious'
 import ArrowUpIcon from 'material-ui-icons/KeyboardArrowUp'
 import ArrowDownIcon from 'material-ui-icons/KeyboardArrowDown'
@@ -25,7 +25,8 @@ import {
 	play,
 	pause,
 	shuffle,
-	playPlaylist
+	playPlaylist,
+	fetchAudioSource
 } from '../actions/playerActions'
 import './slider.css'
 const styles = theme => ({
@@ -337,15 +338,12 @@ class PlaylistPlayer extends Component {
 		}
 	}
 	fetchUrl() {
-		fetch(
-			`https://euterpe-api.herokuapp.com/${encodeURIComponent(
-				this.state.tracks[this.props.currentTrack].name
-			)}/${encodeURIComponent(
+		this.props.dispatch(
+			fetchAudioSource(
+				this.state.tracks[this.props.currentTrack].name,
 				this.state.tracks[this.props.currentTrack].artist.name
-			)}`
+			)
 		)
-			.then(res => res.text())
-			.then(url => this.setState({ source: url }))
 	}
 	componentDidUpdate(prevProps, prevState) {
 		if (prevState.isShuffled) {
@@ -539,65 +537,63 @@ class PlaylistPlayer extends Component {
 						)}
 					</IconButton>
 				</Card>
-				<Slide
-					direction="up"
-					in={this.state.isLaunched}
-					mountOnEnter
-					unmountOnExit
+				<Drawer
+					anchor="bottom"
+					open={this.state.isLaunched}
+					ModalProps={{ onBackdropClick: this.handleLaunch.bind(this) }}
+					variant="temporary"
 				>
 					<div>
-						<Paper className={classes.mobilePaper}>
-							<div className={classes.mobileDrawer}>
-								<img
-									className={classes.mobileSongArt}
-									alt="Song Cover Art"
-									src={this.state.tracks[this.props.currentTrack].image}
-								/>
-								<div>
-									<Typography
-										align="center"
-										className={classes.truncate}
-										variant="headline"
-										component="h3"
-										title={title}
-									>
-										{title}
-									</Typography>
-									<Typography
-										component={Link}
-										to={`/artist/${artist.id}`}
-										align="center"
-										className={classes.truncate}
-										variant="subheading"
-										title={artist.name}
-									>
-										{artist.name}
-									</Typography>
-								</div>
-								<div>
-									<input
-										type="range"
-										value={currentTime}
-										max={duration.toString()}
-										onChange={this.handleChange.bind(this)}
-										ref={this.input}
-										className={classes.progressInput}
-									/>
-									<Typography
-										className={classes.currentTime}
-										variant="caption"
-										align="center"
-									>
-										{`${convertToSeconds(
-											this.state.currentTime * 1000
-										)} / ${convertToSeconds(this.state.duration * 1000)}`}
-									</Typography>
-								</div>
-								{controls}
+						<div className={classes.mobileDrawer}>
+							<img
+								className={classes.mobileSongArt}
+								alt="Song Cover Art"
+								src={this.state.tracks[this.props.currentTrack].image}
+							/>
+							<div>
+								<Typography
+									align="center"
+									className={classes.truncate}
+									variant="headline"
+									component="h3"
+									title={title}
+								>
+									{title}
+								</Typography>
+								<Typography
+									component={Link}
+									to={`/artist/${artist.id}`}
+									align="center"
+									className={classes.truncate}
+									variant="subheading"
+									title={artist.name}
+								>
+									{artist.name}
+								</Typography>
 							</div>
-						</Paper>
+							<div>
+								<input
+									type="range"
+									value={currentTime}
+									max={duration.toString()}
+									onChange={this.handleChange.bind(this)}
+									ref={this.input}
+									className={classes.progressInput}
+								/>
+								<Typography
+									className={classes.currentTime}
+									variant="caption"
+									align="center"
+								>
+									{`${convertToSeconds(
+										this.state.currentTime * 1000
+									)} / ${convertToSeconds(this.state.duration * 1000)}`}
+								</Typography>
+							</div>
+							{controls}
+						</div>
 					</div>
-				</Slide>
+				</Drawer>
 			</div>
 		)
 		const player = (
@@ -640,7 +636,7 @@ class PlaylistPlayer extends Component {
 								autoPlay
 								onPlay={this.handleOnPlay.bind(this)}
 								ref={this.audio}
-								src={this.state.source}
+								src={this.props.audioSource}
 								onTimeUpdate={this.handleTimeUpdate}
 								onEnded={this.handleNext}
 								onError={this.fetchUrl.bind(this)}
@@ -693,7 +689,8 @@ const mapStateToProps = state => {
 		currentTrack: parseInt(state.player.currentTrack, 10),
 		isPlaying: state.player.isPlaying,
 		id: state.player.tracks[0].id,
-		shuffledTracks: state.player.shuffledTracks
+		shuffledTracks: state.player.shuffledTracks,
+		audioSource: state.player.audioSource
 	}
 }
 PlaylistPlayer.propTypes = {
@@ -701,6 +698,7 @@ PlaylistPlayer.propTypes = {
 	currentTrack: PropTypes.number.isRequired,
 	isPlaying: PropTypes.bool.isRequired,
 	id: PropTypes.string.isRequired,
-	shuffledTracks: PropTypes.array.isRequired
+	shuffledTracks: PropTypes.array.isRequired,
+	artist: PropTypes.object.isRequired
 }
 export default connect(mapStateToProps)(PlaylistPlayerWithStyles)

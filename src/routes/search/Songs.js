@@ -10,7 +10,7 @@ class Songs extends Component {
 	state = {
 		songs: []
 	}
-	componentDidMount() {
+	search() {
 		const { term } = this.props.match.params
 		this.props.search(term)
 		spotifyApi.searchTracks(term).then(
@@ -33,6 +33,14 @@ class Songs extends Component {
 				console.log('Something went wrong!', err)
 			}
 		)
+	}
+	componentDidUpdate(prevProps) {
+		if (prevProps.match.params.term !== this.props.match.params.term) {
+			this.search()
+		}
+	}
+	componentDidMount() {
+		this.search()
 	}
 	render() {
 		if (this.state.songs.length > 0) {

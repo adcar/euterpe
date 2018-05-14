@@ -7,7 +7,7 @@ import AlbumCard from '../containers/AlbumCard'
 import PageLabel from '../components/PageLabel'
 import CardWrapper from '../components/CardWrapper'
 import NothingHere from '../components/NothingHere'
-import { fetchSavedAlbums } from '../actions/apiActions'
+import { fetchSavedAlbums } from '../actions/spotifyApiActions'
 import { connect } from 'react-redux'
 
 const styles = theme => ({
@@ -58,7 +58,7 @@ class MyAlbums extends Component {
 }
 
 const mapStateToProps = state => ({
-	albums: state.api.savedAlbums
+	albums: state.spotifyApi.savedAlbums
 })
 
 MyAlbums.propTypes = {

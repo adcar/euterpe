@@ -9,7 +9,9 @@ import { connect } from 'react-redux'
 import SongItem from '../components/SongItem'
 import Typography from 'material-ui/Typography'
 import Card, { CardMedia, CardContent } from 'material-ui/Card'
+import { clearPlaylistTracks } from '../actions/spotifyApiActions'
 import SpotifyWebApi from 'spotify-web-api-node'
+import { fetchPlaylistTracks } from '../actions/spotifyApiActions'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
@@ -62,7 +64,13 @@ class Playlist extends Component {
 			playlistName: '',
 			playlistArtist: '',
 			playlistArt: 'https://via.placeholder.com/400x400',
-			tracksInfo: [],
+			tracksInfo: [
+				{
+					artist: {
+						id: ''
+					}
+				}
+			],
 			song: ''
 		}
 		this.play = this.play.bind(this)
@@ -75,7 +83,51 @@ class Playlist extends Component {
 			})
 		)
 	}
-	co
+	// static getDerivedStateFromProps(nextProps) {
+	// 	return {
+	// 		tracksInfo: nextProps.tracks.map(item => ({
+	// 			name: item.name,
+	// 			artist: item.owner,
+	// 			id: item.id
+	// 		})),
+	// 		tracks: nextProps.tracks.map((item, index) => (
+	// 			<SongItem
+	// 				type="playlist"
+	// 				key={item.id}
+	// 				id={item.id}
+	// 				name={item.name}
+	// 				duration={item.duration_ms}
+	// 				artist={item.artists[0]}
+	// 				index={index}
+	// 				play={this.play}
+	// 			/>
+	// 		))
+	// 	}
+	// }
+	componentDidUpdate(prevProps) {
+		if (prevProps !== this.props) {
+			this.setState({
+				tracksInfo: this.props.tracks.map(item => ({
+					name: item.name,
+					artist: item.artists[0],
+					id: item.id,
+					image: item.album.images[1].url
+				})),
+				tracks: this.props.tracks.map((item, index) => (
+					<SongItem
+						type="playlist"
+						key={item.id}
+						id={item.id}
+						name={item.name}
+						duration={item.duration_ms}
+						artist={item.artists[0]}
+						index={index}
+						play={this.play}
+					/>
+				))
+			})
+		}
+	}
 	componentDidMount() {
 		spotifyApi
 			.getPlaylist(this.props.match.params.user, this.props.match.params.id)
@@ -85,37 +137,16 @@ class Playlist extends Component {
 					playlistArtist: data.body.owner.display_name,
 					playlistArt: data.body.images[0].url
 				})
-			})
-		spotifyApi
-			.getPlaylistTracks(
-				this.props.match.params.user,
-				this.props.match.params.id
-			)
-			.then(data => {
-				this.setState({
-					tracksInfo: data.body.items.map(item => ({
-						name: item.track.name,
-						artist: item.track.artists[0],
-						image: item.track.album.images[1].url,
-						id: item.track.id
-					})),
-
-					tracks: data.body.items.map((item, index) => (
-						<SongItem
-							type="playlist"
-							key={item.track.id}
-							id={item.track.id}
-							name={item.track.name}
-							duration={item.track.duration_ms}
-							artist={item.track.artists[0]}
-							index={index}
-							play={this.play}
-						/>
-					))
-				})
-			})
-			.catch(err => {
-				console.error(err)
+				this.props.dispatch(clearPlaylistTracks())
+				for (let i = 0; i < Math.ceil(data.body.tracks.total / 100); i++) {
+					this.props.dispatch(
+						fetchPlaylistTracks(
+							this.props.match.params.user,
+							this.props.match.params.id,
+							i * 100
+						)
+					)
+				}
 			})
 	}
 	render() {
@@ -164,6 +195,8 @@ class Playlist extends Component {
 		)
 	}
 }
-
+const mapStateToProps = state => ({
+	tracks: state.spotifyApi.playlistTracks
+})
 const PlaylistWithStyles = withStyles(styles)(Playlist)
-export default connect()(PlaylistWithStyles)
+export default connect(mapStateToProps)(PlaylistWithStyles)
