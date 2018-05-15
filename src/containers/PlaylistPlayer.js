@@ -299,39 +299,13 @@ class PlaylistPlayer extends Component {
 			/*eslint-disable */
 			navigator.mediaSession.metadata = new MediaMetadata({
 				/*eslint-enable */
-				title: 'Never Gonna Give You Up',
-				artist: 'Rick Astley',
-				album: 'Whenever You Need Somebody',
+				title: this.state.tracks[this.props.currentTrack].name,
+				artist: this.state.tracks[this.props.currentTrack].artist.name,
 				artwork: [
 					{
-						src: 'https://dummyimage.com/96x96',
-						sizes: '96x96',
-						type: 'image/png'
-					},
-					{
-						src: 'https://dummyimage.com/128x128',
-						sizes: '128x128',
-						type: 'image/png'
-					},
-					{
-						src: 'https://dummyimage.com/192x192',
-						sizes: '192x192',
-						type: 'image/png'
-					},
-					{
-						src: 'https://dummyimage.com/256x256',
-						sizes: '256x256',
-						type: 'image/png'
-					},
-					{
-						src: 'https://dummyimage.com/384x384',
-						sizes: '384x384',
-						type: 'image/png'
-					},
-					{
-						src: 'https://dummyimage.com/512x512',
-						sizes: '512x512',
-						type: 'image/png'
+						src: this.state.tracks[this.props.currentTrack].image,
+						sizes: '300x300',
+						type: 'image/jpeg'
 					}
 				]
 			})
