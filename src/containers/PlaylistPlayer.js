@@ -347,6 +347,15 @@ class PlaylistPlayer extends Component {
 			}
 		}
 	}
+	componentDidMount() {
+		navigator.mediaSession.setActionHandler('previoustrack', () => {
+			this.handlePrev()
+		})
+
+		navigator.mediaSession.setActionHandler('nexttrack', () => {
+			this.handleNext()
+		})
+	}
 	handleOpen() {
 		this.setState({
 			isLaunched: true

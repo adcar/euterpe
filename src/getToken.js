@@ -3,7 +3,7 @@ let url
 if (process.env.NODE_ENV === 'production') {
 	url = 'https://euterpe.cf'
 } else if (process.env.NODE_ENV === 'development') {
-	url = 'http://localhost:3000'
+	url = 'http://10.0.0.27:3000'
 }
 let scope = encodeURIComponent(
 	'user-library-modify user-library-read user-top-read user-follow-read playlist-modify-public playlist-modify-private'
