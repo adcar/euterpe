@@ -20,7 +20,7 @@ spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 const styles = theme => ({
 	card: {
 		width: 300,
-		height: 300,
+		height: 340,
 		display: 'flex',
 		flexDirection: 'column',
 		margin: theme.spacing.unit
@@ -115,6 +115,7 @@ class AlbumCard extends Component {
 					Save
 				</Button>
 			)
+
 		const linkBtn =
 			this.props.type === 'playlist' ? (
 				<Link
@@ -132,15 +133,33 @@ class AlbumCard extends Component {
 					</Button>
 				</Link>
 			)
-		const { classes } = this.props
-		if (this.props.image && this.props.name && this.props.id) {
-			return (
-				<Card className={classes.card} key={this.props.id}>
+
+		const image =
+			this.props.type === 'playlist' ? (
+				<Link
+					to={`/playlist/${this.props.artist.id}/${this.props.id}`}
+					style={{ textDecoration: 'none', height: 'auto' }}
+				>
+					<CardMedia
+						style={{ height: 200 }}
+						image={this.props.image}
+						title="Playlist Cover"
+					/>
+				</Link>
+			) : (
+				<Link to={`/album/${this.props.id}`} style={{ textDecoration: 'none' }}>
 					<CardMedia
 						style={{ height: 200 }}
 						image={this.props.image}
 						title="Album Cover"
 					/>
+				</Link>
+			)
+		const { classes } = this.props
+		if (this.props.image && this.props.name && this.props.id) {
+			return (
+				<Card className={classes.card} key={this.props.id}>
+					{image}
 					<CardContent>
 						<Typography
 							variant="title"
