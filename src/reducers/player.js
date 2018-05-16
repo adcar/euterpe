@@ -7,7 +7,8 @@ const initialState = {
 				id: '',
 				name: ''
 			},
-			id: ''
+			id: '',
+			duration: null
 		}
 	],
 	currentTrack: 0,

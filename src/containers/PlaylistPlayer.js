@@ -315,7 +315,8 @@ class PlaylistPlayer extends Component {
 		this.props.dispatch(
 			fetchAudioSource(
 				this.state.tracks[this.props.currentTrack].name,
-				this.state.tracks[this.props.currentTrack].artist.name
+				this.state.tracks[this.props.currentTrack].artist.name,
+				this.state.tracks[this.props.currentTrack].duration
 			)
 		)
 	}
@@ -683,7 +684,6 @@ PlaylistPlayer.propTypes = {
 	currentTrack: PropTypes.number.isRequired,
 	isPlaying: PropTypes.bool.isRequired,
 	id: PropTypes.string.isRequired,
-	shuffledTracks: PropTypes.array.isRequired,
-	artist: PropTypes.object.isRequired
+	shuffledTracks: PropTypes.array.isRequired
 }
 export default connect(mapStateToProps)(PlaylistPlayerWithStyles)

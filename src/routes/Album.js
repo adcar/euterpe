@@ -94,7 +94,8 @@ class Album extends Component {
 						name: track.name,
 						artist: track.artists[0],
 						image: track.album.images[1].url,
-						id: track.id
+						id: track.id,
+						duration: track.duration_ms
 					})),
 					tracks: data.body.tracks.map((item, index) => (
 						<SongItem

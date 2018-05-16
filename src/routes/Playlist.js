@@ -111,7 +111,8 @@ class Playlist extends Component {
 					name: item.name,
 					artist: item.artists[0],
 					id: item.id,
-					image: item.album.images[1].url
+					image: item.album.images[1].url,
+					duration: item.duration_ms
 				})),
 				tracks: this.props.tracks.map((item, index) => (
 					<SongItem

@@ -35,7 +35,8 @@ class SongItem extends Component {
 					name: this.props.name,
 					artist: this.props.artist,
 					image: this.props.image,
-					id: this.props.id
+					id: this.props.id,
+					duration: this.props.duration
 				}
 			])
 		)

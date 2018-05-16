@@ -35,7 +35,12 @@ const getAudioSource = source => ({
 	payload: source
 })
 
-export const fetchAudioSource = (song, artist) => dispatch => {
+export const fetchAudioSource = (song, artist, duration) => dispatch => {
+	// fetch(
+	// 	`https://euterpe-api.herokuapp.com/${encodeURIComponent(
+	// 		song
+	// 	)}/${encodeURIComponent(artist)}/${Math.round(duration / 1000)}`
+	// )
 	fetch(
 		`https://euterpe-api.herokuapp.com/${encodeURIComponent(
 			song
