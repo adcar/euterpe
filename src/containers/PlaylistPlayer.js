@@ -17,6 +17,9 @@ import RepeatOneIcon from 'material-ui-icons/RepeatOne'
 import ShuffleIcon from 'material-ui-icons/Shuffle'
 import PlayIcon from 'material-ui-icons/PlayArrow'
 import PauseIcon from 'material-ui-icons/Pause'
+import VolumeUpIcon from 'material-ui-icons/VolumeUp'
+import VolumeMuteIcon from 'material-ui-icons/VolumeMute'
+
 import { connect } from 'react-redux'
 import convertToSeconds from '../convertToSeconds'
 import {
@@ -142,7 +145,7 @@ const styles = theme => ({
 	volumeSelector: {
 		borderRadius: 7.5,
 		backgroundColor: theme.palette.primary.main,
-		transform: 'rotate(-90deg)',
+
 		width: 80,
 		'&::-webkit-slider-thumb': {
 			height: 15,
@@ -151,6 +154,10 @@ const styles = theme => ({
 			backgroundColor: 'white',
 			boxShadow: theme.shadows[2]
 		}
+	},
+	volumeWrapper: {
+		display: 'flex',
+		alignItems: 'center'
 	},
 	mobileVolumeSelector: {
 		marginRight: theme.spacing.unit * 2,
@@ -418,6 +425,26 @@ class PlaylistPlayer extends Component {
 			})
 		}
 	}
+	muteVolume() {
+		this.setState(
+			{
+				volumeLvl: 0
+			},
+			() => {
+				this.audio.current.volume = this.state.volumeLvl
+			}
+		)
+	}
+	maxVolume() {
+		this.setState(
+			{
+				volumeLvl: 1
+			},
+			() => {
+				this.audio.current.volume = this.state.volumeLvl
+			}
+		)
+	}
 	render() {
 		const { duration, currentTime, volumeLvl, isShuffled } = this.state
 		const { classes, isPlaying } = this.props
@@ -640,15 +667,24 @@ class PlaylistPlayer extends Component {
 							</Typography>
 						</div>
 					</div>
-					<input
-						type="range"
-						step="0.1"
-						max="1"
-						min="0"
-						value={volumeLvl}
-						onChange={this.changeVolumeLvl.bind(this)}
-						className={classes.volumeSelector}
-					/>
+					<div className={classes.volumeWrapper}>
+						<IconButton onClick={this.muteVolume.bind(this)}>
+							<VolumeMuteIcon className={classes.iconSmall} />
+						</IconButton>
+
+						<input
+							type="range"
+							step="0.1"
+							max="1"
+							min="0"
+							value={volumeLvl}
+							onChange={this.changeVolumeLvl.bind(this)}
+							className={classes.volumeSelector}
+						/>
+						<IconButton onClick={this.maxVolume.bind(this)}>
+							<VolumeUpIcon />
+						</IconButton>
+					</div>
 				</div>
 			</Card>
 		)
