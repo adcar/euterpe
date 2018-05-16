@@ -599,9 +599,12 @@ class PlaylistPlayer extends Component {
 									variant="caption"
 									align="center"
 								>
-									{`${convertToSeconds(
-										this.state.currentTime * 1000
-									)} / ${convertToSeconds(this.state.duration * 1000)}`}
+									{typeof this.state.duration === 'number' &&
+									typeof this.state.currentTime === 'number'
+										? `${convertToSeconds(
+												this.state.currentTime * 1000
+										  )} / ${convertToSeconds(this.state.duration * 1000)}`
+										: '0:00 / 0:00)'}
 								</Typography>
 							</div>
 							{controls}
@@ -644,7 +647,9 @@ class PlaylistPlayer extends Component {
 						{controls}
 						<div className={classes.progress}>
 							<Typography className={classes.currentTime} variant="caption">
-								{convertToSeconds(this.state.currentTime * 1000)}
+								{typeof this.state.currentTime === 'number'
+									? convertToSeconds(this.state.currentTime * 1000)
+									: '0:00'}
 							</Typography>
 							<audio
 								autoPlay
@@ -664,7 +669,9 @@ class PlaylistPlayer extends Component {
 								className={classes.progressInput}
 							/>
 							<Typography className={classes.duration} variant="caption">
-								{convertToSeconds(this.state.duration * 1000)}
+								{typeof this.state.duration === 'number'
+									? convertToSeconds(this.state.duration * 1000)
+									: '0:00'}
 							</Typography>
 						</div>
 					</div>
