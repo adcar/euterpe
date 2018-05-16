@@ -5,8 +5,8 @@ import { ListItem, ListItemText } from 'material-ui/List'
 import Typography from 'material-ui/Typography'
 import { withStyles } from 'material-ui/styles'
 import { connect } from 'react-redux'
-import { playTrack } from '../actions/playerActions'
-import convertToSeconds from '../convertToSeconds'
+import { playTrack } from '../../actions/playerActions'
+import convertToSeconds from '../../convertToSeconds'
 const styles = theme => ({
 	selected: {
 		color: theme.palette.primary.main

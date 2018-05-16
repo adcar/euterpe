@@ -66,7 +66,7 @@ class Categories extends Component {
 		const { classes } = this.props
 		return (
 			<div>
-				<PageLabel>Genres</PageLabel>
+				<PageLabel>Genres & Moods</PageLabel>
 				<div className={classes.genres}>{this.state.genres}</div>
 			</div>
 		)

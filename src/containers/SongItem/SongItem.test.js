@@ -1,6 +1,5 @@
-// Link.react.test.js
 import React from 'react'
-import SongItem from './SongItem'
+import SongItem from './index.js'
 import { shallow, mount, render } from 'enzyme'
 import configureStore from 'redux-mock-store'
 import { MemoryRouter } from 'react-router-dom'

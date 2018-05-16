@@ -6,7 +6,7 @@ import List from 'material-ui/List'
 import { playPlaylist } from '../actions/playerActions'
 import Button from 'material-ui/Button'
 import { connect } from 'react-redux'
-import SongItem from '../components/SongItem'
+import SongItem from '../containers/SongItem'
 import Typography from 'material-ui/Typography'
 import Card, { CardMedia, CardContent } from 'material-ui/Card'
 import { clearPlaylistTracks } from '../actions/spotifyApiActions'
@@ -83,27 +83,6 @@ class Playlist extends Component {
 			})
 		)
 	}
-	// static getDerivedStateFromProps(nextProps) {
-	// 	return {
-	// 		tracksInfo: nextProps.tracks.map(item => ({
-	// 			name: item.name,
-	// 			artist: item.owner,
-	// 			id: item.id
-	// 		})),
-	// 		tracks: nextProps.tracks.map((item, index) => (
-	// 			<SongItem
-	// 				type="playlist"
-	// 				key={item.id}
-	// 				id={item.id}
-	// 				name={item.name}
-	// 				duration={item.duration_ms}
-	// 				artist={item.artists[0]}
-	// 				index={index}
-	// 				play={this.play}
-	// 			/>
-	// 		))
-	// 	}
-	// }
 	componentDidUpdate(prevProps) {
 		if (prevProps !== this.props) {
 			this.setState({

@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
-import AlbumCard from '../containers/AlbumCard'
-import PageLabel from '../components/PageLabel'
-import CardWrapper from '../components/CardWrapper'
+import AlbumCard from '../../containers/AlbumCard'
+import PageLabel from '../../components/PageLabel'
+import CardWrapper from '../../components/CardWrapper'
 import { connect } from 'react-redux'
-import { fetchFollowedPlaylists } from '../actions/spotifyApiActions'
-import NothingHere from '../components/NothingHere'
+import { fetchFollowedPlaylists } from '../../actions/spotifyApiActions'
+import NothingHere from '../../components/NothingHere'
 
 class MyPlaylists extends Component {
 	constructor() {

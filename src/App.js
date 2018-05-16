@@ -16,7 +16,7 @@ import { PersistGate } from 'redux-persist/integration/react'
 
 import storage from 'redux-persist/lib/storage'
 
-import Collection from './routes/Collection'
+import Collection from './routes/collection/Collection'
 import Artist from './routes/Artist'
 import Home from './routes/Home'
 import Album from './routes/Album'

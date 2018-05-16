@@ -1,5 +1,5 @@
 import React from 'react'
-import CardWrapper from './CardWrapper'
+import CardWrapper from './index.js'
 import { shallow, mount, render } from 'enzyme'
 import toJson from 'enzyme-to-json'
 
