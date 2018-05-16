@@ -89,7 +89,7 @@ const styles = theme => ({
 	},
 	playerWrapper: {
 		display: 'grid',
-		gridTemplateColumns: 'repeat(3, minmax(350px, 1fr))',
+		gridTemplateColumns: '1fr 2fr 1fr',
 
 		height: '100%',
 		justifyContent: 'stretch',
@@ -156,6 +156,7 @@ const styles = theme => ({
 		}
 	},
 	volumeWrapper: {
+		justifySelf: 'end',
 		display: 'flex',
 		alignItems: 'center'
 	},
