@@ -329,20 +329,11 @@ class PlaylistPlayer extends Component {
 		)
 	}
 	componentDidUpdate(prevProps, prevState) {
-		if (prevState.isShuffled) {
-			if (
-				prevState.tracks[prevProps.currentTrack].id !==
-				this.state.tracks[this.props.currentTrack].id
-			) {
-				this.fetchUrl()
-			}
-		} else if (!this.state.isShuffled) {
-			if (
-				prevProps.tracks[prevProps.currentTrack].id !==
-				this.props.tracks[this.props.currentTrack].id
-			) {
-				this.fetchUrl()
-			}
+		if (
+			prevState.tracks[prevProps.currentTrack].id !==
+			this.state.tracks[this.props.currentTrack].id
+		) {
+			this.fetchUrl()
 		}
 	}
 	static getDerivedStateFromProps(nextProps, prevState) {
@@ -357,6 +348,7 @@ class PlaylistPlayer extends Component {
 		}
 	}
 	componentDidMount() {
+		this.fetchUrl()
 		if ('mediaSession' in navigator) {
 			navigator.mediaSession.setActionHandler('previoustrack', () => {
 				this.handlePrev()
