@@ -29,6 +29,9 @@ export const shuffle = tracks => ({
 	type: 'SHUFFLE',
 	payload: tracks
 })
+export const unshuffle = () => ({
+	type: 'UNSHUFFLE'
+})
 
 const getAudioSource = source => ({
 	type: 'FETCH_AUDIO_SOURCE',

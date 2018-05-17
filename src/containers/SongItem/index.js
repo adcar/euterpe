@@ -46,11 +46,11 @@ class SongItem extends Component {
 	}
 
 	static getDerivedStateFromProps(prevProps) {
-		if (prevProps.currentTracks === 'shuffledTracks') {
+		if (prevProps.isShuffled) {
 			return {
 				tracks: prevProps.shuffledTracks
 			}
-		} else if (prevProps.currentTracks === 'tracks') {
+		} else if (!prevProps.isShuffled) {
 			return {
 				tracks: prevProps.tracks
 			}
@@ -99,14 +99,15 @@ SongItem.propTypes = {
 	duration: PropTypes.number.isRequired,
 	artist: PropTypes.object.isRequired,
 	type: PropTypes.string.isRequired,
-	index: PropTypes.number
+	index: PropTypes.number,
+	isShuffled: PropTypes.bool.isRequired
 }
 
 const mapStateToProps = state => ({
 	currentTrack: state.player.currentTrack,
 	tracks: state.player.tracks,
 	shuffledTracks: state.player.shuffledTracks,
-	currentTracks: state.player.currentTracks
+	isShuffled: state.player.isShuffled
 })
 const SongItemWithStyles = withStyles(styles)(SongItem)
 export default connect(mapStateToProps)(SongItemWithStyles)

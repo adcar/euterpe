@@ -13,7 +13,7 @@ const initialState = {
 	],
 	currentTrack: 0,
 	isPlaying: false,
-	currentTracks: 'tracks',
+	isShuffled: false,
 	shuffledTracks: []
 }
 
@@ -29,7 +29,8 @@ const player = (state = initialState, action) => {
 			return {
 				...state,
 				tracks: action.payload.tracks,
-				currentTrack: action.payload.currentTrack
+				currentTrack: action.payload.currentTrack,
+				isShuffled: false
 			}
 		case 'NEXT_SONG':
 			if (state.currentTrack + 1 < state.tracks.length) {
@@ -65,7 +66,12 @@ const player = (state = initialState, action) => {
 				shuffledTracks: action.payload.sort(function() {
 					return 0.5 - Math.random()
 				}),
-				currentTracks: 'shuffledTracks'
+				isShuffled: true
+			}
+		case 'UNSHUFFLE':
+			return {
+				...state,
+				isShuffled: false
 			}
 		case 'FETCH_AUDIO_SOURCE':
 			return {

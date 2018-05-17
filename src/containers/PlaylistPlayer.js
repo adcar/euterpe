@@ -28,6 +28,7 @@ import {
 	play,
 	pause,
 	shuffle,
+	unshuffle,
 	playPlaylist,
 	fetchAudioSource
 } from '../actions/playerActions'
@@ -230,7 +231,6 @@ class PlaylistPlayer extends Component {
 			volumeLvl: 1,
 			source: '',
 			isLaunched: false,
-			isShuffled: false,
 			isLooped: false,
 			isSingleLooped: false
 		}
@@ -337,7 +337,7 @@ class PlaylistPlayer extends Component {
 		}
 	}
 	static getDerivedStateFromProps(nextProps, prevState) {
-		if (prevState.isShuffled) {
+		if (nextProps.isShuffled) {
 			return {
 				tracks: nextProps.shuffledTracks
 			}
@@ -376,7 +376,7 @@ class PlaylistPlayer extends Component {
 		})
 	}
 	handleShuffle() {
-		if (!this.state.isShuffled) {
+		if (!this.props.isShuffled) {
 			console.log('shuffling...')
 			this.props.dispatch(shuffle(this.state.tracks.slice(0)))
 			this.setState(
@@ -385,8 +385,9 @@ class PlaylistPlayer extends Component {
 				},
 				() => this.fetchUrl()
 			)
-		} else if (this.state.isShuffled) {
+		} else if (this.props.isShuffled) {
 			console.log('setting back to normal...')
+			this.props.dispatch(unshuffle())
 			this.setState(
 				{
 					tracks: this.props.shuffledTracks // CHANGE THIS FIXME
@@ -394,10 +395,6 @@ class PlaylistPlayer extends Component {
 				() => this.fetchUrl()
 			)
 		}
-
-		this.setState({
-			isShuffled: !this.state.isShuffled
-		})
 	}
 	handleRepeat() {
 		console.log('repeat')
@@ -439,8 +436,8 @@ class PlaylistPlayer extends Component {
 		)
 	}
 	render() {
-		const { duration, currentTime, volumeLvl, isShuffled } = this.state
-		const { classes, isPlaying } = this.props
+		const { duration, currentTime, volumeLvl } = this.state
+		const { classes, isPlaying, isShuffled } = this.props
 
 		const title = this.state.tracks[this.props.currentTrack].name
 		const artist = this.state.tracks[this.props.currentTrack].artist
@@ -709,6 +706,7 @@ const mapStateToProps = state => {
 	return {
 		tracks: state.player.tracks,
 		currentTrack: parseInt(state.player.currentTrack, 10),
+		isShuffled: state.player.isShuffled,
 		isPlaying: state.player.isPlaying,
 		id: state.player.tracks[0].id,
 		shuffledTracks: state.player.shuffledTracks,
@@ -716,6 +714,7 @@ const mapStateToProps = state => {
 	}
 }
 PlaylistPlayer.propTypes = {
+	isShuffled: PropTypes.bool.isRequired,
 	tracks: PropTypes.array.isRequired,
 	currentTrack: PropTypes.number.isRequired,
 	isPlaying: PropTypes.bool.isRequired,
