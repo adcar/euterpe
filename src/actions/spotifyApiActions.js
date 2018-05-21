@@ -33,7 +33,6 @@ const getPlaylistTracks = tracks => ({
 	payload: tracks
 })
 export const fetchPlaylistTracks = (user, id, offset = 0) => dispatch => {
-	console.log(offset)
 	spotifyApi
 		.getPlaylistTracks(user, id, { offset: offset })
 		.then(res =>

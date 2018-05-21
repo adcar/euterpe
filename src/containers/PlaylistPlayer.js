@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
-import Card from '@material-ui/core/Card';
+import Card from '@material-ui/core/Card'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Hidden from '@material-ui/core/Hidden'
@@ -370,14 +370,12 @@ class PlaylistPlayer extends Component {
 		})
 	}
 	handleLaunch() {
-		console.log('launched')
 		this.setState({
 			isLaunched: !this.state.isLaunched
 		})
 	}
 	handleShuffle() {
 		if (!this.props.isShuffled) {
-			console.log('shuffling...')
 			this.props.dispatch(shuffle(this.state.tracks.slice(0)))
 			this.setState(
 				{
@@ -386,7 +384,6 @@ class PlaylistPlayer extends Component {
 				() => this.fetchUrl()
 			)
 		} else if (this.props.isShuffled) {
-			console.log('setting back to normal...')
 			this.props.dispatch(unshuffle())
 			this.setState(
 				{
@@ -397,7 +394,6 @@ class PlaylistPlayer extends Component {
 		}
 	}
 	handleRepeat() {
-		console.log('repeat')
 		if (!this.state.isLooped && !this.state.isSingleLooped) {
 			this.setState({
 				isLooped: true
