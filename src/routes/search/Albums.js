@@ -22,7 +22,6 @@ class Albums extends Component {
 		}
 	}
 	search() {
-		console.log('yay')
 		this.props.dispatch(fetchSavedAlbums())
 
 		const { term } = this.props.match.params
