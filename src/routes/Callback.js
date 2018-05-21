@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import Cookie from 'js-cookie'
 import { withRouter } from 'react-router-dom'
-import { CircularProgress } from 'material-ui/Progress'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import qs from 'qs'
 
 class Callback extends Component {

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import getToken from '../../getToken'
-import { withStyles } from 'material-ui/styles'
-import { CircularProgress } from 'material-ui/Progress'
+import { withStyles } from '@material-ui/core/styles'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import SongItem from '../../containers/SongItem'
 import PageLabel from '../../components/PageLabel'
 import CardWrapper from '../../components/CardWrapper'

@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './index.css'
-import { createMuiTheme, MuiThemeProvider } from 'material-ui/styles'
-import CssBaseline from 'material-ui/CssBaseline'
+import { createMuiTheme, MuiThemeProvider } from '@material-ui/core/styles'
+import CssBaseline from '@material-ui/core/CssBaseline'
 import Navbar from './containers/Navbar'
 import PlaylistPlayer from './containers/PlaylistPlayer'
 import { createStore, applyMiddleware } from 'redux'
@@ -25,8 +25,8 @@ import Category from './routes/Category'
 import Callback from './routes/Callback'
 import Search from './routes/Search'
 
-import blue from 'material-ui/colors/blue'
-import amber from 'material-ui/colors/amber'
+import blue from '@material-ui/core/colors/blue'
+import amber from '@material-ui/core/colors/amber'
 
 // Redux configuration
 const persistConfig = {

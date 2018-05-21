@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import getToken from '../../getToken'
-import { CircularProgress } from 'material-ui/Progress'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import SongItem from '../../containers/SongItem'
 
 import SpotifyWebApi from 'spotify-web-api-node'

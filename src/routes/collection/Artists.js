@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import getToken from '../../getToken'
 import ArtistCard from '../../components/ArtistCard'
-import { CircularProgress } from 'material-ui/Progress'
+import CircularProgress from '@material-ui/core/CircularProgress';
 import PageLabel from '../../components/PageLabel'
 import CardWrapper from '../../components/CardWrapper'
 
