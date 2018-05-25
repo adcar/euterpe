@@ -33,6 +33,11 @@ export const unshuffle = () => ({
 	type: 'UNSHUFFLE'
 })
 
+export const changeVolume = volumeLvl => ({
+	type: 'CHANGE_VOLUME',
+	payload: volumeLvl
+})
+
 const getAudioSource = source => ({
 	type: 'FETCH_AUDIO_SOURCE',
 	payload: source

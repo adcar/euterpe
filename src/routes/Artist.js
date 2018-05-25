@@ -5,6 +5,7 @@ import getToken from '../getToken'
 import CardWrapper from '../components/CardWrapper'
 import AlbumCard from '../containers/AlbumCard'
 import SongItem from '../containers/SongItem'
+import PageLabel from '../components/PageLabel'
 import { withStyles } from '@material-ui/core/styles'
 import { connect } from 'react-redux'
 import SpotifyWebApi from 'spotify-web-api-node'
@@ -12,10 +13,27 @@ import { playPlaylist } from '../actions/playerActions'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 const styles = theme => ({
+	banner: {
+		width: '100%',
+		backgroundColor: 'white',
+		backgroundSize: 'cover',
+		backgroundPosition: 'center',
+		height: 300,
+		filter: 'blur(20px)',
+		position: 'absolute',
+		zIndex: '0'
+	},
 	profile: {
+		paddingTop: theme.spacing.unit * 2,
+		boxSizing: 'border-box',
+		height: 400,
 		display: 'flex',
 		flexDirection: 'column',
-		alignItems: 'center'
+		alignItems: 'center',
+
+		zIndex: '2',
+		position: 'relative',
+		borderBottom: 'white solid 10px'
 	},
 	profileImg: {
 		height: 200,
@@ -99,19 +117,21 @@ class Artist extends Component {
 		const { classes } = this.props
 		return (
 			<div>
+				<div
+					className={classes.banner}
+					style={{
+						backgroundImage: `linear-gradient(rgba(0,0,0,0.2), rgba(0,0,0,0.2)), url(${
+							artist.images[0].url
+						})`
+					}}
+				/>
 				<div className={classes.profile}>
 					<img
 						src={artist.images[1].url}
 						alt={`${artist.name}`}
 						className={classes.profileImg}
 					/>
-					<Typography
-						variant="display2"
-						align="center"
-						className={classes.artistLabel}
-					>
-						{artist.name}
-					</Typography>
+					<PageLabel color="white">{artist.name}</PageLabel>
 				</div>
 				<div className={classes.section}>
 					<Typography variant="display1" align="center">

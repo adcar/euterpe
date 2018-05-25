@@ -6,8 +6,8 @@ import Drawer from '@material-ui/core/Drawer'
 import SwipeableDrawer from '@material-ui/core/SwipeableDrawer'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
-import Input from '@material-ui/core/Input';
-import List from '@material-ui/core/List';
+import Input from '@material-ui/core/Input'
+import List from '@material-ui/core/List'
 import Typography from '@material-ui/core/Typography'
 import IconButton from '@material-ui/core/IconButton'
 import Hidden from '@material-ui/core/Hidden'
@@ -15,17 +15,18 @@ import Divider from '@material-ui/core/Divider'
 import MenuIcon from '@material-ui/icons/Menu'
 import LibraryMusicIcon from '@material-ui/icons/LibraryMusic'
 import HomeIcon from '@material-ui/icons/Home'
-import ListItem from '@material-ui/core/ListItem';
-import ListItemIcon from '@material-ui/core/ListItemIcon';
-import ListItemText from '@material-ui/core/ListItemText';
+import ListItem from '@material-ui/core/ListItem'
+import ListItemIcon from '@material-ui/core/ListItemIcon'
+import ListItemText from '@material-ui/core/ListItemText'
 import { isBrowser } from 'react-device-detect'
 import drawerWidth from '../drawerWidth'
 import getToken from '../getToken'
-import Menu from '@material-ui/core/Menu';
-import MenuItem from '@material-ui/core/MenuItem';
+import Menu from '@material-ui/core/Menu'
+import MenuItem from '@material-ui/core/MenuItem'
 import Cookie from 'js-cookie'
 import { search } from '../actions/searchActions'
 import { connect } from 'react-redux'
+import euterpeLogo from '../img/euterpe.png'
 
 import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
@@ -88,6 +89,15 @@ const styles = theme => ({
 	},
 	menu: {
 		zIndex: 99999
+	},
+	logo: {
+		height: 50,
+		width: 50,
+		marginRight: theme.spacing.unit * 2
+	},
+	logoAndText: {
+		display: 'flex',
+		alignItems: 'center'
 	}
 })
 
@@ -223,11 +233,16 @@ class Navbar extends React.Component {
 							to="/"
 							style={{ textDecoration: 'none', color: 'white', flex: 1 }}
 						>
-							<Typography variant="title" color="inherit" noWrap>
-								{window.location.href.includes('collection')
-									? 'Your Music'
-									: 'Euterpe'}
-							</Typography>
+							<div className={classes.logoAndText}>
+								<img
+									src={euterpeLogo}
+									className={classes.logo}
+									alt="Euterpe Logo"
+								/>
+								<Typography variant="title" color="inherit" noWrap>
+									Euterpe
+								</Typography>
+							</div>
 						</Link>
 						<IconButton
 							color="inherit"

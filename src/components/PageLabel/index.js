@@ -9,13 +9,16 @@ const styles = theme => ({
 	}
 })
 
-const PageLabel = ({ classes, children }) => {
+const PageLabel = ({ classes, children, color }) => {
 	return (
 		<Typography
 			className={classes.root}
 			variant="display1"
 			component="h1"
 			align="center"
+			style={{
+				color: color
+			}}
 		>
 			{children}
 		</Typography>

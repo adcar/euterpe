@@ -14,7 +14,8 @@ const initialState = {
 	currentTrack: 0,
 	isPlaying: false,
 	isShuffled: false,
-	shuffledTracks: []
+	shuffledTracks: [],
+	volumeLvl: 1
 }
 
 const player = (state = initialState, action) => {
@@ -77,6 +78,11 @@ const player = (state = initialState, action) => {
 			return {
 				...state,
 				audioSource: action.payload
+			}
+		case 'CHANGE_VOLUME':
+			return {
+				...state,
+				volumeLvl: action.payload
 			}
 		default:
 			return state

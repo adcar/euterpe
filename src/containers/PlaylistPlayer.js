@@ -30,7 +30,8 @@ import {
 	shuffle,
 	unshuffle,
 	playPlaylist,
-	fetchAudioSource
+	fetchAudioSource,
+	changeVolume
 } from '../actions/playerActions'
 import './slider.css'
 const styles = theme => ({
@@ -228,11 +229,11 @@ class PlaylistPlayer extends Component {
 			],
 			currentTime: 0,
 			duration: 100,
-			volumeLvl: 1,
 			source: '',
 			isLaunched: false,
 			isLooped: false,
-			isSingleLooped: false
+			isSingleLooped: false,
+			volumeLvl: 1
 		}
 		this.audio = React.createRef()
 		this.input = React.createRef()
@@ -282,14 +283,8 @@ class PlaylistPlayer extends Component {
 		)
 	}
 	changeVolumeLvl(e) {
-		this.setState(
-			{
-				volumeLvl: e.target.value
-			},
-			() => {
-				this.audio.current.volume = this.state.volumeLvl
-			}
-		)
+		this.props.dispatch(changeVolume(e.target.value))
+		this.audio.current.volume = parseInt(this.props.volumeLvl, 10)
 	}
 	handlePlayPause() {
 		if (this.props.isPlaying === false) {
@@ -412,28 +407,14 @@ class PlaylistPlayer extends Component {
 		}
 	}
 	muteVolume() {
-		this.setState(
-			{
-				volumeLvl: 0
-			},
-			() => {
-				this.audio.current.volume = this.state.volumeLvl
-			}
-		)
+		this.props.dispatch(changeVolume(0))
 	}
 	maxVolume() {
-		this.setState(
-			{
-				volumeLvl: 1
-			},
-			() => {
-				this.audio.current.volume = this.state.volumeLvl
-			}
-		)
+		this.props.dispatch(changeVolume(1))
 	}
 	render() {
-		const { duration, currentTime, volumeLvl } = this.state
-		const { classes, isPlaying, isShuffled } = this.props
+		const { duration, currentTime } = this.state
+		const { classes, isPlaying, isShuffled, volumeLvl } = this.props
 
 		const title = this.state.tracks[this.props.currentTrack].name
 		const artist = this.state.tracks[this.props.currentTrack].artist
