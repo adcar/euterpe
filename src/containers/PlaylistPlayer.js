@@ -544,7 +544,7 @@ class PlaylistPlayer extends Component {
 							</div>
 							<div
 								style={{
-									width: 120
+									width: 150
 								}}
 							>
 								{durationSlider}
