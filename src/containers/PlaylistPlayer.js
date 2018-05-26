@@ -6,7 +6,6 @@ import Card from '@material-ui/core/Card'
 import IconButton from '@material-ui/core/IconButton'
 import Typography from '@material-ui/core/Typography'
 import Hidden from '@material-ui/core/Hidden'
-
 import Drawer from '@material-ui/core/Drawer'
 import SkipPreviousIcon from '@material-ui/icons/SkipPrevious'
 import ArrowUpIcon from '@material-ui/icons/KeyboardArrowUp'
@@ -19,7 +18,7 @@ import PlayIcon from '@material-ui/icons/PlayArrow'
 import PauseIcon from '@material-ui/icons/Pause'
 import VolumeUpIcon from '@material-ui/icons/VolumeUp'
 import VolumeMuteIcon from '@material-ui/icons/VolumeMute'
-
+import Slider from '@material-ui/lab/Slider'
 import { connect } from 'react-redux'
 import convertToSeconds from '../convertToSeconds'
 import {
@@ -145,35 +144,14 @@ const styles = theme => ({
 		}
 	},
 	volumeSelector: {
-		borderRadius: 7.5,
-		backgroundColor: theme.palette.primary.main,
-
-		width: 80,
-		'&::-webkit-slider-thumb': {
-			height: 15,
-			width: 15,
-			borderRadius: '50%',
-			backgroundColor: 'white',
-			boxShadow: theme.shadows[2]
-		}
+		backgroundColor: 'red'
 	},
 	volumeWrapper: {
 		justifySelf: 'end',
 		display: 'flex',
-		alignItems: 'center'
-	},
-	mobileVolumeSelector: {
-		marginRight: theme.spacing.unit * 2,
-		borderRadius: 7.5,
-		backgroundColor: theme.palette.primary.main,
-		width: 80,
-		'&::-webkit-slider-thumb': {
-			height: 15,
-			width: 15,
-			borderRadius: '50%',
-			backgroundColor: 'white',
-			boxShadow: theme.shadows[2]
-		}
+		alignItems: 'center',
+		justifyContent: 'stretch',
+		width: 150
 	},
 	mobileCard: {
 		position: 'fixed',
@@ -239,6 +217,7 @@ class PlaylistPlayer extends Component {
 		this.input = React.createRef()
 		this.handleTimeUpdate = this.handleTimeUpdate.bind(this)
 		this.handleChange = this.handleChange.bind(this)
+		this.changeVolumeLvl = this.changeVolumeLvl.bind(this)
 		this.handleNext = this.handleNext.bind(this)
 		this.handlePrev = this.handlePrev.bind(this)
 		this.handlePlayPause = this.handlePlayPause.bind(this)
@@ -274,17 +253,21 @@ class PlaylistPlayer extends Component {
 			duration: this.audio.current.duration
 		})
 	}
-	handleChange() {
+	handleChange(e, value) {
 		this.setState(
 			{
-				currentTime: this.input.current.value
+				currentTime: value
 			},
-			() => (this.audio.current.currentTime = this.input.current.value)
+			() => (this.audio.current.currentTime = value)
 		)
 	}
-	changeVolumeLvl(e) {
-		this.props.dispatch(changeVolume(e.target.value))
-		this.audio.current.volume = parseInt(this.props.volumeLvl, 10)
+	changeVolumeLvl(e, value) {
+		this.setState(
+			{
+				volumeLvl: value
+			},
+			() => (this.audio.current.volume = value)
+		)
 	}
 	handlePlayPause() {
 		if (this.props.isPlaying === false) {
@@ -413,11 +396,19 @@ class PlaylistPlayer extends Component {
 		this.props.dispatch(changeVolume(1))
 	}
 	render() {
-		const { duration, currentTime } = this.state
-		const { classes, isPlaying, isShuffled, volumeLvl } = this.props
+		const { duration, currentTime, volumeLvl } = this.state
+		const { classes, isPlaying, isShuffled } = this.props
 
 		const title = this.state.tracks[this.props.currentTrack].name
 		const artist = this.state.tracks[this.props.currentTrack].artist
+		const durationSlider = (
+			<Slider
+				value={currentTime}
+				onChange={this.handleChange}
+				ref={this.input}
+				max={duration.toString()}
+			/>
+		)
 		const controls = (
 			<div className={classes.controls}>
 				<IconButton
@@ -551,15 +542,12 @@ class PlaylistPlayer extends Component {
 									{artist.name}
 								</Typography>
 							</div>
-							<div>
-								<input
-									type="range"
-									value={currentTime}
-									max={duration.toString()}
-									onChange={this.handleChange.bind(this)}
-									ref={this.input}
-									className={classes.progressInput}
-								/>
+							<div
+								style={{
+									width: 120
+								}}
+							>
+								{durationSlider}
 								<Typography
 									className={classes.currentTime}
 									variant="caption"
@@ -579,6 +567,7 @@ class PlaylistPlayer extends Component {
 				</Drawer>
 			</div>
 		)
+
 		const player = (
 			<Card className={classes.card}>
 				<div className={classes.playerWrapper}>
@@ -626,14 +615,7 @@ class PlaylistPlayer extends Component {
 								onEnded={this.handleNext}
 								onError={this.fetchUrl.bind(this)}
 							/>
-							<input
-								type="range"
-								value={currentTime}
-								max={duration.toString()}
-								onChange={this.handleChange.bind(this)}
-								ref={this.input}
-								className={classes.progressInput}
-							/>
+							{durationSlider}
 							<Typography className={classes.duration} variant="caption">
 								{typeof this.state.duration === 'number'
 									? convertToSeconds(this.state.duration * 1000)
@@ -645,15 +627,12 @@ class PlaylistPlayer extends Component {
 						<IconButton onClick={this.muteVolume.bind(this)}>
 							<VolumeMuteIcon className={classes.iconSmall} />
 						</IconButton>
-
-						<input
-							type="range"
-							step="0.1"
-							max="1"
-							min="0"
+						<Slider
+							step={0.1}
+							max={1}
+							min={0}
+							onChange={this.changeVolumeLvl}
 							value={volumeLvl}
-							onChange={this.changeVolumeLvl.bind(this)}
-							className={classes.volumeSelector}
 						/>
 						<IconButton onClick={this.maxVolume.bind(this)}>
 							<VolumeUpIcon />

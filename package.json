@@ -6,6 +6,7 @@
 	"dependencies": {
 		"@material-ui/core": "^1.0.0",
 		"@material-ui/icons": "^1.0.0",
+		"@material-ui/lab": "^1.0.0-alpha.3",
 		"enzyme": "^3.3.0",
 		"enzyme-adapter-react-16": "^1.1.1",
 		"enzyme-to-json": "^3.3.3",
