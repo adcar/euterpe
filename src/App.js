@@ -45,11 +45,11 @@ const persistor = persistStore(store)
 
 const theme = createMuiTheme({
 	palette: {
-		type: 'light',
+		type: 'dark',
 		primary: blue,
 		secondary: amber,
 		background: {
-			default: 'white'
+			default: '#212121' // CHANGE ME
 		}
 	}
 })

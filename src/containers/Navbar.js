@@ -26,7 +26,6 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Cookie from 'js-cookie'
 import { search } from '../actions/searchActions'
 import { connect } from 'react-redux'
-import euterpeLogo from '../img/euterpe.png'
 
 import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
@@ -234,11 +233,6 @@ class Navbar extends React.Component {
 							style={{ textDecoration: 'none', color: 'white', flex: 1 }}
 						>
 							<div className={classes.logoAndText}>
-								<img
-									src={euterpeLogo}
-									className={classes.logo}
-									alt="Euterpe Logo"
-								/>
 								<Typography variant="title" color="inherit" noWrap>
 									Euterpe
 								</Typography>
