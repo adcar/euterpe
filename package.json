@@ -22,7 +22,6 @@
 		"react-truncate": "^2.3.0",
 		"redux": "^4.0.0",
 		"redux-mock-store": "^1.5.1",
-		"redux-persist": "^5.9.1",
 		"redux-thunk": "^2.2.0",
 		"spotify-web-api-node": "^3.1.1",
 		"typeface-pacifico": "^0.0.54"

@@ -11,10 +11,6 @@ import thunk from 'redux-thunk'
 import { BrowserRouter as Router, Route, Redirect } from 'react-router-dom'
 
 import rootReducer from './reducers'
-import { persistStore, persistReducer } from 'redux-persist'
-import { PersistGate } from 'redux-persist/integration/react'
-
-import storage from 'redux-persist/lib/storage'
 
 import Collection from './routes/collection/Collection'
 import Artist from './routes/Artist'
@@ -27,20 +23,11 @@ import Search from './routes/Search'
 
 import pink from '@material-ui/core/colors/pink'
 
-// Redux configuration
-const persistConfig = {
-	key: 'root',
-	storage
-}
-
-const persistedReducer = persistReducer(persistConfig, rootReducer)
-
 const store = createStore(
-	persistedReducer,
+	rootReducer,
 	composeWithDevTools(applyMiddleware(thunk))
 )
 
-const persistor = persistStore(store)
 
 const theme = createMuiTheme({
 	palette: {
@@ -59,7 +46,6 @@ class App extends Component {
 	render() {
 		return (
 			<Provider store={store}>
-				<PersistGate loading={null} persistor={persistor}>
 					<MuiThemeProvider theme={theme}>
 						<CssBaseline />
 						<Router>
@@ -83,7 +69,7 @@ class App extends Component {
 							</div>
 						</Router>
 					</MuiThemeProvider>
-				</PersistGate>
+
 			</Provider>
 		)
 	}
