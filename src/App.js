@@ -25,8 +25,7 @@ import Category from './routes/Category'
 import Callback from './routes/Callback'
 import Search from './routes/Search'
 
-import blue from '@material-ui/core/colors/blue'
-import amber from '@material-ui/core/colors/amber'
+import pink from '@material-ui/core/colors/pink'
 
 // Redux configuration
 const persistConfig = {
@@ -46,10 +45,12 @@ const persistor = persistStore(store)
 const theme = createMuiTheme({
 	palette: {
 		type: 'dark',
-		primary: blue,
-		secondary: amber,
+		primary: pink,
+		secondary: {
+			main: '#ffffff' // To Make Tab Wjhite
+		},
 		background: {
-			default: '#212121' // CHANGE ME
+			default: '#212121' // Darker material color for lower BG's
 		}
 	}
 })
