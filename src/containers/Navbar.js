@@ -26,6 +26,7 @@ import MenuItem from '@material-ui/core/MenuItem'
 import Cookie from 'js-cookie'
 import { search } from '../actions/searchActions'
 import { connect } from 'react-redux'
+import 'typeface-pacifico'
 
 import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
@@ -97,6 +98,12 @@ const styles = theme => ({
 	logoAndText: {
 		display: 'flex',
 		alignItems: 'center'
+	},
+	siteTitle: {
+		fontFamily: 'Pacifico',
+		fontSize: '1.7em',
+		fontWeight: 400,
+		overflow: 'visibleR'
 	}
 })
 
@@ -233,8 +240,8 @@ class Navbar extends React.Component {
 							style={{ textDecoration: 'none', color: 'white', flex: 1 }}
 						>
 							<div className={classes.logoAndText}>
-								<Typography variant="title" color="inherit" noWrap>
-									Euterpe
+								<Typography variant="title" color="inherit" className={classes.siteTitle}>
+									euterpe
 								</Typography>
 							</div>
 						</Link>
