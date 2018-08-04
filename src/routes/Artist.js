@@ -146,7 +146,7 @@ class Artist extends Component {
 					<Typography variant="display1" align="center">
 						Top Tracks
 					</Typography>
-					<div>{this.state.tracks}</div>
+					<CardWrapper>{this.state.tracks}</CardWrapper>
 				</div>
 			</div>
 		)
