@@ -14,26 +14,29 @@ const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 const styles = theme => ({
 	banner: {
-		width: '100%',
-		backgroundColor: 'white',
+        
+        [theme.breakpoints.up('md')]: {
+            width: 'calc(100% - 240px)'
+        },
+        width: '100%',
+        backgroundColor: 'red',
 		backgroundSize: 'cover',
 		backgroundPosition: 'center',
 		height: 300,
-		filter: 'blur(20px)',
-		position: 'absolute',
-		zIndex: '0'
+        filter: 'blur(20px)',
+        position: 'absolute'
+	
 	},
 	profile: {
 		paddingTop: theme.spacing.unit * 2,
 		boxSizing: 'border-box',
-		height: 400,
+		height: 300,
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
 
 		zIndex: '2',
 		position: 'relative',
-		borderBottom: 'white solid 10px'
 	},
 	profileImg: {
 		height: 200,
