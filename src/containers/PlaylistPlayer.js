@@ -406,7 +406,7 @@ class PlaylistPlayer extends Component {
 				value={currentTime}
 				onChange={this.handleChange}
 				ref={this.input}
-				max={duration.toString()}
+				max={duration}
 			/>
 		)
 		const controls = (
