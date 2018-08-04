@@ -1,11 +1,9 @@
 import React, { Component } from 'react'
 import AlbumCard from '../containers/AlbumCard'
-import getToken from '../getToken'
 import PageLabel from '../components/PageLabel'
 import CardWrapper from '../components/CardWrapper'
-import SpotifyWebApi from 'spotify-web-api-node'
-const spotifyApi = new SpotifyWebApi()
-spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
+import { connect } from 'react-redux'
+import {fetchCategoryName, fetchCategoryPlaylists} from '../actions/spotifyApiActions'
 
 class Category extends Component {
 	constructor() {
@@ -15,16 +13,15 @@ class Category extends Component {
 			playlists: []
 		}
 	}
-	componentDidMount() {
-		const { id } = this.props.match.params
-		spotifyApi.getCategory(id).then(res => {
+	componentDidUpdate(prevProps) {
+		if (prevProps.categoryName !== this.props.categoryName) {
 			this.setState({
-				name: res.body.name
+				name: this.props.categoryName
 			})
-		})
-		spotifyApi.getPlaylistsForCategory(id).then(res => {
+		}
+		if (prevProps.categoryPlaylists !== this.props.categoryPlaylists) {
 			this.setState({
-				playlists: res.body.playlists.items.map(item => (
+				playlists: this.props.categoryPlaylists.map(item => (
 					<AlbumCard
 						type="playlist"
 						name={item.name}
@@ -36,7 +33,12 @@ class Category extends Component {
 					/>
 				))
 			})
-		})
+		}
+	}
+	componentDidMount() {
+		const { id } = this.props.match.params
+		this.props.dispatch(fetchCategoryName(id))
+		this.props.dispatch(fetchCategoryPlaylists(id))
 	}
 	render() {
 		return (
@@ -48,4 +50,8 @@ class Category extends Component {
 	}
 }
 
-export default Category
+const mapStateToProps = state => ({
+	categoryName: state.spotifyApi.categoryName,
+	categoryPlaylists: state.spotifyApi.categoryPlaylists
+})
+export default connect(mapStateToProps)(Category)

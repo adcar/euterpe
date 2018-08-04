@@ -27,6 +27,16 @@ const spotifyApi = (state = initialState, action) => {
 				...state,
 				categories: action.payload
 			}
+		case 'FETCH_CATEGORY_NAME':
+			return {
+				...state,
+				categoryName: action.payload
+			}
+		case 'FETCH_CATEGORY_PLAYLISTS':
+			return {
+				...state,
+				categoryPlaylists: action.payload
+			}
 		case 'CLEAR_PLAYLIST_TRACKS':
 			return {
 				...state,

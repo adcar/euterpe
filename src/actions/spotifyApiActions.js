@@ -51,6 +51,21 @@ export const fetchCategories = () => dispatch => {
 	)
 }
 
+const getCategoryName = category => ({
+	type: 'FETCH_CATEGORY_NAME',
+	payload: category
+})
+export const fetchCategoryName = id => dispatch => {
+	spotifyApi.getCategory(id).then(res => dispatch(getCategoryName(res.body.name)))
+}
+
+const getCategoryPlaylists = playlists => ({
+	type: 'FETCH_CATEGORY_PLAYLISTS',
+	payload: playlists
+})
+export const fetchCategoryPlaylists = id => dispatch => {
+	spotifyApi.getPlaylistsForCategory(id).then(res => dispatch(getCategoryPlaylists(res.body.playlists.items)))
+}
 
 export const clearPlaylistTracks = () => ({
 	type: 'CLEAR_PLAYLIST_TRACKS'

@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import getToken from '../getToken'
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import CardMedia from '@material-ui/core/CardMedia';
@@ -10,9 +9,6 @@ import Truncate from 'react-truncate'
 import PageLabel from '../components/PageLabel'
 import { fetchCategories } from '../actions/spotifyApiActions'
 import {connect} from 'react-redux'
-import SpotifyWebApi from 'spotify-web-api-node'
-const spotifyApi = new SpotifyWebApi()
-spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
 
 const styles = theme => ({
 	genres: {
