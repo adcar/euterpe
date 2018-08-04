@@ -8,6 +8,8 @@ import { withStyles } from '@material-ui/core/styles'
 import { Link } from 'react-router-dom'
 import Truncate from 'react-truncate'
 import PageLabel from '../components/PageLabel'
+import { fetchCategories } from '../actions/spotifyApiActions'
+import {connect} from 'react-redux'
 import SpotifyWebApi from 'spotify-web-api-node'
 const spotifyApi = new SpotifyWebApi()
 spotifyApi.setAccessToken(getToken('spotifyAccessToken'))
@@ -35,11 +37,11 @@ class Categories extends Component {
 			genres: []
 		}
 	}
-	componentDidMount() {
+	componentDidUpdate(prevProps) {
 		const { classes } = this.props
-		spotifyApi.getCategories().then(data => {
+		if (prevProps !== this.props) {
 			this.setState({
-				genres: data.body.categories.items.map(item => (
+				genres: this.props.categories.map(item => (
 					<Link
 						to={`/category/${item.id}`}
 						style={{ textDecoration: 'none' }}
@@ -62,7 +64,10 @@ class Categories extends Component {
 					</Link>
 				))
 			})
-		})
+		}
+	}
+	componentDidMount() {
+		this.props.dispatch(fetchCategories())
 	}
 	render() {
 		const { classes } = this.props
@@ -74,5 +79,7 @@ class Categories extends Component {
 		)
 	}
 }
-
-export default withStyles(styles)(Categories)
+const mapStateToProps = state => ({
+	categories: state.spotifyApi.categories
+})
+export default connect(mapStateToProps)(withStyles(styles)(Categories))

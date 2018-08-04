@@ -1,7 +1,8 @@
 const initialState = {
 	savedAlbums: [],
 	followedPlaylists: [],
-	playlistTracks: []
+	playlistTracks: [],
+	categories: []
 }
 
 const spotifyApi = (state = initialState, action) => {
@@ -20,6 +21,11 @@ const spotifyApi = (state = initialState, action) => {
 			return {
 				...state,
 				playlistTracks: [...state.playlistTracks, ...action.payload]
+			}
+		case 'FETCH_CATEGORIES':
+			return {
+				...state,
+				categories: action.payload
 			}
 		case 'CLEAR_PLAYLIST_TRACKS':
 			return {

@@ -40,6 +40,18 @@ export const fetchPlaylistTracks = (user, id, offset = 0) => dispatch => {
 		)
 }
 
+
+const getCategories = categories => ({
+	type: 'FETCH_CATEGORIES',
+	payload: categories
+})
+export const fetchCategories = () => dispatch => {
+	spotifyApi.getCategories().then(
+		res => dispatch(getCategories(res.body.categories.items))
+	)
+}
+
+
 export const clearPlaylistTracks = () => ({
 	type: 'CLEAR_PLAYLIST_TRACKS'
 })
