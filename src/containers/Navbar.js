@@ -18,12 +18,16 @@ import HomeIcon from '@material-ui/icons/Home'
 import ListItem from '@material-ui/core/ListItem'
 import ListItemIcon from '@material-ui/core/ListItemIcon'
 import ListItemText from '@material-ui/core/ListItemText'
+import Switch from '@material-ui/core/Switch'
+import FormGroup from '@material-ui/core/FormGroup'
+import FormControlLabel from '@material-ui/core/FormControlLabel'
 import { isBrowser } from 'react-device-detect'
 import drawerWidth from '../drawerWidth'
 import getToken from '../getToken'
 import Menu from '@material-ui/core/Menu'
 import MenuItem from '@material-ui/core/MenuItem'
 import Cookie from 'js-cookie'
+import { applyFilter } from '../actions/settingsActions'
 import { search } from '../actions/searchActions'
 import { connect } from 'react-redux'
 import 'typeface-pacifico'
@@ -113,6 +117,7 @@ class Navbar extends React.Component {
 		this.state = {
 			mobileOpen: false,
 			searchTerm: '',
+			explicit: true,
 			url: this.props.match.url,
 			userInfo: {
 				images: [
@@ -187,6 +192,20 @@ class Navbar extends React.Component {
 			}
 		}, 500)
 	}
+	toggleExplicit() {
+		this.setState(
+			{
+				explicit: !this.state.explicit
+			},
+			() => {
+				if (this.state.explicit) {
+					this.props.dispatch(applyFilter('explicit'))
+				} else {
+					this.props.dispatch(applyFilter('clean'))
+				}
+			}
+		)
+	}
 	render() {
 		const { classes } = this.props
 		const drawer = (
@@ -240,7 +259,11 @@ class Navbar extends React.Component {
 							style={{ textDecoration: 'none', color: 'white', flex: 1 }}
 						>
 							<div className={classes.logoAndText}>
-								<Typography variant="title" color="inherit" className={classes.siteTitle}>
+								<Typography
+									variant="title"
+									color="inherit"
+									className={classes.siteTitle}
+								>
 									euterpe
 								</Typography>
 							</div>
@@ -273,6 +296,21 @@ class Navbar extends React.Component {
 								}}
 							>
 								Logout
+							</MenuItem>
+							<MenuItem>
+								<FormGroup row>
+									<FormControlLabel
+										control={
+											<Switch
+												onChange={this.toggleExplicit.bind(this)}
+												checked={this.state.explicit}
+												color="primary"
+												value="Explicit"
+											/>
+										}
+										label="Explicit"
+									/>
+								</FormGroup>
 							</MenuItem>
 						</Menu>
 					</Toolbar>

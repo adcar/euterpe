@@ -302,7 +302,8 @@ class PlaylistPlayer extends Component {
 			fetchAudioSource(
 				this.state.tracks[this.props.currentTrack].name,
 				this.state.tracks[this.props.currentTrack].artist.name,
-				this.state.tracks[this.props.currentTrack].duration
+				this.state.tracks[this.props.currentTrack].duration,
+				this.props.filter
 			)
 		)
 	}
@@ -666,7 +667,8 @@ const mapStateToProps = state => {
 		isPlaying: state.player.isPlaying,
 		id: state.player.tracks[0].id,
 		shuffledTracks: state.player.shuffledTracks,
-		audioSource: state.player.audioSource
+		audioSource: state.player.audioSource,
+		filter: state.settings.filter
 	}
 }
 PlaylistPlayer.propTypes = {
