@@ -117,7 +117,7 @@ class Navbar extends React.Component {
 		this.state = {
 			mobileOpen: false,
 			searchTerm: '',
-			explicit: true,
+			explicit: false,
 			url: this.props.match.url,
 			userInfo: {
 				images: [

@@ -1,5 +1,5 @@
 const initialState = {
-	filter: 'explicit'
+	filter: '' // Nothing, meaning clean
 }
 
 const settings = (state = initialState, action) => {
