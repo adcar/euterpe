@@ -199,9 +199,9 @@ class Navbar extends React.Component {
 			},
 			() => {
 				if (this.state.explicit) {
-					this.props.dispatch(applyFilter('explicit'))
+					this.props.dispatch(applyFilter('true'))
 				} else {
-					this.props.dispatch(applyFilter(''))
+					this.props.dispatch(applyFilter('false'))
 				}
 			}
 		)

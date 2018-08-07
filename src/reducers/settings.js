@@ -1,5 +1,5 @@
 const initialState = {
-	filter: '' // Nothing, meaning clean
+	filter: 'false' // Defaults to false
 }
 
 const settings = (state = initialState, action) => {
