@@ -56,6 +56,8 @@ export const fetchAudioSource = (
 			)}/${encodeURIComponent(artist)}/${Math.round(duration / 1000)}/${filter}`
 		)
 			.then(res => res.text())
-			.then(url => dispatch(getAudioSource(url)))
+			.then(url =>
+				dispatch(getAudioSource('https://sample-videos.com/audio/mp3/wave.mp3'))
+			)
 	}
 }
