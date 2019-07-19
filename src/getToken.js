@@ -1,7 +1,7 @@
 import Cookie from 'js-cookie'
 let url
 if (process.env.NODE_ENV === 'production') {
-	url = 'https://acardosi.dev'
+	url = 'https://euterpe.acardosi.dev'
 } else if (process.env.NODE_ENV === 'development') {
 	url = 'http://localhost:3000'
 }
