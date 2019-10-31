@@ -22,7 +22,7 @@ class MyPlaylists extends Component {
 			playlists: nextProps.playlists.map(playlist => (
 				<AlbumCard
 					type="playlist"
-					image={playlist.images[0].url}
+					image={playlist.images[0] ? playlist.images[0].url : ""}
 					name={playlist.name}
 					id={playlist.id}
 					artist={playlist.owner}
